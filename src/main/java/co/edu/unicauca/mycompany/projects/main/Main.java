@@ -21,7 +21,8 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        GUIDashboardCoordinador instance = new GUIDashboardCoordinador();
+        GUIinicioSesion instance = new GUIinicioSesion();
+        //GUIDashboardCoordinador instance = new GUIDashboardCoordinador();
         instance.setVisible(true);
     }
     
