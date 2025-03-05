@@ -5,7 +5,7 @@ import co.edu.unicauca.mycompany.projects.access.Factory;
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.presentation.GUIMenu;
-import co.edu.unicauca.mycompany.projects.presentation.inicioSesion;
+import co.edu.unicauca.mycompany.projects.presentation.GUIinicioSesion;
 import javax.swing.JFrame;
 
 
@@ -20,7 +20,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        inicioSesion instance = new inicioSesion();
+        GUIinicioSesion instance = new GUIinicioSesion();
         instance.setVisible(true);
     }
     
