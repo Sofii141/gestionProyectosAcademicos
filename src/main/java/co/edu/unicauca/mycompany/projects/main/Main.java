@@ -24,6 +24,9 @@ public class Main {
         GUIinicioSesion instance = new GUIinicioSesion();
         //GUIDashboardCoordinador instance = new GUIDashboardCoordinador();
         instance.setVisible(true);
+        
+        //GUIinicioSesion instance = new GUIinicioSesion();
+        //instance.setVisible(true);
     }
     
 }
