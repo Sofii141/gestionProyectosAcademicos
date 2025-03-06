@@ -4,7 +4,6 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import javax.swing.JTable;
 
 /**
  *
@@ -17,20 +16,16 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
      */
     public GUIDashboardCoordinador() {
         initComponents();
-
-
-
+             
         // Hacer la columna 4 más ancha
         this.jTableCoordinador.getColumnModel().getColumn(4).setMinWidth(325);
         this.jTableCoordinador.getColumnModel().getColumn(4).setMaxWidth(325);
         this.jTableCoordinador.getColumnModel().getColumn(4).setPreferredWidth(325);
-
         
         
         // Aplicar el renderizador de botones a la última columna
         this.jTableCoordinador.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
-        
-        
+        this.jTableCoordinador.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor());
         
     }
 
@@ -452,10 +447,18 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
             new String [] {
                 "Nit Empresa", "Nombre Empresa", "Nombre Proyecto", "Fecha", "Acciones"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTableCoordinador.setGridColor(new java.awt.Color(204, 204, 204));
         jTableCoordinador.setRowHeight(45);
-        jTableCoordinador.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jTableCoordinador.setSelectionBackground(new java.awt.Color(102, 102, 255));
         jTableCoordinador.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTableCoordinador);
         jTableCoordinador.getAccessibleContext().setAccessibleDescription("");

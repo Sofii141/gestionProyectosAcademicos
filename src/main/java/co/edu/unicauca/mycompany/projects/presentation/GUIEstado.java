@@ -4,6 +4,8 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Ana_Sofia
@@ -15,6 +17,7 @@ public class GUIEstado extends javax.swing.JFrame {
      */
     public GUIEstado() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**

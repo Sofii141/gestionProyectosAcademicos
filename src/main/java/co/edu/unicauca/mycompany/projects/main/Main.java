@@ -21,12 +21,10 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        GUIinicioSesion instance = new GUIinicioSesion();
-        //GUIDashboardCoordinador instance = new GUIDashboardCoordinador();
-        instance.setVisible(true);
+        GUIDashboardCoordinador instance = new GUIDashboardCoordinador();
         
         //GUIinicioSesion instance = new GUIinicioSesion();
-        //instance.setVisible(true);
+        instance.setVisible(true);
     }
     
 }

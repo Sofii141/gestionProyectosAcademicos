@@ -4,6 +4,9 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author Ana_Sofia
@@ -16,7 +19,7 @@ public class PanelAction extends javax.swing.JPanel {
     public PanelAction() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,14 +92,21 @@ public class PanelAction extends javax.swing.JPanel {
 
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
         // TODO add your handling code here:
+        System.out.println("Botón Detalles presionado"); 
+        GUIVerDetalles detallesFrame = new GUIVerDetalles();
+        detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
         // TODO add your handling code here:
+        GUIEstado estadoFrame = new GUIEstado();
+        estadoFrame.setVisible(true);
     }//GEN-LAST:event_btnEstadoActionPerformed
 
     private void btnComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarioActionPerformed
         // TODO add your handling code here:
+        GUIComentarios comentariosFrame = new GUIComentarios();
+        comentariosFrame.setVisible(true);
     }//GEN-LAST:event_btnComentarioActionPerformed
 
 
