@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * Renderizador para una celda que contiene un panel con botones.
  */
-public class TableActionCellRender extends DefaultTableCellRenderer {
+public class TableActionCellRenderEstudiante extends DefaultTableCellRenderer {
 
 
     @Override
@@ -16,7 +16,8 @@ public class TableActionCellRender extends DefaultTableCellRenderer {
 
         Component com = super.getTableCellRendererComponent(jtable, value, isSelected, hasFocus, row, column);
         
-        PanelAction action = new PanelAction();
+        PanelActionEstudiante action = new PanelActionEstudiante();
+        
         if(isSelected==false&&row%2==0){
             action.setBackground(Color.WHITE);
         }else{

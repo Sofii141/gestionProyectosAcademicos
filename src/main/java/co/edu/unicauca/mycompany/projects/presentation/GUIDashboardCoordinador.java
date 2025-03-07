@@ -458,7 +458,7 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         });
         jTableCoordinador.setGridColor(new java.awt.Color(204, 204, 204));
         jTableCoordinador.setRowHeight(45);
-        jTableCoordinador.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        jTableCoordinador.setSelectionBackground(new java.awt.Color(90, 111, 228));
         jTableCoordinador.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTableCoordinador);
         jTableCoordinador.getAccessibleContext().setAccessibleDescription("");
