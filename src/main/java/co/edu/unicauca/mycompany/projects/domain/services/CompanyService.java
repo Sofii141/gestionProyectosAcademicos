@@ -23,5 +23,23 @@ public class CompanyService {
     public boolean saveCompany(Company newCompany) {
         return repository.save(newCompany);
     }
-
+        /**
+     * Valida que el email ingresado cumpla las reglas de negocio
+     * 
+     * @param email String ingresado por el usuario
+     * @return true si la cadena cumple la expresion regular, false en caso contrario.
+     */
+    public boolean esEmailValido(String email) {
+        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(regex);
+    }
+     /**
+     * Valida que la contraseña cumpla las reglas de negocio
+     * 
+     * @param password String ingresado por el usuario
+     * @return true si la cadena cumple la expresion regular, false en caso contrario.
+     */
+    public boolean existsNit(String nit) {
+        return repository.existsNit(nit);
+    }
 }

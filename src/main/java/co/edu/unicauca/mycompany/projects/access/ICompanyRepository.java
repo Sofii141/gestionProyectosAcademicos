@@ -13,4 +13,5 @@ public interface ICompanyRepository {
     boolean save(Company newCompany);
 
     List<Company> listAll();
+    boolean existsNit(String nit);
 }

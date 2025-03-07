@@ -7,21 +7,23 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
 public class Company {
 
     private String nit;
-    private String name;
-    private String phone;
-    private String pageWeb;
+    private String nombreEmpresa;
+    private String nombreContacto;
+    private String telefonoContacto;
+    private String apellidoContacto;
     private Sector sector;
     private String email;
-    private String password;
+    private String cargoContacto;
 
-    public Company(String nit, String name, String phone, String pageWeb, Sector sector, String email, String password) {
+    public Company(String nit, String nombreEmpresa, String nombreContacto, String telefonoContacto, String apellidoContacto, Sector sector, String email, String cargoContacto) {
         this.nit = nit;
-        this.name = name;
-        this.phone = phone;
-        this.pageWeb = pageWeb;
+        this.nombreEmpresa = nombreEmpresa;
+        this.nombreContacto = nombreContacto;
+        this.telefonoContacto = telefonoContacto;
+        this.apellidoContacto = apellidoContacto;
         this.sector = sector;
         this.email = email;
-        this.password = password;
+        this.cargoContacto = cargoContacto;
     }
 
     public String getNit() {
@@ -32,28 +34,36 @@ public class Company {
         this.nit = nit;
     }
 
-    public String getName() {
-        return name;
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getNombreContacto() {
+        return nombreContacto;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setNombreContacto(String nombreContacto) {
+        this.nombreContacto = nombreContacto;
     }
 
-    public String getPageWeb() {
-        return pageWeb;
+    public String getTelefonoContacto() {
+        return telefonoContacto;
     }
 
-    public void setPageWeb(String pageWeb) {
-        this.pageWeb = pageWeb;
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getApellidoContacto() {
+        return apellidoContacto;
+    }
+
+    public void setApellidoContacto(String apellidoContacto) {
+        this.apellidoContacto = apellidoContacto;
     }
 
     public Sector getSector() {
@@ -72,12 +82,12 @@ public class Company {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getCargoContacto() {
+        return cargoContacto;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCargoContacto(String cargoContacto) {
+        this.cargoContacto = cargoContacto;
     }
-
+    
 }

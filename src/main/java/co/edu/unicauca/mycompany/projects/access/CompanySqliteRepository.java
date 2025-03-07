@@ -23,4 +23,9 @@ public class CompanySqliteRepository implements ICompanyRepository {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public boolean existsNit(String nit) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
