@@ -9,25 +9,25 @@ package co.edu.unicauca.mycompany.projects.presentation;
  *
  * @author Ana_Sofia
  */
-public class GUIDashboardCoordinador extends javax.swing.JFrame {
+public class GUIDashboardEstudiante extends javax.swing.JFrame {
 
     /**
      * Creates new form inicioSesion
      */
-    public GUIDashboardCoordinador() {
+    public GUIDashboardEstudiante() {
         initComponents();
              
-        // Hacer la columna 4 más ancha
-        this.jTableCoordinador.getColumnModel().getColumn(4).setMinWidth(325);
-        this.jTableCoordinador.getColumnModel().getColumn(4).setMaxWidth(325);
-        this.jTableCoordinador.getColumnModel().getColumn(4).setPreferredWidth(325);
+        this.jTableEstudiante.getColumnModel().getColumn(3).setMinWidth(225);
+        this.jTableEstudiante.getColumnModel().getColumn(3).setMaxWidth(225);
+        this.jTableEstudiante.getColumnModel().getColumn(3).setPreferredWidth(225);
         
         
         // Aplicar el renderizador de botones a la última columna
-        this.jTableCoordinador.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
-        this.jTableCoordinador.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor());
-        
+        this.jTableEstudiante.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRenderEstudiante());
+        this.jTableEstudiante.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditorEstudiante());
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,16 +78,16 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         jTextField16 = new javax.swing.JTextField();
         jTextField14 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCoordinador = new javax.swing.JTable();
+        jTableEstudiante = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -372,6 +372,17 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(58, 60, 64));
         jLabel17.setText("*Fecha");
 
+        jButton6.setBackground(new java.awt.Color(90, 111, 228));
+        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Proyectos en curso");
+        jButton6.setBorder(null);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -384,13 +395,13 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Coordinador x");
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, 30));
+        jLabel11.setText("Estudiante x");
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, 30));
 
         jButton4.setBackground(new java.awt.Color(90, 111, 228));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Proyectos");
+        jButton4.setText("Postularme en proyectos");
         jButton4.setBorder(null);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -402,7 +413,7 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         jButton5.setBackground(new java.awt.Color(90, 111, 228));
         jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Proyectos en espera");
+        jButton5.setText("Mis proyectos");
         jButton5.setBorder(null);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,57 +422,45 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         });
         jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
 
-        jButton6.setBackground(new java.awt.Color(90, 111, 228));
-        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Proyectos en curso");
-        jButton6.setBorder(null);
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 50));
-
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("tuCoordinador@gmail.com");
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jLabel12.setText("tuEstudiante@gmail.com");
+        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
-        jLabel10.setText("Solicitudes de Proyecto");
+        jLabel10.setText("Postularme en proyectos");
 
-        jTableCoordinador.setForeground(new java.awt.Color(255, 255, 255));
-        jTableCoordinador.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEstudiante.setForeground(new java.awt.Color(255, 255, 255));
+        jTableEstudiante.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nit Empresa", "Nombre Empresa", "Nombre Proyecto", "Fecha", "Acciones"
+                "Nombre Empresa", "Nombre Proyecto", "Fecha", "Acciones"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableCoordinador.setGridColor(new java.awt.Color(204, 204, 204));
-        jTableCoordinador.setRowHeight(45);
-        jTableCoordinador.setSelectionBackground(new java.awt.Color(90, 111, 228));
-        jTableCoordinador.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTableCoordinador);
-        jTableCoordinador.getAccessibleContext().setAccessibleDescription("");
+        jTableEstudiante.setGridColor(new java.awt.Color(204, 204, 204));
+        jTableEstudiante.setRowHeight(45);
+        jTableEstudiante.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        jTableEstudiante.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(jTableEstudiante);
+        jTableEstudiante.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -615,14 +614,22 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardCoordinador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardCoordinador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardCoordinador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardCoordinador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -635,7 +642,7 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIDashboardCoordinador().setVisible(true);
+                new GUIDashboardEstudiante().setVisible(true);
             }
         });
     }
@@ -673,7 +680,7 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTableCoordinador;
+    private javax.swing.JTable jTableEstudiante;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
