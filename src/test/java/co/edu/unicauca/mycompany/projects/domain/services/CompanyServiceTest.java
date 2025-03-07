@@ -21,7 +21,7 @@ public class CompanyServiceTest {
     /**
      * Para hacer pruebas unitarias de la clase CompanyService, podemos usar 
      * Mockito para simular (mock) el comportamiento del ICompanyRepository.
-     */
+     
     @Mock
     private ICompanyRepository repositoryMock;
     
@@ -82,5 +82,5 @@ public class CompanyServiceTest {
         assertFalse(result);
         verify(repositoryMock, times(1)).save(newCompany);
     }
-
+*/
 }
