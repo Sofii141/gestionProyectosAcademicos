@@ -15,6 +15,7 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
      */
     public GUIDashboardEmpresa() {
         initComponents();
+        initPlaceHolders();
     }
 
     /**
@@ -314,7 +315,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jTextField9.setBackground(new java.awt.Color(227, 230, 235));
         jTextField9.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField9.setText("Ingresar resumen");
         jTextField9.setBorder(null);
         jTextField9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,7 +332,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jTextField10.setBackground(new java.awt.Color(227, 230, 235));
         jTextField10.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField10.setText("Ingresar nombre");
         jTextField10.setBorder(null);
         jTextField10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,7 +341,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jTextField11.setBackground(new java.awt.Color(227, 230, 235));
         jTextField11.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField11.setText("Ingresar tiempo maximo en meses");
         jTextField11.setBorder(null);
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,7 +354,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jTextField12.setBackground(new java.awt.Color(227, 230, 235));
         jTextField12.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField12.setText("Ingresar descripción");
         jTextField12.setBorder(null);
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,7 +371,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jTextField14.setBackground(new java.awt.Color(227, 230, 235));
         jTextField14.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField14.setText("Ingresar fecha");
         jTextField14.setBorder(null);
         jTextField14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -388,7 +384,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jTextField16.setBackground(new java.awt.Color(227, 230, 235));
         jTextField16.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField16.setText("Ingresar fecha");
         jTextField16.setBorder(null);
         jTextField16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -402,7 +397,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jTextField17.setBackground(new java.awt.Color(227, 230, 235));
         jTextField17.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField17.setText("Ingresar resumen");
         jTextField17.setBorder(null);
         jTextField17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -666,6 +660,19 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
                 new GUIDashboardEmpresa().setVisible(true);
             }
         });
+    }
+    /**
+     * Crea los placeholders para la creacion de la empresa
+     */
+    private void initPlaceHolders(){
+        TextPrompt placeholderName = new TextPrompt("Ingresar nombre:",jTextField10);
+        TextPrompt placeholderFecha = new TextPrompt("Ingresar fecha:",jTextField14);
+        TextPrompt placeholderTiempo = new TextPrompt("Ingresar tiempo maximo en meses:",jTextField11);
+        TextPrompt placeholderPresupuesto = new TextPrompt("Ingresar fecha:",jTextField16);
+        TextPrompt placeholderResumen = new TextPrompt("Ingresar resumen:",jTextField9);
+        TextPrompt placeholderObjetivos = new TextPrompt("Ingresar onjetivos:",jTextField17);
+        TextPrompt placeholderDescripcion  = new TextPrompt("Ingrese descripción:",jTextField12);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
