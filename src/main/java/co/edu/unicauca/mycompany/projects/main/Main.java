@@ -7,6 +7,7 @@ import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.presentation.GUIDashboardCoordinador;
 import co.edu.unicauca.mycompany.projects.presentation.GUIDashboardEstudiante;
 import co.edu.unicauca.mycompany.projects.presentation.GUIMenu;
+import co.edu.unicauca.mycompany.projects.presentation.GUIVerDetalles;
 import co.edu.unicauca.mycompany.projects.presentation.GUIinicioSesion;
 import javax.swing.JFrame;
 
@@ -22,7 +23,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        GUIDashboardEstudiante instance = new GUIDashboardEstudiante();
+        GUIVerDetalles instance = new GUIVerDetalles();
         
         //GUIinicioSesion instance = new GUIinicioSesion();
         instance.setVisible(true);
