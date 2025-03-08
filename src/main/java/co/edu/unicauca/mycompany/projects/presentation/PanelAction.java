@@ -4,12 +4,15 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+
 /**
  *
  * @author Ana_Sofia
  */
 public class PanelAction extends javax.swing.JPanel {
-
+    private Project proyecto;
+    
     /**
      * Creates new form PanelAction
      */
@@ -90,7 +93,7 @@ public class PanelAction extends javax.swing.JPanel {
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
         // TODO add your handling code here:
         System.out.println("Botón Detalles presionado"); 
-        GUIVerDetalles detallesFrame = new GUIVerDetalles();
+        GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
         detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesActionPerformed
 

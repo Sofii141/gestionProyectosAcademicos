@@ -4,19 +4,47 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+
 /**
+ * @file PanelActionEstudiante.java
+ * @brief Panel de acciones para estudiantes.
  *
- * @author Ana_Sofia
+ * Este panel permite a un estudiante ver detalles de un proyecto y postularse a él.
+ *
+ * @author Ana Sofia, Paula Munoz
  */
 public class PanelActionEstudiante extends javax.swing.JPanel {
-
     /**
-     * Creates new form PanelActionEst
+     * Proyecto asociado a las acciones del panel.
      */
-    public PanelActionEstudiante() {
+    private Project proyecto;
+    
+    /**
+     * Estudiante que interactúa con el panel.
+     */
+    private Student estudiante;
+    
+    /**
+     * @brief Constructor de la clase.
+     *
+     * Inicializa los componentes de la interfaz y configura eventos de botones.
+     *
+     * @param proyecto Proyecto asociado al estudiante.
+     * @param estudiante Estudiante que interactúa con el panel.
+     */
+    public PanelActionEstudiante(Project proyecto, Student estudiante) {
+        // Asignar los valores recibidos a las variables de instancia
+        this.proyecto = proyecto;
+        this.estudiante = estudiante;
+        
+        // Inicializar componentes de la interfaz gráfica
         initComponents();
+        
+        // Agregar un ActionListener al botón de detalles ELIMINAR
+        btnDetallesEst.addActionListener(e -> mostrarDetallesProyecto());
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,6 +64,7 @@ public class PanelActionEstudiante extends javax.swing.JPanel {
         btnPostularse.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnPostularse.setForeground(new java.awt.Color(255, 255, 255));
         btnPostularse.setText("Postularse");
+        btnPostularse.setFocusPainted(false);
         btnPostularse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPostularseActionPerformed(evt);
@@ -46,6 +75,7 @@ public class PanelActionEstudiante extends javax.swing.JPanel {
         btnDetallesEst.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDetallesEst.setForeground(new java.awt.Color(255, 255, 255));
         btnDetallesEst.setText("Detalles");
+        btnDetallesEst.setFocusPainted(false);
         btnDetallesEst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDetallesEstActionPerformed(evt);
@@ -85,21 +115,47 @@ public class PanelActionEstudiante extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * @brief Evento que se ejecuta al hacer clic en "Detalles".
+     *
+     * Abre una nueva ventana con los detalles del proyecto.
+     *
+     * @param evt Evento de acción generado por el botón "Detalles".
+     */
     private void btnDetallesEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesEstActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Botón Detalles presionado");
-        GUIVerDetalles detallesFrame = new GUIVerDetalles();
+        // Crear una nueva ventana de detalles del proyecto y mostrarla
+        GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
+        // Mostrar la ventana de los detalles del proyecto
         detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesEstActionPerformed
 
+    /**
+     * @brief Evento que se ejecuta al hacer clic en "Postularse".
+     *
+     * Verifica si el estudiante ya está postulado y, si no, abre la interfaz de postulación.
+     *
+     * @param evt Evento de acción generado por el botón "Postularse".
+     */
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Botón Detalles presionado"); 
-        GUIPostularse detallesFrame = new GUIPostularse();
-        detallesFrame.setVisible(true);
+        // Verificar en la base de datos que el estudiante no se haya postulado antes
+        // Crear una nueva ventana de detalles del proyecto y mostrarla
+        GUIPostularse objpostularse = new GUIPostularse(proyecto, estudiante);
+        // Mostrar la ventana de postulación
+        objpostularse.setVisible(true);
     }//GEN-LAST:event_btnPostularseActionPerformed
 
-
+    // ELIMINAR
+    private void mostrarDetallesProyecto() {
+        if (proyecto != null) {
+            System.out.println("Proyecto seleccionado:");
+            System.out.println("ID: " + proyecto.getProId());
+            System.out.println("Título: " + proyecto.getProTitle());
+            System.out.println("Descripción: " + proyecto.getProDescription());
+        } else {
+            System.out.println("No hay proyecto asociado.");
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetallesEst;
     private javax.swing.JButton btnPostularse;

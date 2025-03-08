@@ -133,10 +133,12 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableCoordinador.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableCoordinador.setGridColor(new java.awt.Color(204, 204, 204));
         jTableCoordinador.setRowHeight(45);
         jTableCoordinador.setSelectionBackground(new java.awt.Color(90, 111, 228));
         jTableCoordinador.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableCoordinador.setShowGrid(true);
         jScrollPane1.setViewportView(jTableCoordinador);
         jTableCoordinador.getAccessibleContext().setAccessibleDescription("");
 

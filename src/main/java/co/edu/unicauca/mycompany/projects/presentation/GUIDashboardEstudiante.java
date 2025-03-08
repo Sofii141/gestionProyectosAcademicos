@@ -1,33 +1,64 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
+
+import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+import java.awt.Color;
+import java.awt.Font;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 /**
+ * @file GUIDashboardEstudiante.java
+ * @brief Interfaz gráfica del panel de control para estudiantes.
  *
- * @author Ana_Sofia
+ * Esta clase representa la ventana principal del estudiante, donde puede visualizar 
+ * la cantidad de proyectos realizados, en curso y finalizados, además de otras 
+ * funcionalidades relacionadas con la gestión de proyectos académicos.
+ *
+ * @author Paula Munoz
  */
 public class GUIDashboardEstudiante extends javax.swing.JFrame {
-
     /**
-     * Creates new form inicioSesion
+     * Objeto que representa al estudiante que está utilizando la interfaz.
      */
-    public GUIDashboardEstudiante() {
+    private Student estudiante;
+    
+    /**
+     * @brief Constructor de la clase.
+     *
+     * Inicializa los componentes de la interfaz gráfica del panel de control 
+     * del estudiante y configura los elementos visuales.
+     *
+     * @param estudiante Objeto de tipo Student que contiene la información del estudiante.
+     */
+    public GUIDashboardEstudiante(Student estudiante) {
+        // Asigna el estudiante recibido por parámetro a la variable de instancia
+        this.estudiante = estudiante;
+        // Hace visible la ventana
+        this.setVisible(true);
+        
+        // Llamada al método que inicializa los componentes de la interfaz gráfica
         initComponents();
-             
-        this.jTableEstudiante.getColumnModel().getColumn(3).setMinWidth(225);
-        this.jTableEstudiante.getColumnModel().getColumn(3).setMaxWidth(225);
-        this.jTableEstudiante.getColumnModel().getColumn(3).setPreferredWidth(225);
-        
-        
-        // Aplicar el renderizador de botones a la última columna
-        this.jTableEstudiante.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRenderEstudiante());
-        this.jTableEstudiante.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditorEstudiante());
+        // Llamada al método que genera y muestra la gráfica de proyectos
+        mostrarGrafico();
+        // Configura la ventana para que aparezca centrada en la pantalla
+        setLocationRelativeTo(null);
+        // Bloquea el redimensionamiento de la ventana
+        setResizable(false);
+
+        // Establece el texto del botón de inicio con el identificador del estudiante
+        btnInicio.setText("Estudiante " + estudiante.getId());
+        // Muestra un mensaje de bienvenida con el nombre del estudiante en el título
+        lblTitulo.setText("Bienvenido " + estudiante.getNombreStudent());
+        // Muestra el correo electrónico del estudiante en la interfaz
+        lblCorreo.setText(estudiante.getCorreo());
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,13 +71,12 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableEstudiante = new javax.swing.JTable();
+        lblCorreo = new javax.swing.JLabel();
+        btnInicio = new javax.swing.JButton();
+        btnProyectos = new javax.swing.JButton();
+        btnPostular = new javax.swing.JButton();
+        lblTitulo = new javax.swing.JLabel();
+        jPanelGrafico = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -57,75 +87,67 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(90, 111, 228));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Estudiante x");
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, 30));
+        lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
+        lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCorreo.setText("tuEstudiante@gmail.com");
+        jPanel4.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 150, 190, -1));
 
-        jButton4.setBackground(new java.awt.Color(90, 111, 228));
-        jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Postularme en proyectos");
-        jButton4.setBorder(null);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnInicio.setBackground(new java.awt.Color(90, 111, 228));
+        btnInicio.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        btnInicio.setForeground(new java.awt.Color(255, 255, 255));
+        btnInicio.setText("Estudiante X");
+        btnInicio.setBorder(null);
+        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInicio.setFocusPainted(false);
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnInicioActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 50));
+        jPanel4.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 210, 50));
 
-        jButton5.setBackground(new java.awt.Color(90, 111, 228));
-        jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Mis proyectos");
-        jButton5.setBorder(null);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnProyectos.setBackground(new java.awt.Color(90, 111, 228));
+        btnProyectos.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnProyectos.setForeground(new java.awt.Color(255, 255, 255));
+        btnProyectos.setText("Mis proyectos");
+        btnProyectos.setBorder(null);
+        btnProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProyectos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnProyectosActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
+        jPanel4.add(btnProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
 
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("tuEstudiante@gmail.com");
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(38, 42, 65));
-        jLabel10.setText("Postularme en proyectos");
-
-        jTableEstudiante.setForeground(new java.awt.Color(255, 255, 255));
-        jTableEstudiante.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre Empresa", "Nombre Proyecto", "Fecha", "Acciones"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnPostular.setBackground(new java.awt.Color(90, 111, 228));
+        btnPostular.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnPostular.setForeground(new java.awt.Color(255, 255, 255));
+        btnPostular.setText("Postularme");
+        btnPostular.setBorder(null);
+        btnPostular.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPostular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPostularActionPerformed(evt);
             }
         });
-        jTableEstudiante.setGridColor(new java.awt.Color(204, 204, 204));
-        jTableEstudiante.setRowHeight(45);
-        jTableEstudiante.setSelectionBackground(new java.awt.Color(102, 102, 255));
-        jTableEstudiante.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTableEstudiante);
-        jTableEstudiante.getAccessibleContext().setAccessibleDescription("");
+        jPanel4.add(btnPostular, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 50));
+
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(38, 42, 65));
+        lblTitulo.setText("Bienvenido Estudiante X");
+
+        jPanelGrafico.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanelGraficoLayout = new javax.swing.GroupLayout(jPanelGrafico);
+        jPanelGrafico.setLayout(jPanelGraficoLayout);
+        jPanelGraficoLayout.setHorizontalGroup(
+            jPanelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 782, Short.MAX_VALUE)
+        );
+        jPanelGraficoLayout.setVerticalGroup(
+            jPanelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 467, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -135,18 +157,18 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 26, Short.MAX_VALUE))
+                    .addComponent(lblTitulo)
+                    .addComponent(jPanelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel10)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitulo)
+                .addGap(26, 26, 26)
+                .addComponent(jPanelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -166,73 +188,76 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+        dispose();
+        GUIDashboardEstudiante instancia = new GUIDashboardEstudiante(estudiante);
+    }//GEN-LAST:event_btnInicioActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnProyectosActionPerformed
+
+    private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
+        this.setVisible(false); // Oculta el frame sin cerrarlo
+        GUIProyectosDisponibles instancia = new GUIProyectosDisponibles(estudiante); // Crea una instancia del otro frame
+        instancia.setVisible(true); // Volver visible el otro frame
+    }//GEN-LAST:event_btnPostularActionPerformed
 
     /**
-     * @param args the command line arguments
+     * @brief Muestra un gráfico de barras con la cantidad de proyectos en diferentes estados.
+     *
+     * Esta función crea un conjunto de datos con el total de proyectos, 
+     * los proyectos en curso y los finalizados. Luego, genera un gráfico 
+     * de barras utilizando la biblioteca JFreeChart y lo añade al panel 
+     * de gráficos en la interfaz.
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void mostrarGrafico() {
+        // Crear el conjunto de datos para el gráfico
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        dataset.setValue(10, "Proyectos", "Total");       // Agrega el total de proyectos
+        dataset.setValue(4, "Proyectos", "En Curso");     // Agrega los proyectos en curso
+        dataset.setValue(6, "Proyectos", "Finalizados");  // Agrega los proyectos finalizados 
+       
+        // Crear el gráfico de barras con los datos proporcionados
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Cantidad de Proyectos",  // Establece el título del gráfico
+                "Estado",                 // Etiqueta del eje X (categorías de proyectos)
+                "Cantidad",               // Etiqueta del eje Y (cantidad de proyectos)
+                dataset,                  // Conjunto de datos del gráfico
+                PlotOrientation.VERTICAL, // Orientación del gráfico (vertical)
+                false,  // No muestra la leyenda
+                true,   // Activa herramientas de ayuda
+                false   // No habilita URL en cada barra
+        );
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIDashboardEstudiante().setVisible(true);
-            }
-        });
+        // Configurar el área donde se dibujan las barras
+        CategoryPlot plot = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        // Asigna un color personalizado a las barras del gráfico
+        renderer.setSeriesPaint(0, new Color(90, 111, 228));
+        // Elimina el efecto 3D del gráfico para un diseño plano
+        renderer.setBarPainter(new StandardBarPainter());
+        // Configura el fondo del gráfico en color blanco
+        plot.setBackgroundPaint(Color.WHITE); 
+        plot.setOutlineVisible(false); // Oculta el borde del gráfico
+        // Configura la fuente y el estilo del título del gráfico
+        chart.getTitle().setFont(new Font("Segoe UI", Font.BOLD, 18));
+
+        // Crear un panel para mostrar el gráfico y ajustarlo a la interfaz
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setSize(jPanelGrafico.getWidth(), jPanelGrafico.getHeight()); // Ajusta el tamaño del panel
+        jPanelGrafico.add(chartPanel); // Agrega el gráfico al panel de la interfaz
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JButton btnInicio;
+    private javax.swing.JButton btnPostular;
+    private javax.swing.JButton btnProyectos;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableEstudiante;
+    private javax.swing.JPanel jPanelGrafico;
+    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }

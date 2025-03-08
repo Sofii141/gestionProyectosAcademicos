@@ -1,22 +1,58 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JWindow;
+import javax.swing.Timer;
+import javax.swing.border.LineBorder;
+
 /**
+ * @file GUIPostularse.java
+ * @brief Interfaz gráfica para postularse a un proyecto.
  *
- * @author Ana_Sofia
+ * Esta clase representa la ventana donde un estudiante puede postularse a un proyecto
+ * académico. Permite al usuario confirmar o cancelar su postulación.
+ *
+ * @author Ana Sofia, Paula Munoz
  */
 public class GUIPostularse extends javax.swing.JFrame {
-
     /**
-     * Creates new form GUIPostularse
+     * Proyecto al que el estudiante desea postularse.
      */
-    public GUIPostularse() {
+    private Project proyecto;
+    
+    /**
+     * Estudiante que está realizando la postulación.
+     */
+    private Student estudiante;
+    
+    /**
+     * @brief Constructor de la clase.
+     *
+     * Inicializa los componentes de la interfaz y configura la ventana.
+     *
+     * @param proyecto Proyecto al que el estudiante desea postularse.
+     * @param estudiante Estudiante que está realizando la postulación.
+     */
+    public GUIPostularse(Project proyecto, Student estudiante) {
+        // Asignar los valores recibidos a las variables de instancia
+        this.proyecto = proyecto;
+        this.estudiante = estudiante;
+        
+        // Inicializar componentes de la interfaz gráfica
         initComponents();
+        
+        // Configurar la ventana para que aparezca centrada en la pantalla
+        setLocationRelativeTo(null);
+        // Bloquear el redimensionamiento de la ventana
+        setResizable(false);
+        // Configurar para que la ventana se cierre sin terminar la aplicación
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,24 +72,31 @@ public class GUIPostularse extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnAceptar.setBackground(new java.awt.Color(41, 64, 211));
+        btnAceptar.setBackground(new java.awt.Color(90, 111, 228));
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("Aceptar");
+        btnAceptar.setFocusPainted(false);
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
             }
         });
 
-        btnCancelar.setBackground(new java.awt.Color(95, 97, 112));
+        btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setFocusPainted(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(38, 42, 65));
-        jLabel11.setText("¿Desea aceptar");
+        jLabel11.setText("¿Desea enviar");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(38, 42, 65));
@@ -70,22 +113,23 @@ public class GUIPostularse extends javax.swing.JFrame {
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel11)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel11))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel12)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addGap(99, 99, 99))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(53, 53, 53)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -106,44 +150,53 @@ public class GUIPostularse extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * @brief Evento que se ejecuta cuando el usuario hace clic en "Aceptar".
+     *
+     * Cierra la ventana actual y muestra un mensaje emergente indicando que la postulación fue enviada.
+     *
+     * @param evt Evento de acción generado por el botón "Aceptar".
+     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        // Cierra la ventana actual
+        dispose();
+        
+        // Crear una ventana emergente sin bordes
+        JWindow window = new JWindow();
+        
+        // Crear una etiqueta con el mensaje de confirmación
+        JLabel label = new JLabel("Postulación enviada al proyecto " + proyecto.getProTitle(), JLabel.CENTER);
+        label.setOpaque(true); // Hacer que la etiqueta tenga un fondo visible
+        label.setBackground(Color.WHITE); // Establecer el fondo en color blanco
+        label.setBorder(new LineBorder(new Color(90, 111, 228), 2)); // Establecer un borde azul
+        label.setForeground(Color.BLACK); // Color del texto
+        label.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14)); // Establecer la fuente
+
+        // Agregar la etiqueta a la ventana emergente
+        window.getContentPane().add(label);
+        // Definir el tamaño de la ventana emergente
+        window.setSize(500, 50);
+        // Posicionar la ventana en la pantalla
+        window.setLocation(482, 675);
+        
+        // Configurar un temporizador para cerrar la ventana emergente automáticamente en 2 segundos
+        new Timer(2000, e -> window.dispose()).start();
+        
+        // Hacer visible la ventana emergente
+        window.setVisible(true);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
-     * @param args the command line arguments
+     * @brief Evento que se ejecuta cuando el usuario hace clic en "Cancelar".
+     *
+     * Cierra la ventana sin realizar ninguna acción.
+     *
+     * @param evt Evento de acción generado por el botón "Cancelar".
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIPostularse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIPostularse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIPostularse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIPostularse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIPostularse().setVisible(true);
-            }
-        });
-    }
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // Cierra la ventana actual sin realizar cambios
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
