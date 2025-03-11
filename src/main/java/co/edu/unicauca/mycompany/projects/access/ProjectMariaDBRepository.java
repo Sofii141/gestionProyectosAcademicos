@@ -15,8 +15,7 @@ import java.util.logging.Logger;
  *
  * @author User
  */
-public class ProjectMariaDBRepository implements IProjectRepository {
-    private Connection conn;
+public class ProjectMariaDBRepository extends MariaDBConnection implements IProjectRepository {
 
     public ProjectMariaDBRepository() {
         initDatabase();
@@ -75,53 +74,5 @@ public class ProjectMariaDBRepository implements IProjectRepository {
             Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return projects;
-    }
-
-    private void initDatabase() {
-        // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS Project (\n"
-                + "    proId VARCHAR(50) NOT NULL,\n"
-                + "    proTitle VARCHAR(100) NOT NULL,\n"
-                + "    proDescription TEXT,\n"
-                + "    proAbstract TEXT,\n"
-                + "    proGoals TEXT,\n"
-                + "    proDeadLine INT NOT NULL,\n"
-                + "    proBudget FLOAT,\n"
-                + "    proState VARCHAR(20) NOT NULL,"
-                + "    PRIMARY KEY (proId),,\n"
-                + "    CONSTRAINT chk_proState CHECK (proState IN ('PROPUESTO', 'ASIGNADO', 'FINALIZADO'))\n"
-                + ");";
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            this.disconnect();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void connect() {
-        // URL de conexión para MariaDB
-        String url = "jdbc:mariadb://localhost:3306/mydatabase"; // Cambia 'mydatabase' por el nombre de tu base de datos
-        String user = "root"; // Cambia 'root' por tu usuario de MariaDB
-        String password = "password"; // Cambia 'password' por tu contraseña de MariaDB
-
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void disconnect() {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }
