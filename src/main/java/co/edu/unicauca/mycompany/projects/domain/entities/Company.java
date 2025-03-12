@@ -1,5 +1,8 @@
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Libardo, Julio
@@ -14,6 +17,8 @@ public class Company {
     private Sector sector;
     private String email;
     private String cargoContacto;
+    
+    private List<Project> companyProyectos;
 
     public Company(String nit, String nombreEmpresa, String nombreContacto, String telefonoContacto, String apellidoContacto, Sector sector, String email, String cargoContacto) {
         this.nit = nit;
@@ -24,6 +29,8 @@ public class Company {
         this.sector = sector;
         this.email = email;
         this.cargoContacto = cargoContacto;
+
+        this.companyProyectos = new ArrayList<>();
     }
 
     public String getNit() {
@@ -89,5 +96,19 @@ public class Company {
     public void setCargoContacto(String cargoContacto) {
         this.cargoContacto = cargoContacto;
     }
+
+    public List<Project> getCompanyProyectos() {
+        return companyProyectos;
+    }
+
+    public void setCompanyProyectos(List<Project> companyProyectos) {
+        this.companyProyectos = companyProyectos;
+    }   
     
+    public void agregarProyecto(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, float proBudget){
+        Project proyecto = new Project(proId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proBudget);
+        proyecto.setCompania(this);
+        companyProyectos.add(proyecto);
+    }
 }
+

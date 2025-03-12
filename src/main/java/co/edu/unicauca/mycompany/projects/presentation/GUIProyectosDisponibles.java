@@ -34,8 +34,8 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         setResizable(false);
         this.estudiante = estudiante;
         this.setVisible(true);
-        btnInicio.setText("Estudiante "+estudiante.getId());
-        lblCorreo.setText(estudiante.getCorreo());
+        btnInicio.setText("Estudiante "+estudiante.getUserId());
+        lblCorreo.setText(estudiante.getUserEmail());
     }
     
     /**

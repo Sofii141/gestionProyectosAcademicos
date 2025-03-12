@@ -53,11 +53,11 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         setResizable(false);
 
         // Establece el texto del botón de inicio con el identificador del estudiante
-        btnInicio.setText("Estudiante " + estudiante.getId());
+        btnInicio.setText("Estudiante " + estudiante.getUserId());
         // Muestra un mensaje de bienvenida con el nombre del estudiante en el título
-        lblTitulo.setText("Bienvenido " + estudiante.getNombreStudent());
+        lblTitulo.setText("Bienvenido " + estudiante.getUserId());
         // Muestra el correo electrónico del estudiante en la interfaz
-        lblCorreo.setText(estudiante.getCorreo());
+        lblCorreo.setText(estudiante.getUserEmail());
     }
 
     /**

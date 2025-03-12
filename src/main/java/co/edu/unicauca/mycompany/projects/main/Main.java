@@ -14,7 +14,6 @@ import co.edu.unicauca.mycompany.projects.presentation.GUIinicioSesion;
 import com.sun.source.doctree.EscapeTree;
 import javax.swing.JFrame;
 
-
 /**
  *
  * @author Libardo Pantoja

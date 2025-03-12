@@ -66,7 +66,6 @@ public class ProjectMariaDBRepository implements IProjectRepository {
             while (rs.next()) {
                 Project newProject = new Project(rs.getString("proId"), rs.getString("proTitle"), rs.getString("proDescription"),
                         rs.getString("proAbstract"), rs.getString("proGoals"), Integer.decode(rs.getString("proDeadLine")),Float.parseFloat(rs.getString("proBudget")));
-
                 projects.add(newProject);
             }
             this.disconnect();

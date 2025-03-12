@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.domain.entities;
+
+import co.edu.unicauca.mycompany.projects.domain.services.Observer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,6 +18,11 @@ public class Project {
     private float proBudget; //Puede recibir null
     private String proState; // "PROPUESTO", "ASIGNADO", "FINALIZADO"
 
+    private List<Student> proEquipo;
+    private List<Student> proPostulados;
+    private Coordinator proCoordinador;
+    private Company compania;
+    
     /**
      * Constructor de la clase Project.
      * 
@@ -34,6 +39,9 @@ public class Project {
         this.proDeadLine = proDeadLine;
         this.proBudget = proBudget;
         this.proState = "PROPUESTO"; //Default
+        this.proEquipo = new ArrayList<>();
+        this.proPostulados = new ArrayList<>();
+        
     }
 
     public String getProId() {
@@ -83,8 +91,6 @@ public class Project {
         return proDeadLine;
     }
     
-    
-
     public void setProId(String proId) {
         this.proId = proId;
     }
@@ -118,6 +124,37 @@ public class Project {
     public void setProState(String proState) {
         this.proState = proState;
     }
-    
+
+    public List<Student> getProEquipo() {
+        return proEquipo;
+    }
+
+    public void setProEquipo(List<Student> proEquipo) {
+        this.proEquipo = proEquipo;
+    }
+
+    public List<Student> getProPostulados() {
+        return proPostulados;
+    }
+
+    public void setProPostulados(List<Student> proPostulados) {
+        this.proPostulados = proPostulados;
+    }
+
+    public Coordinator getProCoordinador() {
+        return proCoordinador;
+    }
+
+    public void setProCoordinador(Coordinator proCoordinador) {
+        this.proCoordinador = proCoordinador;
+    }
+
+    public Company getCompania() {
+        return compania;
+    }
+
+    public void setCompania(Company compania) {
+        this.compania = compania;
+    }
     
 }
