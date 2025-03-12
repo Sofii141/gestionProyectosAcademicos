@@ -1,6 +1,9 @@
 package co.edu.unicauca.mycompany.projects.access;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.entities.ProjectState;
+import co.edu.unicauca.mycompany.projects.domain.entities.Sector;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -66,6 +69,8 @@ public class ProjectMariaDBRepository implements IProjectRepository {
             while (rs.next()) {
                 Project newProject = new Project(rs.getString("proId"), rs.getString("proTitle"), rs.getString("proDescription"),
                         rs.getString("proAbstract"), rs.getString("proGoals"), Integer.decode(rs.getString("proDeadLine")),Float.parseFloat(rs.getString("proBudget")));
+                //OJOOOOOOOOOO
+                newProject.setCompany(new Company("U011"));
                 projects.add(newProject);
             }
             this.disconnect();
@@ -77,6 +82,7 @@ public class ProjectMariaDBRepository implements IProjectRepository {
     }
 
     private void initDatabase() {
+        
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS Project (\n"
                 + "    proId VARCHAR(50) NOT NULL,\n"
@@ -87,7 +93,7 @@ public class ProjectMariaDBRepository implements IProjectRepository {
                 + "    proDeadLine INT NOT NULL,\n"
                 + "    proBudget FLOAT,\n"
                 + "    proState VARCHAR(20) NOT NULL,"
-                + "    PRIMARY KEY (proId),,\n"
+                + "    PRIMARY KEY (proId),\n"
                 + "    CONSTRAINT chk_proState CHECK (proState IN ('PROPUESTO', 'ASIGNADO', 'FINALIZADO'))\n"
                 + ");";
         try {
@@ -100,12 +106,47 @@ public class ProjectMariaDBRepository implements IProjectRepository {
             Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @Override
+    public Project getProject(String id) {
+        connect();
+        String sql = "SELECT proId, proTitle, proDescription, proAbstract, proGoals, " +
+                     "proDeadLine, proBudget, proState FROM Project WHERE proId = ?";
+
+        Project project = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                project = new Project(
+                    rs.getString("proId"),
+                    rs.getString("proTitle"),
+                    rs.getString("proDescription"),
+                    rs.getString("proAbstract"),
+                    rs.getString("proGoals"),
+                    rs.getInt("proDeadLine"),
+                    rs.getObject("proBudget") != null ? rs.getFloat("proBudget") : null
+                );
+            }
+            project.setProState(ProjectState.fromString(rs.getString("proState")));
+            //OJOOOOOOOOOO
+            project.setCompany(new Company("U011"));
+            
+        } catch (SQLException e) {
+            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto.", e);
+        } finally {
+            disconnect();
+        }
+        return project;
+    }
 
     public void connect() {
         // URL de conexión para MariaDB
         String url = "jdbc:mariadb://localhost:3306/mydatabase"; // Cambia 'mydatabase' por el nombre de tu base de datos
         String user = "root"; // Cambia 'root' por tu usuario de MariaDB
-        String password = "password"; // Cambia 'password' por tu contraseña de MariaDB
+        String password = "mariadb"; // Cambia 'password' por tu contraseña de MariaDB
 
         try {
             conn = DriverManager.getConnection(url, user, password);

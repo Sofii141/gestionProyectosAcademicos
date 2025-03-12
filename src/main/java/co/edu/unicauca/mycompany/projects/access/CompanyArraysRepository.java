@@ -43,4 +43,9 @@ public class CompanyArraysRepository implements ICompanyRepository {
         return false;
     }
 
+    @Override
+    public Company companyInfo(String nit) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

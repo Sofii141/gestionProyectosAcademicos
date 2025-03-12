@@ -41,9 +41,6 @@ public class PanelActionEstudiante extends javax.swing.JPanel {
         
         // Inicializar componentes de la interfaz gráfica
         initComponents();
-        
-        // Agregar un ActionListener al botón de detalles ELIMINAR
-        btnDetallesEst.addActionListener(e -> mostrarDetallesProyecto());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -144,17 +141,6 @@ public class PanelActionEstudiante extends javax.swing.JPanel {
         objpostularse.setVisible(true);
     }//GEN-LAST:event_btnPostularseActionPerformed
 
-    // ELIMINAR
-    private void mostrarDetallesProyecto() {
-        if (proyecto != null) {
-            System.out.println("Proyecto seleccionado:");
-            System.out.println("ID: " + proyecto.getProId());
-            System.out.println("Título: " + proyecto.getProTitle());
-            System.out.println("Descripción: " + proyecto.getProDescription());
-        } else {
-            System.out.println("No hay proyecto asociado.");
-        }
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetallesEst;

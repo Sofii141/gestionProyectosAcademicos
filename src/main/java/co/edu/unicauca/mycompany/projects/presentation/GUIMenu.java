@@ -158,7 +158,7 @@ public class GUIMenu extends javax.swing.JFrame {
 
         model.setRowCount(0); // Limpiar la tabla antes de llenarla
         for (Company company : companyService.getAllCompanies()) {
-            model.addRow(new Object[]{company.getNit(), company.getNombreEmpresa(), company.getSector()});
+            model.addRow(new Object[]{company.getNit(), company.getCompanyName(), company.getSector()});
         }
         tblCompanies.setModel(model);
 

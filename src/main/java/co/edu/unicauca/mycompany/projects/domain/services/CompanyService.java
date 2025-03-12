@@ -1,6 +1,8 @@
 package co.edu.unicauca.mycompany.projects.domain.services;
 
+import co.edu.unicauca.mycompany.projects.access.CompanyMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
+import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import java.util.List;
 
@@ -12,12 +14,16 @@ public class CompanyService {
 
     private ICompanyRepository repository;
 
-    public CompanyService(ICompanyRepository repository) {
-        this.repository = repository;
+    public CompanyService() {
+        this.repository = new CompanyMariaDBRepository();
     }
 
     public List<Company> getAllCompanies() {
         return repository.listAll();
+    }
+    
+    public Company getCompany(String nit){
+        return repository.companyInfo(nit);
     }
 
     public boolean saveCompany(Company newCompany) {

@@ -382,8 +382,8 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         }
         // Convertir el sector seleccionado a enum
         Sector sector = Sector.valueOf(sectorInd.toUpperCase());
-        Company company = new Company(nit, nombreEmp, nombreCon, telefonoCon, apellidoCon, sector, email, cargoCon);
-
+        Company company = new Company(nit, nombreEmp, email, telefonoCon, nombreCon, apellidoCon, cargoCon, sector);
+        
         // Verificar si el NIT ya existe
         try {
             if (companyService.existsNit(nit)) {

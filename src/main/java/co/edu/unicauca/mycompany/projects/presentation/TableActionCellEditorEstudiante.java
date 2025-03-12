@@ -2,6 +2,7 @@ package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import java.awt.Component;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
@@ -18,7 +19,9 @@ public class TableActionCellEditorEstudiante extends DefaultCellEditor {
     /**
      * Estudiante asociado al editor de la celda.
      */
-    private Student estudiante;
+    private final Student estudiante;
+    
+    private final ProjectService projectServie = new ProjectService();
 
     /**
      * @brief Constructor de la clase.
@@ -67,11 +70,7 @@ public class TableActionCellEditorEstudiante extends DefaultCellEditor {
      * @param idPro ID del proyecto a buscar.
      * @return Un objeto `Project` con la información correspondiente.
      */
-    private Project obtenerProyecto(String idPro) {
-        // Simulación de búsqueda en base de datos: si el ID está vacío, retorna un proyecto predeterminado
-        if (idPro.isEmpty()) {
-            return new Project("0", "Sin Título", "Sin Descripción", "", "", 0, 0);
-        }
-        return new Project("0", "Sin Título", "Sin Descripción", "", "", 0, 0); // Se debe implementar la obtención real del proyecto
+    private Project obtenerProyecto(String idProject) {
+        return projectServie.getProject(idProject);
     }
 }

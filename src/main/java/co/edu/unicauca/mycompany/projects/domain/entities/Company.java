@@ -9,28 +9,32 @@ import java.util.List;
  */
 public class Company {
 
-    private String nit;
-    private String nombreEmpresa;
-    private String nombreContacto;
-    private String telefonoContacto;
-    private String apellidoContacto;
+   private String nit;
+    private String companyName;
+    private String contactName;
+    private String contactPhone;
+    private String contactLastName;
     private Sector sector;
     private String email;
-    private String cargoContacto;
+    private String contactPosition;
     
     private List<Project> companyProyectos;
 
-    public Company(String nit, String nombreEmpresa, String nombreContacto, String telefonoContacto, String apellidoContacto, Sector sector, String email, String cargoContacto) {
+    public Company(String nit, String nombreEmpresa, String email, String telefonoContacto, String nombreContacto, String apellidoContacto, String cargoContacto, Sector sector) {
         this.nit = nit;
-        this.nombreEmpresa = nombreEmpresa;
-        this.nombreContacto = nombreContacto;
-        this.telefonoContacto = telefonoContacto;
-        this.apellidoContacto = apellidoContacto;
+        this.companyName = nombreEmpresa;
+        this.contactName = nombreContacto;
+        this.contactPhone = telefonoContacto;
+        this.contactLastName = apellidoContacto;
         this.sector = sector;
         this.email = email;
-        this.cargoContacto = cargoContacto;
+        this.contactPosition = cargoContacto;
 
         this.companyProyectos = new ArrayList<>();
+    }
+    
+    public Company(String nit) {
+        this.nit = nit;
     }
 
     public String getNit() {
@@ -41,36 +45,36 @@ public class Company {
         this.nit = nit;
     }
 
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getNombreContacto() {
-        return nombreContacto;
+    public String getContactName() {
+        return contactName;
     }
 
-    public void setNombreContacto(String nombreContacto) {
-        this.nombreContacto = nombreContacto;
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 
-    public String getTelefonoContacto() {
-        return telefonoContacto;
+    public String getContactPhone() {
+        return contactPhone;
     }
 
-    public void setTelefonoContacto(String telefonoContacto) {
-        this.telefonoContacto = telefonoContacto;
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
-    public String getApellidoContacto() {
-        return apellidoContacto;
+    public String getContactLastName() {
+        return contactLastName;
     }
 
-    public void setApellidoContacto(String apellidoContacto) {
-        this.apellidoContacto = apellidoContacto;
+    public void setContactLastName(String contactLastName) {
+        this.contactLastName = contactLastName;
     }
 
     public Sector getSector() {
@@ -89,12 +93,12 @@ public class Company {
         this.email = email;
     }
 
-    public String getCargoContacto() {
-        return cargoContacto;
+    public String getContactPosition() {
+        return contactPosition;
     }
 
-    public void setCargoContacto(String cargoContacto) {
-        this.cargoContacto = cargoContacto;
+    public void setContactPosition(String contactPosition) {
+        this.contactPosition = contactPosition;
     }
 
     public List<Project> getCompanyProyectos() {
@@ -103,11 +107,11 @@ public class Company {
 
     public void setCompanyProyectos(List<Project> companyProyectos) {
         this.companyProyectos = companyProyectos;
-    }   
+    }
     
     public void agregarProyecto(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, float proBudget){
         Project proyecto = new Project(proId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proBudget);
-        proyecto.setCompania(this);
+        proyecto.setCompany(this);
         companyProyectos.add(proyecto);
     }
 }

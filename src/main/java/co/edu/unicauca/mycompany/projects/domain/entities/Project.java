@@ -16,19 +16,23 @@ public class Project {
     private String proGoals;
     private int proDeadLine; 
     private float proBudget; //Puede recibir null
-    private String proState; // "PROPUESTO", "ASIGNADO", "FINALIZADO"
+    private ProjectState proState;
 
-    private List<Student> proEquipo;
-    private List<Student> proPostulados;
-    private Coordinator proCoordinador;
-    private Company compania;
+    private List<Student> proTeam;
+    private List<Student> proPostulates;
+    private Coordinator proCoordinator;
+    private Company company;
     
     /**
      * Constructor de la clase Project.
      * 
-     * @param titulo     Título del proyecto.
-     * @param descripcion Descripción del proyecto.
-     * 
+     * @param proId
+     * @param proTitle
+     * @param proDescription
+     * @param proAbstract
+     * @param proGoals
+     * @param proDeadLine
+     * @param proBudget
      */
     public Project(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, float proBudget) {    
         this.proId = proId;
@@ -38,9 +42,9 @@ public class Project {
         this.proGoals = proGoals;
         this.proDeadLine = proDeadLine;
         this.proBudget = proBudget;
-        this.proState = "PROPUESTO"; //Default
-        this.proEquipo = new ArrayList<>();
-        this.proPostulados = new ArrayList<>();
+        this.proState = ProjectState.PROPUESTO;
+        this.proTeam = new ArrayList<>();
+        this.proPostulates = new ArrayList<>();
         
     }
 
@@ -78,15 +82,6 @@ public class Project {
         return proBudget;
     }
     
-    /**
-     * Obtiene el estado actual del proyecto.
-     * 
-     * @return Estado del proyecto.
-     */
-    public String getProState() {
-        return proState;
-    }
-
     public int getProDeadLine() {
         return proDeadLine;
     }
@@ -120,41 +115,44 @@ public class Project {
         this.proDeadLine = proDeadLine;
     }
 
-    
-    public void setProState(String proState) {
+    public List<Student> getProTeam() {
+        return proTeam;
+    }
+
+    public void setProTeam(List<Student> proTeam) {
+        this.proTeam = proTeam;
+    }
+
+    public List<Student> getProPostulates() {
+        return proPostulates;
+    }
+
+    public void setProPostulates(List<Student> proPostulates) {
+        this.proPostulates = proPostulates;
+    }
+
+    public Coordinator getProCoordinator() {
+        return proCoordinator;
+    }
+
+    public void setProCoordinator(Coordinator proCoordinator) {
+        this.proCoordinator = proCoordinator;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public ProjectState getProState() {
+        return proState;
+    }
+
+    public void setProState(ProjectState proState) {
         this.proState = proState;
-    }
-
-    public List<Student> getProEquipo() {
-        return proEquipo;
-    }
-
-    public void setProEquipo(List<Student> proEquipo) {
-        this.proEquipo = proEquipo;
-    }
-
-    public List<Student> getProPostulados() {
-        return proPostulados;
-    }
-
-    public void setProPostulados(List<Student> proPostulados) {
-        this.proPostulados = proPostulados;
-    }
-
-    public Coordinator getProCoordinador() {
-        return proCoordinador;
-    }
-
-    public void setProCoordinador(Coordinator proCoordinador) {
-        this.proCoordinador = proCoordinador;
-    }
-
-    public Company getCompania() {
-        return compania;
-    }
-
-    public void setCompania(Company compania) {
-        this.compania = compania;
     }
     
 }

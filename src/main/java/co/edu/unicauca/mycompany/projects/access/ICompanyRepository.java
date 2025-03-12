@@ -1,6 +1,4 @@
-
 package co.edu.unicauca.mycompany.projects.access;
-
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.List;
  */
 public interface ICompanyRepository {
     boolean save(Company newCompany);
-
     List<Company> listAll();
     boolean existsNit(String nit);
+    Company companyInfo (String nit);
 }

@@ -1,6 +1,7 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import java.awt.Color;
 import java.awt.Font;
 import org.jfree.chart.ChartFactory;
