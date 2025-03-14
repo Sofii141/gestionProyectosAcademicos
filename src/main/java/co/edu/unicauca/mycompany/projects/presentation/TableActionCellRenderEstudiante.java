@@ -31,7 +31,7 @@ public class TableActionCellRenderEstudiante extends DefaultTableCellRenderer {
         Component com = super.getTableCellRendererComponent(jtable, value, isSelected, hasFocus, row, column);
         
         // Crear un panel de acciones personalizado
-        PanelActionEstudiante action = new PanelActionEstudiante(null, null);
+        PanelActionEstudiante action = new PanelActionEstudiante(null, null, null);
         
         // Configurar el color de fondo del panel de la celda.
         // Si la celda no está seleccionada y la fila es par, se establece el fondo en blanco

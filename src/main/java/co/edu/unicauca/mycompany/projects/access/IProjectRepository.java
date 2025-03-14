@@ -10,6 +10,8 @@ import java.util.List;
 public interface IProjectRepository {
     boolean save(Project newProject);
     List<Project> listAll();
+    List<Project> listProjectsAvailable(String studentId);
     Project getProject(String id);
+    boolean apply(String studentId,String projectId);
 }
     

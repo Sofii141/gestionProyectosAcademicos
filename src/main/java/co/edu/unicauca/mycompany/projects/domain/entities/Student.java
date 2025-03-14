@@ -12,30 +12,29 @@ import java.util.List;
  * @author paula
  */
 public class Student extends User{
-    
-    private List<Project> misproyectos;
-    private List<Project> postulaciones;
+    private List<Project> myProjects;
+    private List<Project> myPostulations;
     
     public Student(String userId, String userEmail, String userPassword) {
         super(userId, userEmail, userPassword);
-        this.misproyectos = new ArrayList<>();
-        this.postulaciones = new ArrayList<>();
+        this.myProjects = new ArrayList<>();
+        this.myPostulations = new ArrayList<>();
     }
 
-    public List<Project> getMisproyectos() {
-        return misproyectos;
+    public List<Project> getMyProjects() {
+        return myProjects;
     }
 
-    public void setMisproyectos(List<Project> misproyectos) {
-        this.misproyectos = misproyectos;
+    public void setMyProjects(List<Project> myProjects) {
+        this.myProjects = myProjects;
     }
 
-    public List<Project> getPostulaciones() {
-        return postulaciones;
+    public List<Project> getMyPostulations() {
+        return myPostulations;
     }
 
-    public void setPostulaciones(List<Project> postulaciones) {
-        this.postulaciones = postulaciones;
+    public void setMyPostulations(List<Project> myPostulations) {
+        this.myPostulations = myPostulations;
     }
 
 }

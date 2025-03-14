@@ -14,8 +14,8 @@ public class CompanyService {
 
     private ICompanyRepository repository;
 
-    public CompanyService() {
-        this.repository = new CompanyMariaDBRepository();
+    public CompanyService(ICompanyRepository repository) {
+        this.repository = repository;
     }
 
     public List<Company> getAllCompanies() {

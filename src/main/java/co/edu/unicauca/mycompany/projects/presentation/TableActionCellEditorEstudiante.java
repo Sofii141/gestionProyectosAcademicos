@@ -1,5 +1,7 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
@@ -21,7 +23,7 @@ public class TableActionCellEditorEstudiante extends DefaultCellEditor {
      */
     private final Student estudiante;
     
-    private final ProjectService projectServie = new ProjectService();
+    private final ProjectService projectService;
 
     /**
      * @brief Constructor de la clase.
@@ -31,9 +33,10 @@ public class TableActionCellEditorEstudiante extends DefaultCellEditor {
      *
      * @param estudiante Estudiante asociado a la acción de la celda.
      */
-    public TableActionCellEditorEstudiante(Student estudiante) {
+    public TableActionCellEditorEstudiante(ProjectService projectService, Student estudiante) {
         super(new JCheckBox()); // Llamada al constructor de DefaultCellEditor con un JCheckBox ficticio
         this.estudiante = estudiante; // Asignación del estudiante recibido al atributo de la clase
+        this.projectService = projectService;
     }
     
     /**
@@ -54,7 +57,7 @@ public class TableActionCellEditorEstudiante extends DefaultCellEditor {
         Project proyecto = obtenerProyecto(idPro);
         
         // Crear un panel de acciones personalizado para el estudiante y el proyecto
-        PanelActionEstudiante action = new PanelActionEstudiante(proyecto, estudiante);
+        PanelActionEstudiante action = new PanelActionEstudiante(projectService, proyecto, estudiante);
         
         // Configurar el color de fondo del editor con el color de selección de la tabla
         action.setBackground(jtable.getSelectionBackground());
@@ -71,6 +74,6 @@ public class TableActionCellEditorEstudiante extends DefaultCellEditor {
      * @return Un objeto `Project` con la información correspondiente.
      */
     private Project obtenerProyecto(String idProject) {
-        return projectServie.getProject(idProject);
+        return projectService.getProject(idProject);
     }
 }

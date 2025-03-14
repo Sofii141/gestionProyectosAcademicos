@@ -1,6 +1,7 @@
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,42 +10,42 @@ import java.util.List;
  */
 public class Company {
 
-   private String nit;
+   private String companyNit;
     private String companyName;
     private String contactName;
     private String contactPhone;
     private String contactLastName;
-    private Sector sector;
-    private String email;
+    private Sector companySector;
+    private String companyEmail;
     private String contactPosition;
     
     private List<Project> companyProyectos;
 
     public Company(String nit, String nombreEmpresa, String email, String telefonoContacto, String nombreContacto, String apellidoContacto, String cargoContacto, Sector sector) {
-        this.nit = nit;
+        this.companyNit = nit;
         this.companyName = nombreEmpresa;
         this.contactName = nombreContacto;
         this.contactPhone = telefonoContacto;
         this.contactLastName = apellidoContacto;
-        this.sector = sector;
-        this.email = email;
+        this.companySector = sector;
+        this.companyEmail = email;
         this.contactPosition = cargoContacto;
 
         this.companyProyectos = new ArrayList<>();
     }
     
     public Company(String nit) {
-        this.nit = nit;
+        this.companyNit = nit;
     }
 
-    public String getNit() {
-        return nit;
+    public String getCompanyNit() {
+        return companyNit;
     }
 
-    public void setNit(String nit) {
-        this.nit = nit;
+    public void setCompanyNit(String companyNit) {
+        this.companyNit = companyNit;
     }
-
+    
     public String getCompanyName() {
         return companyName;
     }
@@ -77,20 +78,20 @@ public class Company {
         this.contactLastName = contactLastName;
     }
 
-    public Sector getSector() {
-        return sector;
+    public Sector getCompanySector() {
+        return companySector;
     }
 
-    public void setSector(Sector sector) {
-        this.sector = sector;
+    public void setCompanySector(Sector companySector) {
+        this.companySector = companySector;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCompanyEmail() {
+        return companyEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCompanyEmail(String companyEmail) {
+        this.companyEmail = companyEmail;
     }
 
     public String getContactPosition() {
@@ -110,8 +111,7 @@ public class Company {
     }
     
     public void agregarProyecto(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, float proBudget){
-        Project proyecto = new Project(proId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proBudget);
-        proyecto.setCompany(this);
+        Project proyecto = new Project(proId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proBudget, this.companyNit);
         companyProyectos.add(proyecto);
     }
 }

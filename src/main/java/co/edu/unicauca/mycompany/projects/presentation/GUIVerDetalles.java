@@ -1,42 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.Factory;
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
-import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import javax.swing.JFrame;
 
-/**
- *
- * @author Ana_Sofia
- */
 public class GUIVerDetalles extends javax.swing.JFrame {
     private Project project;
     private Company company;
+    private CompanyService companyService;
 
-    /**
-     * Creates new form GUIVerDetalles
-     * @param project
-     */
     public GUIVerDetalles(Project project) {
+        ICompanyRepository companySepository = Factory.getInstance().getRepositoryCompany("MARIADB");
+        
         this.project = project;
-        CompanyService companyService = new CompanyService();
-        this.company = companyService.getCompany(project.getCompany().getNit());
+        this.companyService = new CompanyService(companySepository);
+        this.company = companyService.getCompany(project.getIdcompany());
+        
         // Inicializar los componentes
         initComponents();
-        // No cierra la aplicacion al cerrar el frame
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        // Configurar el frame en el centro
-        setLocationRelativeTo(null);
-        // Configurar el frame para que no se pueda modificar
-        setResizable(false);
-        // Establecer componentes
+        initVisual();
         obtenerDatos();
+    }
+    
+    public final void initVisual() {
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -238,52 +230,50 @@ public class GUIVerDetalles extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel16)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblNit))
-                                            .addComponent(jLabel22))
-                                        .addGap(154, 154, 154)
+                                                .addComponent(lblNit, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblNombrePersona)
-                                            .addComponent(jLabel27)))
+                                            .addComponent(jLabel27)
+                                            .addComponent(lblNombrePersona, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblNombreEmpresa)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel20)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblTelefono))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(lblTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel14)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblGmail))
-                                            .addComponent(jLabel18)
-                                            .addComponent(lblSector))
-                                        .addGap(98, 98, 98)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblApellidosPersona)
+                                                .addComponent(lblGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+                                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblSector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblNombreEmpresa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(5, 5, 5)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel29)
-                                            .addComponent(jLabel26)
-                                            .addComponent(lblCargoPersona)))))
+                                            .addComponent(lblCargoPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                                            .addComponent(lblApellidosPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel32)
-                                    .addComponent(lblResumenProyecto)
                                     .addComponent(jLabel37)
-                                    .addComponent(lblObjetivosProyecto)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel35)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblNombreProyecto)
-                                        .addGap(63, 63, 63)
+                                        .addComponent(lblNombreProyecto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel33)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblPresupuesto))
+                                        .addComponent(lblPresupuesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jLabel39)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel43)
@@ -293,11 +283,13 @@ public class GUIVerDetalles extends javax.swing.JFrame {
                                         .addComponent(jLabel45)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblEstadoProyecto))
-                                    .addComponent(lblDescripcionProyecto)
+                                    .addComponent(lblDescripcionProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel41)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblTiempoProyecto)))))
+                                        .addComponent(lblTiempoProyecto))
+                                    .addComponent(lblResumenProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblObjetivosProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 27, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -412,23 +404,23 @@ public class GUIVerDetalles extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void obtenerDatos(){
+    public final void obtenerDatos(){
         lblApellidosPersona.setText(company.getContactLastName());
         lblCargoPersona.setText(company.getContactPosition());
-        lblDescripcionProyecto.setText(project.getProDescription());
-        lblEstadoProyecto.setText(project.getProState().toString());
-        /// nohayy
-        lblFechaProyecto.setText("nohay");
-        lblGmail.setText(company.getEmail());
-        lblNit.setText(company.getNit());
+        lblGmail.setText(company.getCompanyEmail());
+        lblNit.setText(company.getCompanyNit());
         lblNombreEmpresa.setText(company.getCompanyName());
         lblNombrePersona.setText(company.getContactName());
+        lblSector.setText(company.getCompanySector().toString());
+        lblTelefono.setText(company.getContactPhone());
+        
+        lblDescripcionProyecto.setText(project.getProDescription());
+        lblEstadoProyecto.setText(project.getProState().toString());
+        lblFechaProyecto.setText(project.getProDate().toString());
         lblNombreProyecto.setText(project.getProTitle());
         lblObjetivosProyecto.setText(project.getProGoals());
         lblPresupuesto.setText(String.valueOf(project.getProBudget()));
         lblResumenProyecto.setText(project.getProAbstract());
-        lblSector.setText(company.getSector().toString());
-        lblTelefono.setText(company.getContactPhone());
         lblTiempoProyecto.setText(String.valueOf(project.getProDeadLine()));
     }
 

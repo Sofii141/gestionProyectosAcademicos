@@ -1,52 +1,30 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
-import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
-import co.edu.unicauca.mycompany.projects.domain.entities.Company;
-import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
-import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
 
-
-/**
- * @file GUIProyectosDisponibles.java
- * @brief Interfaz gráfica del panel para postularse a proyectos.
- * 
- * Esta clase representa una ventana del estudiante, donde puede visualizar 
- * los proyectos disponibles y puede postularse a ellos 
- * 
- * @author Paula Munoz
- */
 public class GUIProyectosDisponibles extends javax.swing.JFrame {
-    private Student student;
-    private ProjectService projectService;
-    private CompanyService companyService;
-    
-    /**
-     * @param student
-     * @brief Constructor de la clase.
-     *
-     * Inicializa los componentes de la interfaz gráfica del panel visualizacion
-     * y postulacion de los proyectos disponibles a postularse
-     */
+    private final Student student;
+    private final ProjectService projectService;
+
     public GUIProyectosDisponibles(Student student) {
-        // Inicializar componentes
-        initComponents();
-        // Configurar el frame en el centro
-        setLocationRelativeTo(null);
-        // Configurar el frame para que no se pueda modificar
-        setResizable(false);
+        IProjectRepository projectSepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        this.projectService = new ProjectService(projectSepository);
         this.student = student;
+        
+        initComponents();
+        initVisual();
+        projectService.addObserver(new ProjectsTable(student, projectService, jTableEstudiante, jScrollPane1));
+    }
+
+    public final void initVisual() {
         this.setVisible(true);
-        btnInicio.setText("Estudiante "+student.getUserId());
+        setResizable(false);
+        setLocationRelativeTo(null);
+        btnInicio.setText("Estudiante " + student.getUserId());
         lblCorreo.setText(student.getUserEmail());
-        this.projectService = new ProjectService();
-        this.companyService = new CompanyService();
-        // Inicializar la tabla
-        crearTabla();
     }
     
     /**
@@ -61,7 +39,6 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnPostular = new javax.swing.JButton();
-        btnProyectos = new javax.swing.JButton();
         lblCorreo = new javax.swing.JLabel();
         btnInicio = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -90,20 +67,6 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
             }
         });
         jPanel4.add(btnPostular, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 50));
-
-        btnProyectos.setBackground(new java.awt.Color(90, 111, 228));
-        btnProyectos.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        btnProyectos.setForeground(new java.awt.Color(255, 255, 255));
-        btnProyectos.setText("Mis proyectos");
-        btnProyectos.setBorder(null);
-        btnProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProyectos.setFocusPainted(false);
-        btnProyectos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProyectosActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
 
         lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -182,58 +145,20 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
+        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student);
+        gui.setVisible(true);
         dispose();
-        GUIProyectosDisponibles instancia = new GUIProyectosDisponibles(student);
     }//GEN-LAST:event_btnPostularActionPerformed
 
-    private void btnProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProyectosActionPerformed
-
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        new GUIDashboardEstudiante(student).setVisible(true); // Reabre el JFrame
-        dispose(); // Cierra el segundo JFrame
+        GUIDashboardEstudiante gui = new GUIDashboardEstudiante(student.getUserId());
+        gui.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
-
-    /**
-    * @brief Actualiza la configuración de la tabla de estudiantes.
-    *
-    * Este método configura la columna 3 de la tabla `jTableEstudiante`,
-    * estableciendo su tamaño fijo y asignando un renderizador y un editor de celdas personalizados.
-    */
-    private void crearTabla() {
-        //Establece el ancho mínimo, máximo y preferido de la columna 3 en 225 píxeles.
-        this.jTableEstudiante.getColumnModel().getColumn(5).setMinWidth(225); // Ancho mínimo de la columna.
-        this.jTableEstudiante.getColumnModel().getColumn(5).setMaxWidth(225); // Ancho máximo de la columna.
-        this.jTableEstudiante.getColumnModel().getColumn(5).setPreferredWidth(225); // Ancho preferido de la columna.
-
-        // Asigna un renderizador personalizado a la columna 3.
-        //Permite que se visualicen componentes como botones dentro de la tabla.
-        this.jTableEstudiante.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEstudiante());
-
-        // Asigna un editor de celdas personalizado a la columna 3.
-        // Permite la interacción con los botones dentro de la celda
-        this.jTableEstudiante.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEstudiante(student));
-
-        // Confugurar el MultilineCell en cada fila
-        for(int i=0;i<jTableEstudiante.getColumnCount()-1;i++){
-            jTableEstudiante.getColumnModel().getColumn(i).setCellRenderer(new MultiLineCellRenderer()); 
-        }
-        jTableEstudiante.setRowHeight(50);
-        
-        // For para ingresar los datos desde la bd
-        DefaultTableModel modelo = (DefaultTableModel) jTableEstudiante.getModel();
-        List<Project> projects = projectService.listProjects();
-        for (Project project : projects) {
-            Company company = companyService.getCompany(project.getCompany().getNit());
-            modelo.addRow(new Object[]{project.getProId(),company.getCompanyName(), project.getProTitle(), project.getProDeadLine(), project.getProAbstract(), "Acciones"});
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnPostular;
-    private javax.swing.JButton btnProyectos;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

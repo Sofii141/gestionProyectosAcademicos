@@ -91,20 +91,16 @@ public class PanelAction extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Botón Detalles presionado"); 
         GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
         detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
-        // TODO add your handling code here:
         GUIEstado estadoFrame = new GUIEstado();
         estadoFrame.setVisible(true);
     }//GEN-LAST:event_btnEstadoActionPerformed
 
     private void btnComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarioActionPerformed
-        // TODO add your handling code here:
         GUIComentarios comentariosFrame = new GUIComentarios();
         comentariosFrame.setVisible(true);
     }//GEN-LAST:event_btnComentarioActionPerformed

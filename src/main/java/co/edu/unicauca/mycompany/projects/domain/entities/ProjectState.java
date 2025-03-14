@@ -9,9 +9,9 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
  * @author paula
  */
 public enum ProjectState {
-    PROPUESTO,
-    ASIGNADO,
-    FINALIZADO;
+    RECIBIDO,
+    ACEPTADO,
+    RECHAZADO;
 
     public static ProjectState fromString(String state) {
         try {

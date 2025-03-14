@@ -12,22 +12,19 @@ import java.util.List;
  * @author paula
  */
 public class Coordinator extends User{
-    private List<Project> coordProyectos;
+    private List<Project> coordProjects;
 
     public Coordinator(String userId, String userEmail, String userPassword) {
         super(userId, userEmail, userPassword);
-        this.coordProyectos = new ArrayList<>();
+        this.coordProjects = new ArrayList<>();
     }
 
-    public List<Project> getProyectos() {
-        return coordProyectos;
+    public List<Project> getCoordProjects() {
+        return coordProjects;
     }
 
-    public void setProyectos(List<Project> proyectos) {
-        this.coordProyectos = proyectos;
+    public void setCoordProjects(List<Project> coordProjects) {
+        this.coordProjects = coordProjects;
     }
-    
-    public void agregarProyecto(Project proyecto){
-        coordProyectos.add(proyecto);
-    }
+
 }

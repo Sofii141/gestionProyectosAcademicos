@@ -2,57 +2,30 @@ package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
-import java.awt.Color;
-import java.awt.Font;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JWindow;
-import javax.swing.Timer;
-import javax.swing.border.LineBorder;
 
-/**
- * @file GUIPostularse.java
- * @brief Interfaz gráfica para postularse a un proyecto.
- *
- * Esta clase representa la ventana donde un estudiante puede postularse a un proyecto
- * académico. Permite al usuario confirmar o cancelar su postulación.
- *
- * @author Ana Sofia, Paula Munoz
- */
 public class GUIPostularse extends javax.swing.JFrame {
-    /**
-     * Proyecto al que el estudiante desea postularse.
-     */
-    private Project proyecto;
+
+    private final Project project;
+    private final Student student;
+    private final ProjectService projectService;
     
-    /**
-     * Estudiante que está realizando la postulación.
-     */
-    private Student estudiante;
-    
-    /**
-     * @brief Constructor de la clase.
-     *
-     * Inicializa los componentes de la interfaz y configura la ventana.
-     *
-     * @param proyecto Proyecto al que el estudiante desea postularse.
-     * @param estudiante Estudiante que está realizando la postulación.
-     */
-    public GUIPostularse(Project proyecto, Student estudiante) {
-        // Asignar los valores recibidos a las variables de instancia
-        this.proyecto = proyecto;
-        this.estudiante = estudiante;
-        
-        // Inicializar componentes de la interfaz gráfica
+    public GUIPostularse(ProjectService projectService, Project proyecto, Student estudiante) {
+        this.project = proyecto;
+        this.student = estudiante;
+        this.projectService = projectService;
+
         initComponents();
-        
-        // Configurar la ventana para que aparezca centrada en la pantalla
-        setLocationRelativeTo(null);
-        // Bloquear el redimensionamiento de la ventana
+        initVisual();
+    }
+    
+    public final void initVisual() {
         setResizable(false);
-        // Configurar para que la ventana se cierre sin terminar la aplicación
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -150,51 +123,13 @@ public class GUIPostularse extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @brief Evento que se ejecuta cuando el usuario hace clic en "Aceptar".
-     *
-     * Cierra la ventana actual y muestra un mensaje emergente indicando que la postulación fue enviada.
-     *
-     * @param evt Evento de acción generado por el botón "Aceptar".
-     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // Cierra la ventana actual
         dispose();
-        
-        // Crear una ventana emergente sin bordes
-        JWindow window = new JWindow();
-        
-        // Crear una etiqueta con el mensaje de confirmación
-        JLabel label = new JLabel("Postulación enviada al proyecto " + proyecto.getProTitle(), JLabel.CENTER);
-        label.setOpaque(true); // Hacer que la etiqueta tenga un fondo visible
-        label.setBackground(Color.WHITE); // Establecer el fondo en color blanco
-        label.setBorder(new LineBorder(new Color(90, 111, 228), 2)); // Establecer un borde azul
-        label.setForeground(Color.BLACK); // Color del texto
-        label.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14)); // Establecer la fuente
-
-        // Agregar la etiqueta a la ventana emergente
-        window.getContentPane().add(label);
-        // Definir el tamaño de la ventana emergente
-        window.setSize(500, 50);
-        // Posicionar la ventana en la pantalla
-        window.setLocation(482, 675);
-        
-        // Configurar un temporizador para cerrar la ventana emergente automáticamente en 2 segundos
-        new Timer(2000, e -> window.dispose()).start();
-        
-        // Hacer visible la ventana emergente
-        window.setVisible(true);
+        projectService.applyStudent(student.getUserId(), project.getProId());
+        projectService.notifyObserversApply();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    /**
-     * @brief Evento que se ejecuta cuando el usuario hace clic en "Cancelar".
-     *
-     * Cierra la ventana sin realizar ninguna acción.
-     *
-     * @param evt Evento de acción generado por el botón "Cancelar".
-     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // Cierra la ventana actual sin realizar cambios
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

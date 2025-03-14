@@ -2,6 +2,7 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
 
 import co.edu.unicauca.mycompany.projects.domain.services.Observer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,14 +15,15 @@ public class Project {
     private String proDescription;
     private String proAbstract;
     private String proGoals;
+    private Date proDate;
     private int proDeadLine; 
-    private float proBudget; //Puede recibir null
+    private double proBudget; //Puede recibir null
     private ProjectState proState;
 
     private List<Student> proTeam;
     private List<Student> proPostulates;
-    private Coordinator proCoordinator;
-    private Company company;
+    private String proCoordinator;
+    private String idcompany;
     
     /**
      * Constructor de la clase Project.
@@ -33,8 +35,10 @@ public class Project {
      * @param proGoals
      * @param proDeadLine
      * @param proBudget
+     * @param idcompany
      */
-    public Project(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, float proBudget) {    
+    
+    public Project(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, double proBudget, String idcompany) {    
         this.proId = proId;
         this.proTitle = proTitle;
         this.proDescription = proDescription;
@@ -42,9 +46,12 @@ public class Project {
         this.proGoals = proGoals;
         this.proDeadLine = proDeadLine;
         this.proBudget = proBudget;
-        this.proState = ProjectState.PROPUESTO;
+        this.proDate = null;
+        this.proState = ProjectState.RECIBIDO;
         this.proTeam = new ArrayList<>();
         this.proPostulates = new ArrayList<>();
+        this.proCoordinator = null;
+        this.idcompany = idcompany;
         
     }
 
@@ -78,7 +85,7 @@ public class Project {
         return proGoals;
     }
 
-    public float getProBudget() {
+    public double getProBudget() {
         return proBudget;
     }
     
@@ -131,28 +138,36 @@ public class Project {
         this.proPostulates = proPostulates;
     }
 
-    public Coordinator getProCoordinator() {
-        return proCoordinator;
-    }
-
-    public void setProCoordinator(Coordinator proCoordinator) {
-        this.proCoordinator = proCoordinator;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
     public ProjectState getProState() {
         return proState;
     }
 
     public void setProState(ProjectState proState) {
         this.proState = proState;
+    }
+
+    public String getIdcompany() {
+        return idcompany;
+    }
+
+    public void setIdcompany(String idcompany) {
+        this.idcompany = idcompany;
+    }
+
+    public String getProCoordinator() {
+        return proCoordinator;
+    }
+
+    public void setProCoordinator(String proCoordinator) {
+        this.proCoordinator = proCoordinator;
+    }
+
+    public Date getProDate() {
+        return proDate;
+    }
+
+    public void setProDate(Date proDate) {
+        this.proDate = proDate;
     }
     
 }

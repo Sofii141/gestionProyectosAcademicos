@@ -1,7 +1,11 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
+import co.edu.unicauca.mycompany.projects.access.IStudentRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
 import java.awt.Color;
 import java.awt.Font;
 import org.jfree.chart.ChartFactory;
@@ -25,40 +29,31 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Paula Munoz
  */
 public class GUIDashboardEstudiante extends javax.swing.JFrame {
-    /**
-     * Objeto que representa al estudiante que está utilizando la interfaz.
-     */
-    private Student estudiante;
-    
-    /**
-     * @brief Constructor de la clase.
-     *
-     * Inicializa los componentes de la interfaz gráfica del panel de control 
-     * del estudiante y configura los elementos visuales.
-     *
-     * @param estudiante Objeto de tipo Student que contiene la información del estudiante.
-     */
-    public GUIDashboardEstudiante(Student estudiante) {
-        // Asigna el estudiante recibido por parámetro a la variable de instancia
-        this.estudiante = estudiante;
-        // Hace visible la ventana
-        this.setVisible(true);
-        
-        // Llamada al método que inicializa los componentes de la interfaz gráfica
-        initComponents();
-        // Llamada al método que genera y muestra la gráfica de proyectos
-        mostrarGrafico();
-        // Configura la ventana para que aparezca centrada en la pantalla
-        setLocationRelativeTo(null);
-        // Bloquea el redimensionamiento de la ventana
-        setResizable(false);
 
-        // Establece el texto del botón de inicio con el identificador del estudiante
-        btnInicio.setText("Estudiante " + estudiante.getUserId());
-        // Muestra un mensaje de bienvenida con el nombre del estudiante en el título
-        lblTitulo.setText("Bienvenido " + estudiante.getUserId());
-        // Muestra el correo electrónico del estudiante en la interfaz
-        lblCorreo.setText(estudiante.getUserEmail());
+    private final StudentService studentService;
+    private final ProjectService projectService;
+    private final Student student;
+    
+    public GUIDashboardEstudiante(String studentId) {
+        IStudentRepository studentRepository = Factory.getInstance().getRepositoryStudent("MARIADB");
+        IProjectRepository projectSepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        
+        this.projectService = new ProjectService(projectSepository);
+        this.studentService = new StudentService(studentRepository);
+        this.student = studentService.getStudent(studentId);
+        
+        initComponents();
+        mostrarGrafico();
+        initVisual();
+    }
+    
+    public final void initVisual() {
+        this.setVisible(true);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        btnInicio.setText("Estudiante " + student.getUserId());
+        lblTitulo.setText("Bienvenido estudiente " + student.getUserId());
+        lblCorreo.setText(student.getUserEmail());
     }
 
     /**
@@ -191,17 +186,18 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         dispose();
-        GUIDashboardEstudiante instancia = new GUIDashboardEstudiante(estudiante);
+        GUIDashboardEstudiante gui = new GUIDashboardEstudiante(student.getUserId());
+        gui.setVisible(true);
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectosActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnProyectosActionPerformed
 
     private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
-        this.setVisible(false); // Oculta el frame sin cerrarlo
-        GUIProyectosDisponibles instancia = new GUIProyectosDisponibles(estudiante); // Crea una instancia del otro frame
-        instancia.setVisible(true); // Volver visible el otro frame
+        dispose();
+        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student);
+        gui.setVisible(true);
     }//GEN-LAST:event_btnPostularActionPerformed
 
     /**

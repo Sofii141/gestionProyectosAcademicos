@@ -3,32 +3,25 @@ package co.edu.unicauca.mycompany.projects.access;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Fabrica que se encarga de instanciar ProductRepository o cualquier otro que
- * se cree en el futuro.
- *
- * @author Libardo, Julio
- */
 public class Factory {
 
-    /**
-     * Singleton
-     */
     private static Factory instance;
 
-    private Map<String, ICompanyRepository> dictionary;
+    private Map<String, ICompanyRepository> companyDictionary;
+    private Map<String, IStudentRepository> StudentDictionary;
+    private Map<String, IProjectRepository> projectDictionary;
 
     private Factory() {
-        dictionary = new HashMap<>();
-        dictionary.put("ARRAYS", new CompanyArraysRepository());
-        dictionary.put("SQLITE", new CompanySqliteRepository());
+        companyDictionary = new HashMap<>();
+        companyDictionary.put("MARIADB", new CompanyMariaDBRepository());
+        
+        StudentDictionary = new HashMap<>();
+        StudentDictionary.put("MARIADB", new StudentMariaDBRepository());
+        
+        projectDictionary = new HashMap<>();
+        projectDictionary.put("MARIADB", new ProjectMariaDBRepository());
     }
 
-    /**
-     * Clase singleton
-     *
-     * @return
-     */
     public static Factory getInstance() {
 
         if (instance == null) {
@@ -38,21 +31,29 @@ public class Factory {
 
     }
 
-    /**
-     * Método que crea una instancia concreta de la jerarquia ICompanyRepository
-     *
-     * @param repository cadena que indica qué tipo de clase hija debe instanciar
-     * @return una clase hija de la abstracción IProductRepository
-     */
-    public ICompanyRepository getRepository(String repository) {
-
+    public ICompanyRepository getRepositoryCompany(String repository) {
         ICompanyRepository result = null;
-
-        if (dictionary.containsKey(repository)) {
-            result = dictionary.get(repository);
+        if (companyDictionary.containsKey(repository)) {
+            result = companyDictionary.get(repository);
         }
-
         return result;
 
+    }
+    
+    public IStudentRepository getRepositoryStudent(String repository) {
+        IStudentRepository result = null;
+        if (StudentDictionary.containsKey(repository)) {
+            result = StudentDictionary.get(repository);
+        }
+        return result;
+
+    }
+    
+    public IProjectRepository getRepositoryProject(String repository) {
+        IProjectRepository result = null;
+        if (projectDictionary.containsKey(repository)) {
+            result = projectDictionary.get(repository);
+        }
+        return result;
     }
 }

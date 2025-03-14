@@ -1,12 +1,14 @@
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
+import co.edu.unicauca.mycompany.projects.domain.entities.ProjectState;
 import co.edu.unicauca.mycompany.projects.domain.entities.Sector;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,16 +27,97 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
 
     @Override
     public boolean save(Company newCompany) {
-        return false;
+        String sql = "INSERT INTO CompanyContact (userId, comName, comEmail, comContactPhone, comContactName, "
+                + "comContactLastName, comContactCharge, secId) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        int rowsAffected;
+        try {
+            this.connect();
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, newCompany.getCompanyNit());
+            pstmt.setString(2, newCompany.getCompanyName());
+            pstmt.setString(3, newCompany.getCompanyEmail());
+            pstmt.setString(4, newCompany.getContactPhone());
+            pstmt.setString(5, newCompany.getContactName());
+            pstmt.setString(6, newCompany.getContactLastName());
+            pstmt.setString(7, newCompany.getContactPosition());
+            pstmt.setString(8, newCompany.getCompanySector().toString());
+
+            rowsAffected = pstmt.executeUpdate();
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            disconnect();
+        }
+
+        return rowsAffected > 0;
     }
 
     @Override
     public List<Company> listAll() {
         List<Company> companies = new ArrayList<>();
+        String sql = "SELECT userId, comName, comEmail, comContactPhone, comContactName, "
+                   + "comContactLastName, comContactCharge, secId FROM CompanyContact";
+
+        try {
+            this.connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                Company company = new Company(
+                    rs.getString("userId"),
+                    rs.getString("comName"),
+                    rs.getString("comEmail"),
+                    rs.getString("comContactPhone"),
+                    rs.getString("comContactName"),
+                    rs.getString("comContactLastName"),
+                    rs.getString("comContactCharge"),
+                    Sector.valueOf(rs.getString("secId"))
+                );
+                companies.add(company);
+            }
+
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            disconnect();
+        }
+
         return companies;
     }
 
     private void initDatabase() {
+        // SQL statement for creating the CompanyContact table
+        String sql = "CREATE TABLE IF NOT EXISTS CompanyContact (\n"
+                + "    userId VARCHAR(50) NOT NULL,\n"
+                + "    comName VARCHAR(100) NOT NULL,\n"
+                + "    comEmail VARCHAR(100) NOT NULL,\n"
+                + "    comContactPhone VARCHAR(20) NOT NULL,\n"
+                + "    comContactName VARCHAR(100) NOT NULL,\n"
+                + "    comContactLastName VARCHAR(100) NOT NULL,\n"
+                + "    comContactCharge VARCHAR(100) NOT NULL,\n"
+                + "    secId VARCHAR(50) NOT NULL,\n"
+                + "    PRIMARY KEY (userId),\n"
+                + "    CONSTRAINT fk_CompanyContact_User FOREIGN KEY (userId) REFERENCES User(userId),\n"
+                + "    CONSTRAINT fk_CompanyContact_Sector FOREIGN KEY (secId) REFERENCES Sector(secId)\n"
+                + ");";
+
+        try {
+            this.connect();
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            disconnect();
+        }
     }
 
     @Override
@@ -45,11 +128,11 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
     @Override
     public Company companyInfo(String nit) {
         this.connect();
-        String sql = "SELECT cc.userId, cc.comName, cc.comEmail, cc.comPhone, cc.comContactName, " +
-                     "cc.comContactLastName, cc.comContactCharge, s.secName " +
-                     "FROM CompanyContact cc " +
-                     "JOIN Sector s ON cc.secId = s.secId " +
-                     "WHERE cc.userId = ?";
+        String sql = "SELECT cc.userId, cc.comName, cc.comEmail, cc.comContactPhone, cc.comContactName, "
+               + "cc.comContactLastName, cc.comContactCharge, s.secName "
+               + "FROM CompanyContact cc "
+               + "JOIN Sector s ON cc.secId = s.secId "
+               + "WHERE cc.userId = ?";
         Company company = null;
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -61,11 +144,11 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
                     rs.getString("userId"),
                     rs.getString("comName"),
                     rs.getString("comEmail"),
-                    rs.getString("comPhone"),
+                    rs.getString("comContactPhone"),
                     rs.getString("comContactName"),
                     rs.getString("comContactLastName"),
                     rs.getString("comContactCharge"),
-                    Sector.fromString(rs.getString("secName")) 
+                    Sector.valueOf(rs.getString("secName"))
                 );
             }
         } catch (SQLException e) {

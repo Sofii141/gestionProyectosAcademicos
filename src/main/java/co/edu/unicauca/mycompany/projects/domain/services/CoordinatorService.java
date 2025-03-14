@@ -9,8 +9,7 @@ import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 public class CoordinatorService {
     private ICompanyRepository repository;
 
-    public CoordinatorService(ICompanyRepository repository) {
-        this.repository = repository;
+    public CoordinatorService() {
     }
     
 }

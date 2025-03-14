@@ -1,45 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 
-/**
- * @file PanelActionEstudiante.java
- * @brief Panel de acciones para estudiantes.
- *
- * Este panel permite a un estudiante ver detalles de un proyecto y postularse a él.
- *
- * @author Ana Sofia, Paula Munoz
- */
 public class PanelActionEstudiante extends javax.swing.JPanel {
-    /**
-     * Proyecto asociado a las acciones del panel.
-     */
-    private Project proyecto;
-    
-    /**
-     * Estudiante que interactúa con el panel.
-     */
-    private Student estudiante;
-    
-    /**
-     * @brief Constructor de la clase.
-     *
-     * Inicializa los componentes de la interfaz y configura eventos de botones.
-     *
-     * @param proyecto Proyecto asociado al estudiante.
-     * @param estudiante Estudiante que interactúa con el panel.
-     */
-    public PanelActionEstudiante(Project proyecto, Student estudiante) {
-        // Asignar los valores recibidos a las variables de instancia
+    private final Project proyecto;
+    private final Student estudiante;
+    private final ProjectService projectService;
+
+    public PanelActionEstudiante(ProjectService projectService, Project proyecto, Student estudiante) {
         this.proyecto = proyecto;
         this.estudiante = estudiante;
-        
-        // Inicializar componentes de la interfaz gráfica
+        this.projectService = projectService;
         initComponents();
     }
     /**
@@ -112,36 +85,16 @@ public class PanelActionEstudiante extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @brief Evento que se ejecuta al hacer clic en "Detalles".
-     *
-     * Abre una nueva ventana con los detalles del proyecto.
-     *
-     * @param evt Evento de acción generado por el botón "Detalles".
-     */
     private void btnDetallesEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesEstActionPerformed
-        // Crear una nueva ventana de detalles del proyecto y mostrarla
         GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
-        // Mostrar la ventana de los detalles del proyecto
         detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesEstActionPerformed
 
-    /**
-     * @brief Evento que se ejecuta al hacer clic en "Postularse".
-     *
-     * Verifica si el estudiante ya está postulado y, si no, abre la interfaz de postulación.
-     *
-     * @param evt Evento de acción generado por el botón "Postularse".
-     */
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
-        // Verificar en la base de datos que el estudiante no se haya postulado antes
-        // Crear una nueva ventana de detalles del proyecto y mostrarla
-        GUIPostularse objpostularse = new GUIPostularse(proyecto, estudiante);
-        // Mostrar la ventana de postulación
+        GUIPostularse objpostularse = new GUIPostularse(projectService, proyecto, estudiante);
         objpostularse.setVisible(true);
     }//GEN-LAST:event_btnPostularseActionPerformed
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetallesEst;
     private javax.swing.JButton btnPostularse;

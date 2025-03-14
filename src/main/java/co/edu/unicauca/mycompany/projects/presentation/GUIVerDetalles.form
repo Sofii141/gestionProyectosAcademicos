@@ -56,63 +56,61 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="lblNit" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblNit" min="-2" pref="210" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel22" max="32767" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblNombrePersona" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblNombrePersona" pref="206" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblNombreEmpresa" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
                                                   <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="lblTelefono" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblTelefono" max="32767" attributes="0"/>
                                               </Group>
-                                              <Group type="102" alignment="0" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
                                                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="lblGmail" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblGmail" pref="207" max="32767" attributes="0"/>
                                               </Group>
-                                              <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                                              <Component id="lblSector" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel18" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="lblSector" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="lblNombreEmpresa" alignment="1" max="32767" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblApellidosPersona" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="lblCargoPersona" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblCargoPersona" max="32767" attributes="0"/>
+                                              <Component id="jLabel26" alignment="0" pref="207" max="32767" attributes="0"/>
+                                              <Component id="lblApellidosPersona" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblResumenProyecto" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel37" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblObjetivosProyecto" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="lblNombreProyecto" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                                          <Component id="lblNombreProyecto" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="lblPresupuesto" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblPresupuesto" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
@@ -124,12 +122,14 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="lblEstadoProyecto" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="lblDescripcionProyecto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblDescripcionProyecto" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="lblTiempoProyecto" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="lblResumenProyecto" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblObjetivosProyecto" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
