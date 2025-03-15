@@ -15,10 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-/**
- *
- * @author User
- */
+
 public class ProjectMariaDBRepository implements IProjectRepository {
     private Connection conn;
 
@@ -184,6 +181,54 @@ public class ProjectMariaDBRepository implements IProjectRepository {
             disconnect();
         }
         return rowsAffected > 0;
+    }
+    
+    @Override
+    public List<Integer> countProjectsStudent(String studentId) {
+        String sql1 = "SELECT COUNT(distinct(project.proId)) AS sumTotal FROM project ";
+        String sql2 = "SELECT COUNT(DISTINCT(p.proId)) AS sumPostulated\n" +
+                    "FROM project p\n" +
+                    "INNER JOIN aplicants a\n" +
+                    "ON p.proId = a.proId\n" +
+                    "WHERE a.studentId = ?";
+        String sql3 = "SELECT COUNT(DISTINCT(p.proId)) AS sumDevelop\n" +
+                    "FROM project p\n" +
+                    "INNER JOIN develop d\n" +
+                    "ON p.proId = d.proId\n" +
+                    "WHERE d.studentId = ?";
+        
+        List<Integer> valores = new ArrayList<>();
+        try {
+            this.connect();
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql1);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                valores.add(rs.getInt("sumTotal"));
+            }
+            
+            pstmt = conn.prepareStatement(sql2);
+            pstmt.setString(1, studentId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                valores.add(rs.getInt("sumPostulated"));
+            }
+            
+            pstmt = conn.prepareStatement(sql3);
+            pstmt.setString(1, studentId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                valores.add(rs.getInt("sumDevelop"));
+            }
+            
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } finally {
+            disconnect();
+        }
+        return valores;
     }
     
     private void initDatabase() {

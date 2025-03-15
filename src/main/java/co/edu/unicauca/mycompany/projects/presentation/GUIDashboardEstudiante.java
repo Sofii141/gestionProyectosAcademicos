@@ -6,17 +6,6 @@ import co.edu.unicauca.mycompany.projects.access.IStudentRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
-import java.awt.Color;
-import java.awt.Font;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.data.category.DefaultCategoryDataset;
-
 
 /**
  * @file GUIDashboardEstudiante.java
@@ -43,7 +32,7 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         this.student = studentService.getStudent(studentId);
         
         initComponents();
-        mostrarGrafico();
+        projectService.addObserver(new GraphicProjectsObserver(student, projectService, jPanelGrafico));
         initVisual();
     }
     
@@ -108,6 +97,7 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         btnProyectos.setText("Mis proyectos");
         btnProyectos.setBorder(null);
         btnProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProyectos.setFocusPainted(false);
         btnProyectos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProyectosActionPerformed(evt);
@@ -185,9 +175,7 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        dispose();
-        GUIDashboardEstudiante gui = new GUIDashboardEstudiante(student.getUserId());
-        gui.setVisible(true);
+        
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectosActionPerformed
@@ -195,57 +183,10 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProyectosActionPerformed
 
     private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
-        dispose();
-        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student);
+        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student, projectService,btnPostular);
         gui.setVisible(true);
+        btnPostular.setVisible(false);
     }//GEN-LAST:event_btnPostularActionPerformed
-
-    /**
-     * @brief Muestra un gráfico de barras con la cantidad de proyectos en diferentes estados.
-     *
-     * Esta función crea un conjunto de datos con el total de proyectos, 
-     * los proyectos en curso y los finalizados. Luego, genera un gráfico 
-     * de barras utilizando la biblioteca JFreeChart y lo añade al panel 
-     * de gráficos en la interfaz.
-     */
-    private void mostrarGrafico() {
-        // Crear el conjunto de datos para el gráfico
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(10, "Proyectos", "Total");       // Agrega el total de proyectos
-        dataset.setValue(4, "Proyectos", "En Curso");     // Agrega los proyectos en curso
-        dataset.setValue(6, "Proyectos", "Finalizados");  // Agrega los proyectos finalizados 
-       
-        // Crear el gráfico de barras con los datos proporcionados
-        JFreeChart chart = ChartFactory.createBarChart(
-                "Cantidad de Proyectos",  // Establece el título del gráfico
-                "Estado",                 // Etiqueta del eje X (categorías de proyectos)
-                "Cantidad",               // Etiqueta del eje Y (cantidad de proyectos)
-                dataset,                  // Conjunto de datos del gráfico
-                PlotOrientation.VERTICAL, // Orientación del gráfico (vertical)
-                false,  // No muestra la leyenda
-                true,   // Activa herramientas de ayuda
-                false   // No habilita URL en cada barra
-        );
-
-        // Configurar el área donde se dibujan las barras
-        CategoryPlot plot = chart.getCategoryPlot();
-        BarRenderer renderer = (BarRenderer) plot.getRenderer();
-        // Asigna un color personalizado a las barras del gráfico
-        renderer.setSeriesPaint(0, new Color(90, 111, 228));
-        // Elimina el efecto 3D del gráfico para un diseño plano
-        renderer.setBarPainter(new StandardBarPainter());
-        // Configura el fondo del gráfico en color blanco
-        plot.setBackgroundPaint(Color.WHITE); 
-        plot.setOutlineVisible(false); // Oculta el borde del gráfico
-        // Configura la fuente y el estilo del título del gráfico
-        chart.getTitle().setFont(new Font("Segoe UI", Font.BOLD, 18));
-
-        // Crear un panel para mostrar el gráfico y ajustarlo a la interfaz
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setSize(jPanelGrafico.getWidth(), jPanelGrafico.getHeight()); // Ajusta el tamaño del panel
-        jPanelGrafico.add(chartPanel); // Agrega el gráfico al panel de la interfaz
-    }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;

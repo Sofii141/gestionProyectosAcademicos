@@ -13,5 +13,6 @@ public interface IProjectRepository {
     List<Project> listProjectsAvailable(String studentId);
     Project getProject(String id);
     boolean apply(String studentId,String projectId);
+    List<Integer> countProjectsStudent(String studentId);
 }
     

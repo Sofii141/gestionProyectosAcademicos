@@ -12,13 +12,13 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class ProjectsTable extends JFrame implements Observer {
+public class TableProjectsObserver extends JFrame implements Observer {
     private final JTable jTableEstudiante;
     private final JScrollPane jScrollPane1;
     private final ProjectService projectService;
     private final Student student;
     
-    public ProjectsTable(Student student,ProjectService projectService, JTable jTableEstudiante, JScrollPane jScrollPane1) {
+    public TableProjectsObserver(Student student,ProjectService projectService, JTable jTableEstudiante, JScrollPane jScrollPane1) {
         this.student = student;
         this.jTableEstudiante = jTableEstudiante;
         this.projectService = projectService;

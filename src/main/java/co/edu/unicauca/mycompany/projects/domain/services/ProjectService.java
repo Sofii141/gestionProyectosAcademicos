@@ -50,10 +50,15 @@ public class ProjectService{
     public void removeObserver(Observer observer) {
         observers.remove(observer);
     }
+    
+    public List<Integer> dataGraphicStudent(String studentId){
+        return repository.countProjectsStudent(studentId);
+    }
 
     public void notifyObserversApply() {
         for (Observer observer : observers) {
             observer.update();
         }
     }
+    
 }

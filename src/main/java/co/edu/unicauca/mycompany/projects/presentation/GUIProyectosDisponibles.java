@@ -1,22 +1,22 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import co.edu.unicauca.mycompany.projects.access.Factory;
-import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import javax.swing.JButton;
 
 public class GUIProyectosDisponibles extends javax.swing.JFrame {
     private final Student student;
     private final ProjectService projectService;
+    private final JButton btnPostularInicio;
 
-    public GUIProyectosDisponibles(Student student) {
-        IProjectRepository projectSepository = Factory.getInstance().getRepositoryProject("MARIADB");
-        this.projectService = new ProjectService(projectSepository);
+    public GUIProyectosDisponibles(Student student, ProjectService projectService, JButton btnPostularInicio) {
+        this.projectService = projectService;
         this.student = student;
+        this.btnPostularInicio = btnPostularInicio;
         
         initComponents();
         initVisual();
-        projectService.addObserver(new ProjectsTable(student, projectService, jTableEstudiante, jScrollPane1));
+        projectService.addObserver(new TableProjectsObserver(student, projectService, jTableEstudiante, jScrollPane1));
     }
 
     public final void initVisual() {
@@ -38,9 +38,10 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        btnPostular = new javax.swing.JButton();
+        btnMisProyectos = new javax.swing.JButton();
         lblCorreo = new javax.swing.JLabel();
         btnInicio = new javax.swing.JButton();
+        btnPostular1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEstudiante = new javax.swing.JTable();
@@ -54,19 +55,20 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(90, 111, 228));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnPostular.setBackground(new java.awt.Color(75, 99, 225));
-        btnPostular.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        btnPostular.setForeground(new java.awt.Color(255, 255, 255));
-        btnPostular.setText("Postularme");
-        btnPostular.setBorder(null);
-        btnPostular.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPostular.setFocusPainted(false);
-        btnPostular.addActionListener(new java.awt.event.ActionListener() {
+        btnMisProyectos.setBackground(new java.awt.Color(90, 111, 228));
+        btnMisProyectos.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnMisProyectos.setForeground(new java.awt.Color(255, 255, 255));
+        btnMisProyectos.setText("Mis proyectos");
+        btnMisProyectos.setBorder(null);
+        btnMisProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMisProyectos.setFocusPainted(false);
+        btnMisProyectos.setFocusable(false);
+        btnMisProyectos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPostularActionPerformed(evt);
+                btnMisProyectosActionPerformed(evt);
             }
         });
-        jPanel4.add(btnPostular, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 50));
+        jPanel4.add(btnMisProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
 
         lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -86,6 +88,20 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
             }
         });
         jPanel4.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 210, 50));
+
+        btnPostular1.setBackground(new java.awt.Color(75, 99, 225));
+        btnPostular1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnPostular1.setForeground(new java.awt.Color(255, 255, 255));
+        btnPostular1.setText("Postularme");
+        btnPostular1.setBorder(null);
+        btnPostular1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPostular1.setFocusPainted(false);
+        btnPostular1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPostular1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnPostular1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 50));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
@@ -144,21 +160,23 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
-        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student);
-        gui.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnPostularActionPerformed
+    private void btnMisProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMisProyectosActionPerformed
+        
+    }//GEN-LAST:event_btnMisProyectosActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        GUIDashboardEstudiante gui = new GUIDashboardEstudiante(student.getUserId());
-        gui.setVisible(true);
         dispose();
+        btnPostularInicio.setVisible(true);
     }//GEN-LAST:event_btnInicioActionPerformed
+
+    private void btnPostular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostular1ActionPerformed
+       
+    }//GEN-LAST:event_btnPostular1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
-    private javax.swing.JButton btnPostular;
+    private javax.swing.JButton btnMisProyectos;
+    private javax.swing.JButton btnPostular1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
