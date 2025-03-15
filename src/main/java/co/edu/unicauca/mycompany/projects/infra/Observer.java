@@ -1,4 +1,4 @@
-package co.edu.unicauca.mycompany.projects.domain.services;
+package co.edu.unicauca.mycompany.projects.infra;
 
 /**
  * Interfaz que define el patrón de diseño Observer.

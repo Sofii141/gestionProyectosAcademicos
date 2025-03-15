@@ -6,7 +6,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
-import co.edu.unicauca.mycompany.projects.domain.services.Observer;
+import co.edu.unicauca.mycompany.projects.infra.Observer;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import java.util.List;
 import javax.swing.*;

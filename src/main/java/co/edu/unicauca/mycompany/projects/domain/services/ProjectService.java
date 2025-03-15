@@ -3,7 +3,7 @@ package co.edu.unicauca.mycompany.projects.domain.services;
 import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
-import java.util.ArrayList;
+import co.edu.unicauca.mycompany.projects.infra.Subject;
 import java.util.List;
 
 /**
@@ -11,10 +11,9 @@ import java.util.List;
  * Se encarga de interactuar con el repositorio de proyectos y de notificar a los observadores
  * cuando ocurren cambios relevantes en los proyectos.
  */
-public class ProjectService {
+public class ProjectService extends Subject{
 
     private final IProjectRepository repository;
-    private final List<Observer> observers;
 
     /**
      * Constructor que inicializa el servicio con un repositorio de proyectos.
@@ -23,7 +22,6 @@ public class ProjectService {
      */
     public ProjectService(IProjectRepository repository) {
         this.repository = repository;
-        this.observers = new ArrayList<>();
     }
 
     /**
@@ -70,25 +68,7 @@ public class ProjectService {
             Messages.showErrorDialog("No se pudo enviar la solicitud", "Error");
         }
     }
-
-    /**
-     * Agrega un observador a la lista de observadores.
-     *
-     * @param observer Objeto que implementa la interfaz Observer y desea ser notificado de cambios.
-     */
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    /**
-     * Elimina un observador de la lista de observadores.
-     *
-     * @param observer Objeto que implementa la interfaz Observer y ya no desea ser notificado.
-     */
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
+    
     /**
      * Obtiene estadísticas de los proyectos de un estudiante para su visualización en gráficos.
      *
@@ -98,13 +78,5 @@ public class ProjectService {
     public List<Integer> dataGraphicStudent(String studentId) {
         return repository.countProjectsStudent(studentId);
     }
-
-    /**
-     * Notifica a todos los observadores registrados cuando un estudiante aplica a un proyecto.
-     */
-    public void notifyObserversApply() {
-        for (Observer observer : observers) {
-            observer.update();
-        }
-    }
+    
 }
