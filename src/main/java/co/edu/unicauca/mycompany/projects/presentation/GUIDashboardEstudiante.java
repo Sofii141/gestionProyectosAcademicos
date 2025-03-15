@@ -8,40 +8,63 @@ import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
 
 /**
- * @file GUIDashboardEstudiante.java
- * @brief Interfaz gráfica del panel de control para estudiantes.
- *
- * Esta clase representa la ventana principal del estudiante, donde puede visualizar 
- * la cantidad de proyectos realizados, en curso y finalizados, además de otras 
- * funcionalidades relacionadas con la gestión de proyectos académicos.
- *
- * @author Paula Munoz
+ * Clase que representa el panel principal (dashboard) de un estudiante en la interfaz gráfica.
+ * Permite visualizar información del estudiante, proyectos disponibles y gráficos relacionados.
  */
 public class GUIDashboardEstudiante extends javax.swing.JFrame {
 
     private final StudentService studentService;
     private final ProjectService projectService;
     private final Student student;
-    
+
+    /**
+     * Constructor de la clase GUIDashboardEstudiante.
+     * Inicializa los servicios de estudiante y proyectos, recupera la información del estudiante
+     * y configura la interfaz gráfica.
+     *
+     * @param studentId Identificador único del estudiante que inicia sesión.
+     */
     public GUIDashboardEstudiante(String studentId) {
+        // Obtener instancias de los repositorios a través de la fábrica
         IStudentRepository studentRepository = Factory.getInstance().getRepositoryStudent("MARIADB");
-        IProjectRepository projectSepository = Factory.getInstance().getRepositoryProject("MARIADB");
-        
-        this.projectService = new ProjectService(projectSepository);
+        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+
+        // Inicializar los servicios con los repositorios correspondientes
+        this.projectService = new ProjectService(projectRepository);
         this.studentService = new StudentService(studentRepository);
+
+        // Obtener los datos del estudiante a partir del ID proporcionado
         this.student = studentService.getStudent(studentId);
-        
+
+        // Inicializar los componentes gráficos de la interfaz
         initComponents();
+
+        // Agregar un observador para actualizar la gráfica de proyectos en el panel
         projectService.addObserver(new GraphicProjectsObserver(student, projectService, jPanelGrafico));
+
+        // Configurar la apariencia y los datos visuales
         initVisual();
     }
-    
+
+    /**
+     * Configura la apariencia y elementos visuales del dashboard.
+     * Hace visible la ventana, la centra en la pantalla y deshabilita la opción de redimensionar.
+     */
     public final void initVisual() {
+        // Mostrar la ventana
         this.setVisible(true);
-        setLocationRelativeTo(null);
+        
+        // Centrar la ventana en la pantalla
+        setLocationRelativeTo(null); 
+        
+        // Bloquear el cambio de tamaño de la ventana
         setResizable(false);
+
+        // Mostrar el ID del estudiante en el botón de inicio
         btnInicio.setText("Estudiante " + student.getUserId());
-        lblTitulo.setText("Bienvenido estudiente " + student.getUserId());
+
+        // Configurar los textos de los labels con la información del estudiante
+        lblTitulo.setText("Bienvenido estudiante " + student.getUserId());
         lblCorreo.setText(student.getUserEmail());
     }
 

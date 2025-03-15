@@ -4,26 +4,56 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import javax.swing.JButton;
 
+/**
+ * Clase que representa la interfaz gráfica donde un estudiante puede ver los proyectos disponibles.
+ * Permite visualizar y postularse a proyectos en los que el estudiante esté interesado.
+ */
 public class GUIProyectosDisponibles extends javax.swing.JFrame {
+
     private final Student student;
-    private final ProjectService projectService;
     private final JButton btnPostularInicio;
 
+    /**
+     * Constructor de la clase GUIProyectosDisponibles.
+     * Inicializa la interfaz con la información del estudiante y los proyectos disponibles.
+     *
+     * @param student          Estudiante que está visualizando los proyectos.
+     * @param projectService   Servicio encargado de gestionar los proyectos.
+     * @param btnPostularInicio Botón de la pantalla principal para postulación rápida.
+     */
     public GUIProyectosDisponibles(Student student, ProjectService projectService, JButton btnPostularInicio) {
-        this.projectService = projectService;
         this.student = student;
         this.btnPostularInicio = btnPostularInicio;
-        
+
+        // Inicializar los componentes gráficos de la interfaz
         initComponents();
+
+        // Configurar la apariencia y datos visuales
         initVisual();
+
+        // Agregar un observador para actualizar la tabla de proyectos disponibles
         projectService.addObserver(new TableProjectsObserver(student, projectService, jTableEstudiante, jScrollPane1));
     }
 
+    /**
+     * Configura la apariencia inicial de la ventana.
+     * Hace visible la interfaz, la centra en la pantalla y deshabilita el redimensionamiento.
+     * También establece la información del estudiante en los elementos gráficos.
+     */
     public final void initVisual() {
-        this.setVisible(true);
-        setResizable(false);
-        setLocationRelativeTo(null);
+        // Mostrar la ventana
+        this.setVisible(true); 
+        
+        // Bloquear el cambio de tamaño de la ventana
+        setResizable(false); 
+        
+        // Centrar la ventana en la pantalla
+        setLocationRelativeTo(null); 
+
+        // Mostrar el ID del estudiante en el botón de inicio
         btnInicio.setText("Estudiante " + student.getUserId());
+
+        // Configurar el texto del label con el correo del estudiante
         lblCorreo.setText(student.getUserEmail());
     }
     

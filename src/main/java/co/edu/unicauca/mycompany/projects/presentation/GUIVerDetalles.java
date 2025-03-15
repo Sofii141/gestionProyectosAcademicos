@@ -7,28 +7,50 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import javax.swing.JFrame;
 
+/**
+ * Clase que representa la interfaz gráfica para visualizar los detalles de un proyecto específico.
+ * Muestra información sobre el proyecto y la empresa asociada.
+ */
 public class GUIVerDetalles extends javax.swing.JFrame {
-    private Project project;
-    private Company company;
-    private CompanyService companyService;
+    
+    private final Project project;
+    private final Company company;
+    private final CompanyService companyService;
 
+    /**
+     * Constructor de la clase GUIVerDetalles.
+     * Inicializa la interfaz con la información del proyecto y su empresa asociada.
+     *
+     * @param project Proyecto cuyos detalles se van a visualizar.
+     */
     public GUIVerDetalles(Project project) {
-        ICompanyRepository companySepository = Factory.getInstance().getRepositoryCompany("MARIADB");
-        
+        // Obtener el repositorio de empresas desde la fábrica
+        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
+
         this.project = project;
-        this.companyService = new CompanyService(companySepository);
+        this.companyService = new CompanyService(companyRepository);
+
+        // Obtener la empresa asociada al proyecto
         this.company = companyService.getCompany(project.getIdcompany());
-        
-        // Inicializar los componentes
+
+        // Inicializar los componentes gráficos de la interfaz
         initComponents();
+
+        // Configurar la apariencia de la ventana
         initVisual();
+
+        // Cargar los datos del proyecto y la empresa en la interfaz
         obtenerDatos();
     }
-    
+
+    /**
+     * Configura la apariencia inicial de la ventana.
+     * Bloquea el cambio de tamaño, la centra en la pantalla y define la acción de cierre.
+     */
     public final void initVisual() {
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false); // Evita que la ventana cambie de tamaño
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana sin afectar la aplicación principal
     }
 
     /**
@@ -404,24 +426,30 @@ public class GUIVerDetalles extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public final void obtenerDatos(){
-        lblApellidosPersona.setText(company.getContactLastName());
-        lblCargoPersona.setText(company.getContactPosition());
-        lblGmail.setText(company.getCompanyEmail());
-        lblNit.setText(company.getCompanyNit());
-        lblNombreEmpresa.setText(company.getCompanyName());
-        lblNombrePersona.setText(company.getContactName());
-        lblSector.setText(company.getCompanySector().toString());
-        lblTelefono.setText(company.getContactPhone());
-        
-        lblDescripcionProyecto.setText(project.getProDescription());
-        lblEstadoProyecto.setText(project.getProState().toString());
-        lblFechaProyecto.setText(project.getProDate().toString());
-        lblNombreProyecto.setText(project.getProTitle());
-        lblObjetivosProyecto.setText(project.getProGoals());
-        lblPresupuesto.setText(String.valueOf(project.getProBudget()));
-        lblResumenProyecto.setText(project.getProAbstract());
-        lblTiempoProyecto.setText(String.valueOf(project.getProDeadLine()));
+    /**
+     * Método encargado de cargar los datos del proyecto y de la empresa en la interfaz gráfica.
+     * Se asignan los valores correspondientes a los labels de la ventana.
+     */
+    public final void obtenerDatos() {
+        // Información de la empresa asociada al proyecto
+        lblApellidosPersona.setText(company.getContactLastName());  // Apellido del contacto de la empresa
+        lblCargoPersona.setText(company.getContactPosition());      // Cargo del contacto de la empresa
+        lblGmail.setText(company.getCompanyEmail());               // Correo electrónico de la empresa
+        lblNit.setText(company.getCompanyNit());                   // NIT de la empresa
+        lblNombreEmpresa.setText(company.getCompanyName());        // Nombre de la empresa
+        lblNombrePersona.setText(company.getContactName());        // Nombre del contacto de la empresa
+        lblSector.setText(company.getCompanySector().toString());  // Sector al que pertenece la empresa
+        lblTelefono.setText(company.getContactPhone());            // Teléfono de contacto de la empresa
+
+        // Información del proyecto
+        lblDescripcionProyecto.setText(project.getProDescription()); // Descripción del proyecto
+        lblEstadoProyecto.setText(project.getProState().toString()); // Estado actual del proyecto
+        lblFechaProyecto.setText(project.getProDate().toString());   // Fecha de creación del proyecto
+        lblNombreProyecto.setText(project.getProTitle());           // Título del proyecto
+        lblObjetivosProyecto.setText(project.getProGoals());        // Objetivos del proyecto
+        lblPresupuesto.setText(String.valueOf(project.getProBudget())); // Presupuesto del proyecto
+        lblResumenProyecto.setText(project.getProAbstract());       // Resumen o abstract del proyecto
+        lblTiempoProyecto.setText(String.valueOf(project.getProDeadLine())); // Tiempo estimado del proyecto
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Implementación del repositorio con Sqlite
  *
- * @author Libardo, Julio
  */
 public class CompanySqliteRepository implements ICompanyRepository {
 

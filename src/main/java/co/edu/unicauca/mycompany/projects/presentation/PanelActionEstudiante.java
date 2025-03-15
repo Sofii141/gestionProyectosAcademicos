@@ -4,11 +4,23 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 
+/**
+ * Clase que representa un panel de acciones para el estudiante en la interfaz gráfica.
+ * Este panel permite al estudiante interactuar con un proyecto específico.
+ */
 public class PanelActionEstudiante extends javax.swing.JPanel {
-    private final Project proyecto;
-    private final Student estudiante;
-    private final ProjectService projectService;
+    
+    private final Project proyecto; // Proyecto asociado al panel
+    private final Student estudiante; // Estudiante que interactúa con el panel
+    private final ProjectService projectService; // Servicio de proyectos
 
+    /**
+     * Constructor de la clase.
+     * 
+     * @param projectService Servicio de gestión de proyectos
+     * @param proyecto Proyecto sobre el cual se realizarán acciones
+     * @param estudiante Estudiante que interactúa con el proyecto
+     */
     public PanelActionEstudiante(ProjectService projectService, Project proyecto, Student estudiante) {
         this.proyecto = proyecto;
         this.estudiante = estudiante;
