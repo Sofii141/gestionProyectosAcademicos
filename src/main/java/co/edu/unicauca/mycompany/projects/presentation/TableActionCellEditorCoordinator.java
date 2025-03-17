@@ -6,6 +6,7 @@ package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import java.awt.Component;
 import javax.swing.DefaultCellEditor;
@@ -20,11 +21,14 @@ public class TableActionCellEditorCoordinator extends DefaultCellEditor{
         
     private final Coordinator coordinator; // Coordinador que interactúa con la tabla
     private final ProjectService projectService; // Servicio de gestión de proyectos
+    private CompanyService companyService;
     
-    public TableActionCellEditorCoordinator(ProjectService projectService, Coordinator coordinator){
+    public TableActionCellEditorCoordinator(ProjectService projectService, Coordinator coordinator, CompanyService companyService){
         super(new JCheckBox());
         this.coordinator = coordinator;
         this.projectService = projectService;
+        this.companyService = companyService;
+        System.out.println("companyService desde TableActionCellEditorCoordinator: " + companyService);
     }
     
     
@@ -51,7 +55,7 @@ public class TableActionCellEditorCoordinator extends DefaultCellEditor{
            return new JCheckBox(); 
         }
         // Se crea el panel de acciones
-        PanelActionCoordinator action = new PanelActionCoordinator(projectService, proyecto, coordinator);
+        PanelActionCoordinator action = new PanelActionCoordinator(projectService, proyecto, coordinator, companyService);
         
         // Se ajusta el fondo para mantener la coherencia visual
         action.setBackground(jtable.getSelectionBackground());

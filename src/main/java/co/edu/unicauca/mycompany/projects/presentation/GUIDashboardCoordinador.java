@@ -5,6 +5,7 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import java.awt.Color;
 import java.awt.Component;
@@ -27,8 +28,9 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
     
     private final Coordinator coordinator;
     private final JButton btnProyectosInicio;
+    private CompanyService companyService;
     
-    public GUIDashboardCoordinador(Coordinator coordinator, ProjectService projectService, JButton btnProyectosInicio) {
+    public GUIDashboardCoordinador(Coordinator coordinator, ProjectService projectService, CompanyService companyService, JButton btnProyectosInicio) {
         
         this.coordinator = coordinator;
         this.btnProyectosInicio = btnProyectosInicio;
@@ -40,7 +42,7 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         initVisual();
 
         // Agregar un observador para actualizar la tabla de proyectos disponibles
-        projectService.addObserver(new TableProjectsCoordinatorObserver(coordinator, projectService, jTableCoordinator, jScrollPane1));
+        projectService.addObserver(new TableProjectsCoordinatorObserver(coordinator, projectService, jTableCoordinator, jScrollPane1, companyService));
 
         /*
         this.jTableCoordinator.getColumnModel().getColumn(4).setMinWidth(325);

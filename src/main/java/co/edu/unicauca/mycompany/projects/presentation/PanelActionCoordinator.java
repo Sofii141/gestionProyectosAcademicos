@@ -6,6 +6,7 @@ package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import javax.swing.JOptionPane;
 
@@ -18,7 +19,8 @@ public class PanelActionCoordinator extends javax.swing.JPanel {
     private Project proyecto;
     private final Coordinator coordinator; // Estudiante que interactúa con el panel
     private final ProjectService projectService; // Servicio de proyectos
-
+    private CompanyService companyService;
+    
      /**
      * Constructor de la clase.
      * 
@@ -26,10 +28,12 @@ public class PanelActionCoordinator extends javax.swing.JPanel {
      * @param proyecto Proyecto sobre el cual se realizarán acciones
      * @param coordinator coordinador que interactúa con el proyecto
      */
-    public PanelActionCoordinator(ProjectService projectService, Project proyecto, Coordinator coordinator) {
+    public PanelActionCoordinator(ProjectService projectService, Project proyecto, Coordinator coordinator, CompanyService companyService) {
         this.proyecto = proyecto;
         this.coordinator = coordinator;
         this.projectService = projectService;
+      
+        System.out.println("CompanyService en PanelActionCoordinator: " + (this.companyService != null ? "OK" : "NULL"));
 
         initComponents();
     }
@@ -111,7 +115,8 @@ public class PanelActionCoordinator extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
-        GUIEstado estadoFrame = new GUIEstado(projectService, proyecto, coordinator);
+        
+        GUIEstado estadoFrame = new GUIEstado(projectService, proyecto, coordinator, companyService);
         estadoFrame.setVisible(true);
     }//GEN-LAST:event_btnEstadoActionPerformed
 

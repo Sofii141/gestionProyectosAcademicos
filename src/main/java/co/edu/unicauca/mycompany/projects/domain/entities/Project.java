@@ -1,6 +1,6 @@
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
-import co.edu.unicauca.mycompany.projects.infra.ProjectStatePatron;
+import co.edu.unicauca.mycompany.projects.infra.state.ProjectStatePatron;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

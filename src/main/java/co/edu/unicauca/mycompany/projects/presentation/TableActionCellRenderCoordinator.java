@@ -26,7 +26,7 @@ public class TableActionCellRenderCoordinator extends DefaultTableCellRenderer {
 
         Component com = super.getTableCellRendererComponent(jtable, value, isSelected, hasFocus, row, column);
         
-        PanelActionCoordinator action = new PanelActionCoordinator(null, null, null);
+        PanelActionCoordinator action = new PanelActionCoordinator(null, null, null, null);
         
         if(isSelected==false&&row%2==0){
             action.setBackground(Color.WHITE);

@@ -5,9 +5,11 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.access.ICoordinatorRepository;
 import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.CoordinatorService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 
@@ -24,15 +26,18 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
     private final CoordinatorService coordinatorService;
     private final ProjectService projectService;
     private final Coordinator coordinator;
+    private final CompanyService companyService;
     
     public GUIDashboardCoordinadorInicio(String coordinatorId) {
         // Obtener instancias de los repositorios a través de la fábrica
         ICoordinatorRepository coordinatorRepository = Factory.getInstance().getRepositoryCoordinator("MARIADB");
         IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
 
         // Inicializar los servicios con los repositorios correspondientes
         this.projectService = new ProjectService(projectRepository);
         this.coordinatorService = new CoordinatorService(coordinatorRepository);
+        this.companyService = new CompanyService(companyRepository);
 
         // Obtener los datos del estudiante a partir del ID proporcionado
         this.coordinator = coordinatorService.getCoordinator(coordinatorId);
@@ -236,7 +241,7 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
 
     private void btnProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectosActionPerformed
         // TODO add your handling code here:
-        GUIDashboardCoordinador gui = new GUIDashboardCoordinador(coordinator, projectService, btnProyectos);
+        GUIDashboardCoordinador gui = new GUIDashboardCoordinador(coordinator, projectService, companyService, btnProyectos);
         gui.setVisible(true);
         btnProyectos.setVisible(false);
     }//GEN-LAST:event_btnProyectosActionPerformed

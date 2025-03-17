@@ -6,12 +6,14 @@ package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
-import co.edu.unicauca.mycompany.projects.infra.AceptadoState;
-import co.edu.unicauca.mycompany.projects.infra.CerradoState;
-import co.edu.unicauca.mycompany.projects.infra.EjecucionState;
-import co.edu.unicauca.mycompany.projects.infra.ProjectStatePatron;
-import co.edu.unicauca.mycompany.projects.infra.RechazadoState;
+import co.edu.unicauca.mycompany.projects.infra.state.AceptadoState;
+import co.edu.unicauca.mycompany.projects.infra.state.CerradoState;
+import co.edu.unicauca.mycompany.projects.infra.state.EjecucionState;
+import co.edu.unicauca.mycompany.projects.infra.state.ProjectStatePatron;
+import co.edu.unicauca.mycompany.projects.infra.state.RechazadoState;
+import co.edu.unicauca.mycompany.projects.infra.state.RecibidoState;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -23,14 +25,16 @@ public class GUIEstado extends javax.swing.JFrame {
      */
     
     private Project proyecto;
-    private final Coordinator coordinator; // Estudiante que interactúa con el panel
+    private final Coordinator coordinator; 
     private final ProjectService projectService; // Servicio de proyectos
-
-    public GUIEstado(ProjectService projectService, Project proyecto, Coordinator coordinator) {
+    private CompanyService companyService;
+    
+    public GUIEstado(ProjectService projectService, Project proyecto, Coordinator coordinator, CompanyService companyService) {
         this.proyecto = proyecto;
         this.coordinator = coordinator;
         this.projectService = projectService;
-        
+        this.companyService = companyService;
+                
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -51,6 +55,7 @@ public class GUIEstado extends javax.swing.JFrame {
         btnAceptado = new javax.swing.JButton();
         btnRechazado = new javax.swing.JButton();
         btnEjecucion = new javax.swing.JButton();
+        btnRecibido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,6 +109,16 @@ public class GUIEstado extends javax.swing.JFrame {
             }
         });
 
+        btnRecibido.setBackground(new java.awt.Color(0, 204, 204));
+        btnRecibido.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnRecibido.setForeground(new java.awt.Color(255, 255, 255));
+        btnRecibido.setText("Recibido");
+        btnRecibido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecibidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -121,7 +136,8 @@ public class GUIEstado extends javax.swing.JFrame {
                             .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRecibido, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,15 +147,17 @@ public class GUIEstado extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel41)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(btnRecibido, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,10 +177,9 @@ public class GUIEstado extends javax.swing.JFrame {
     private void btnAceptadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptadoActionPerformed
         // TODO add your handling code here:
         // Cambiar estado del proyecto
-        ProjectStatePatron estado = new AceptadoState();
-        proyecto.setProStatePatron(estado);
+        ProjectStatePatron estado = new AceptadoState(companyService, projectService);
+        estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
 
-        // Actualizar estado en BD usando el servicio
         if (estado.updateDatabase(proyecto, projectService)) {
             JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Aceptado.");
         } else {
@@ -173,12 +190,12 @@ public class GUIEstado extends javax.swing.JFrame {
     private void btnRechazadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRechazadoActionPerformed
         // TODO add your handling code here:
 
-        ProjectStatePatron estado = new RechazadoState();
-        proyecto.setProStatePatron(estado);
+        // Cambiar estado del proyecto
+        ProjectStatePatron estado = new RechazadoState(companyService, projectService);
+        estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
 
-        // Actualizar estado en BD usando el servicio
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a RECHAZADO.");
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Rechazado.");
         } else {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -187,12 +204,12 @@ public class GUIEstado extends javax.swing.JFrame {
     private void btnEjecucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecucionActionPerformed
         // TODO add your handling code here:
         
-        ProjectStatePatron estado = new EjecucionState();
-        proyecto.setProStatePatron(estado);
+        // Cambiar estado del proyecto
+        ProjectStatePatron estado = new EjecucionState(companyService, projectService);
+        estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
 
-        // Actualizar estado en BD usando el servicio
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a EJECUCION.");
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Ejecucion.");
         } else {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -201,16 +218,29 @@ public class GUIEstado extends javax.swing.JFrame {
     private void btnCerradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerradoActionPerformed
         // TODO add your handling code here:
 
-        ProjectStatePatron estado = new CerradoState();
-        proyecto.setProStatePatron(estado);
+        // Cambiar estado del proyecto
+        ProjectStatePatron estado = new CerradoState(companyService, projectService);
+        estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
 
-        // Actualizar estado en BD usando el servicio
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a CERRADO.");
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Cerrado.");
         } else {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCerradoActionPerformed
+
+    private void btnRecibidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecibidoActionPerformed
+        // TODO add your handling code here:
+        // Cambiar estado del proyecto
+        ProjectStatePatron estado = new RecibidoState(companyService, projectService);
+        estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
+
+        if (estado.updateDatabase(proyecto, projectService)) {
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Recibido.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRecibidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,6 +275,7 @@ public class GUIEstado extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrado;
     private javax.swing.JButton btnEjecucion;
     private javax.swing.JButton btnRechazado;
+    private javax.swing.JButton btnRecibido;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JPanel jPanel1;

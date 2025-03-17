@@ -22,6 +22,7 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
     private final JScrollPane jScrollPane1;
     private final ProjectService projectService;
     private final Coordinator coordinator;
+    private final CompanyService companyService;
     
     /**
      * Constructor de la clase.
@@ -31,11 +32,12 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
      * @param jTableCoordinator Tabla que muestra los proyectos disponibles
      * @param jScrollPane1 Panel de desplazamiento para la tabla
      */
-    public TableProjectsCoordinatorObserver(Coordinator coordinator, ProjectService projectService, JTable jTableCoordinator, JScrollPane jScrollPane1) {
+    public TableProjectsCoordinatorObserver(Coordinator coordinator, ProjectService projectService, JTable jTableCoordinator, JScrollPane jScrollPane1, CompanyService companyService) {
         this.coordinator = coordinator;
         this.jTableCoordinator = jTableCoordinator;
         this.projectService = projectService;
         this.jScrollPane1 = jScrollPane1;
+        this.companyService = companyService;
         
         // Dargar datos iniciales
         configurarTabla();
@@ -97,7 +99,7 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
         jTableCoordinator.getColumnModel().getColumn(5).setMaxWidth(325);
         jTableCoordinator.getColumnModel().getColumn(5).setPreferredWidth(325);
         jTableCoordinator.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderCoordinator());
-        jTableCoordinator.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorCoordinator(projectService, coordinator));
+        jTableCoordinator.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorCoordinator(projectService, coordinator, companyService));
 
         // Aplicar renderizador para mostrar múltiples líneas en las celdas de texto
         for (int i = 0; i < jTableCoordinator.getColumnCount() - 1; i++) {
