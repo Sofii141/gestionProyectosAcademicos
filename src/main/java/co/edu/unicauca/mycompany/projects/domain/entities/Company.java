@@ -234,3 +234,4 @@ public class Company {
         companyProjects.add(project);
     }
 }
+
