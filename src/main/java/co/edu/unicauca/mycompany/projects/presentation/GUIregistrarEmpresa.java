@@ -4,7 +4,6 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import co.edu.unicauca.mycompany.projects.access.CompanyArraysRepository;
 import co.edu.unicauca.mycompany.projects.access.CompanyMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
@@ -583,7 +582,7 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
 
         // Convertir el sector seleccionado a enum
         Sector sector = Sector.valueOf(comSector.toUpperCase());
-        Company company = new Company(comNit, comName, sector, comEmail, comPassword, comContactName, comContactLastName, comContactCharge, comContactPhone);
+        Company company = new Company(comNit, comName, comEmail, comContactPhone, comContactName, comContactLastName, comContactPhone, sector);
         //Registro de empresas
         if (companyService.saveCompany(company)) {
             Messages.showMessageDialog("Empresa registrada", "Confirmación");
