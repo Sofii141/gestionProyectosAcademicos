@@ -20,9 +20,11 @@ public class GUIinicioSesion extends javax.swing.JFrame {
      * Creates new form inicioSesion
      */
     private UserService service;
+    private ControllerInicioSesion controller;
     
     public GUIinicioSesion(UserService prmService) {
         service = prmService;
+        controller = new ControllerInicioSesion(service, this);
         initComponents();
         initImages();
         initPlaceholders();
@@ -204,31 +206,9 @@ public class GUIinicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void jButton_iniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_iniciarSesionActionPerformed
-        // TODO add your handling code here:
         String userName = jTextUserName.getText().trim();
         char[] enteredPassword = jPasswordField.getPassword();
-        if (service.iniciarSesion(userName, enteredPassword) == 1){
-            this.setVisible(false);
-            GUIDashboardEstudiante instance = new GUIDashboardEstudiante(null);
-            //GUIDashboardEstudiante instance = new GUIDashboardEstudiante(userName);  Este se prueba cuando haga merge
-            instance.setVisible(true);
-            
-        }
-        if (service.iniciarSesion(userName, enteredPassword) == 2){
-            this.setVisible(false);
-            GUIDashboardCoordinador instance = new GUIDashboardCoordinador();
-            instance.setVisible(true);
-        }
-        if (service.iniciarSesion(userName, enteredPassword) == 3){
-            this.setVisible(false);
-            GUIDashboardEmpresa instance = new GUIDashboardEmpresa();
-            instance.setVisible(true);
-        }
-        if (service.iniciarSesion(userName, enteredPassword) == 0)
-        {
-            Messages.showMessageDialog("Usuario o clave incorrecta", "ERROR:");
-        }
-
+        controller.actionButtomLogin(userName, enteredPassword);
     }//GEN-LAST:event_jButton_iniciarSesionActionPerformed
 
     private void jTextUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextUserNameActionPerformed
