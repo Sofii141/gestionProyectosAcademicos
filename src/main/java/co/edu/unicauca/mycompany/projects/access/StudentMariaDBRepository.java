@@ -20,9 +20,8 @@ import java.util.logging.Logger;
  * y realizar operaciones CRUD relacionadas con los estudiantes.
  * 
  */
-public class StudentMariaDBRepository  implements IStudentRepository {
+public class StudentMariaDBRepository extends MariaDBConnection implements IStudentRepository {
     // onexión a la base de datos MariaDB utilizada para la gestión de estudiantes.
-    private Connection conn;
 
     /**
     * Constructor de la clase StudentMariaDBRepository.
@@ -32,39 +31,9 @@ public class StudentMariaDBRepository  implements IStudentRepository {
     * realizar operaciones sobre los datos.
     */
     public StudentMariaDBRepository() {
-        initDatabase();
     }
     
-    /**
-    * Inicializa la base de datos creando la tabla Student si no existe.
-    */
-    private void initDatabase() {
-        // SQL para crear la tabla Student
-        String sql = "CREATE TABLE IF NOT EXISTS Student (\n"
-                   + "    userId VARCHAR(50) NOT NULL,\n"
-                   + "    PRIMARY KEY (userId),\n"
-                   + "    CONSTRAINT fk_Student_User FOREIGN KEY (userId) REFERENCES User(userId)\n"
-                   + ");";
 
-        try {
-            // Establecer conexión con la base de datos
-            this.connect();
-            
-            // Crear un objeto Statement para ejecutar la consulta SQL
-            Statement stmt = conn.createStatement();
-            
-            // Ejecutar la sentencia SQL para crear la tabla si no existe
-            stmt.execute(sql);
-            
-            // Cerrar la conexión con la base de datos
-            this.disconnect();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            disconnect();
-        }
-    }
     
     /**
     * Guarda un nuevo estudiante en la base de datos.  
@@ -248,33 +217,4 @@ public class StudentMariaDBRepository  implements IStudentRepository {
         // Retornar el estudiante encontrado o `null` si no se halló en la base de datos
         return student;
     }
-    
-    /**
-    * Establece la conexión con la base de datos.
-    */
-    public void connect() {
-        String url = "jdbc:mariadb://localhost:3306/mydatabase"; 
-        String user = "root"; 
-        String password = "mariadb";
-
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-    * Cierra la conexión con la base de datos.
-    */
-    public void disconnect() {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
 }

@@ -8,6 +8,7 @@ import java.util.Map;
  * Proporciona una instancia única de la fábrica y permite obtener repositorios
  * para diferentes entidades como Company, Student y Project según el tipo especificado.
  * 
+ * @author Libardo, Julio
  */
 public class Factory {
     // Instancia única de la fábrica (patrón Singleton)
@@ -18,7 +19,7 @@ public class Factory {
     private final Map<String, IStudentRepository> StudentDictionary;
     private final Map<String, IProjectRepository> projectDictionary;
     private final Map<String, ICoordinatorRepository> coordinatorDictionary;
-
+    private final Map<String, IUserRepository> userDictionary;
     /**
      * Constructor privado para evitar la instanciación externa.
      * Inicializa los diccionarios y registra las implementaciones disponibles.
@@ -38,6 +39,9 @@ public class Factory {
         
         coordinatorDictionary = new HashMap<>();
         coordinatorDictionary.put("MARIADB", new CoordinatorMariaDBRepository()); // Agrega repositorio MariaDB
+        
+        userDictionary = new HashMap<>();
+        userDictionary.put("MARIADB", new UserMariaDBRepository()); // Agrega repositorio MariaDB
     }
     
     /**
@@ -107,6 +111,16 @@ public class Factory {
         if (coordinatorDictionary.containsKey(repository)) {
             // Obtiene la implementación correspondiente
             result = coordinatorDictionary.get(repository);
+        }
+        return result;
+    }
+    
+    public IUserRepository getRepositoryUSer(String repository) {
+        IUserRepository result = null;
+        // Verifica si el repositorio existe
+        if (userDictionary.containsKey(repository)) {
+            // Obtiene la implementación correspondiente
+            result = userDictionary.get(repository);
         }
         return result;
     }

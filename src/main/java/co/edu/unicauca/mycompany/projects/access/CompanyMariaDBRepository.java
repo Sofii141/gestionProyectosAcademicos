@@ -19,14 +19,12 @@ import java.util.logging.Logger;
  * así como la gestión de la conexión con la base de datos.
  * 
  */
-public class CompanyMariaDBRepository implements ICompanyRepository {
-    private Connection conn; // Conexión a la base de datos
+public class CompanyMariaDBRepository extends MariaDBConnection implements ICompanyRepository{
     
     /**
      * Constructor de la clase. Inicializa la base de datos.
      */
     public CompanyMariaDBRepository() {
-        initDatabase();
     }
     
     /**
@@ -122,44 +120,7 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
         return companies;
     }
     
-    /**
-     * Inicializa la base de datos creando la tabla CompanyContact si no existe.
-     */
-    private void initDatabase() {
-        // Consulta SQL
-        String sql = "CREATE TABLE IF NOT EXISTS CompanyContact (\n"
-                + "    userId VARCHAR(50) NOT NULL,\n"
-                + "    comName VARCHAR(100) NOT NULL,\n"
-                + "    comEmail VARCHAR(100) NOT NULL,\n"
-                + "    comContactPhone VARCHAR(20) NOT NULL,\n"
-                + "    comContactName VARCHAR(100) NOT NULL,\n"
-                + "    comContactLastName VARCHAR(100) NOT NULL,\n"
-                + "    comContactCharge VARCHAR(100) NOT NULL,\n"
-                + "    secId VARCHAR(50) NOT NULL,\n"
-                + "    PRIMARY KEY (userId),\n"
-                + "    CONSTRAINT fk_CompanyContact_User FOREIGN KEY (userId) REFERENCES User(userId),\n"
-                + "    CONSTRAINT fk_CompanyContact_Sector FOREIGN KEY (secId) REFERENCES Sector(secId)\n"
-                + ");";
 
-        try {
-            // Establecer conexión con la base de datos
-            this.connect();
-            
-            // Objeto para ejecutar consultas sin parametros
-            Statement stmt = conn.createStatement();
-            
-            // Ejecutar la creación de la tabla
-            stmt.execute(sql);
-            
-            // Cerrar conexión con la base de datos
-            this.disconnect();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            disconnect();
-        }
-    }
     
     /**
      * Verifica si una compañía con el NIT especificado existe en la base de datos.
@@ -223,33 +184,4 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
         }
         return company;
     }
-    
-    /**
-     * Establece una conexión con la base de datos.
-     */
-    public void connect() {
-        String url = "jdbc:mariadb://localhost:3306/mydatabase"; 
-        String user = "root"; 
-        String password = "mariadb";
-
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    /**
-     * Cierra la conexión con la base de datos si está activa.
-     */
-    public void disconnect() {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
 }

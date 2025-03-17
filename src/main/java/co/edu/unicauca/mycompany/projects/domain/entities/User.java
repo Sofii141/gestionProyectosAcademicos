@@ -27,7 +27,16 @@ public class User {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
     }
-
+    
+    /**
+     * Constructor de usuario para inicio de sesion
+     * @param nombre
+     * @param password 
+     */
+    public User(String id, String password){
+        this.userId = id;
+        userPassword = password;
+    }
     /**
      * Obtiene el identificador del usuario.
      * 

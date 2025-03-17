@@ -17,21 +17,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ *
+ * @author User
+ */
+/**
 * Implementación de ICProjectRepository para la gestión de proyectos en MariaDB.
 * Proporciona métodos para insertar, listar y obtener información de proyectos,
 * así como la gestión de la conexión con la base de datos.
 * 
 */
-public class ProjectMariaDBRepository implements IProjectRepository {
-    // Objeto para manejar la conexión con la base de datos
-    private Connection conn;
+public class ProjectMariaDBRepository extends MariaDBConnection implements IProjectRepository {
     
 
     /**
     * Constructor que inicializa la base de datos.
     */
     public ProjectMariaDBRepository() {
-        initDatabase();
     }
     
     /**
@@ -398,73 +399,6 @@ public class ProjectMariaDBRepository implements IProjectRepository {
         return valores;
     }
     
-    /**
-    * Inicializa la base de datos creando la tabla "Project" si no existe.
-    */
-    private void initDatabase() {
-        // Sentencia SQL para crear la tabla "Project" si no existe
-        String sql = "CREATE TABLE IF NOT EXISTS Project (\n"
-                + "    proId VARCHAR(50) NOT NULL,\n"
-                + "    companyId VARCHAR(50) NOT NULL,\n"
-                + "    proTitle VARCHAR(100) NOT NULL,\n"
-                + "    proDescription TEXT NOT NULL,\n"
-                + "    proAbstract TEXT NOT NULL,\n"
-                + "    proGoals TEXT NOT NULL,\n"
-                + "    proDeadLine INT NOT NULL,\n"
-                + "    proBudget DECIMAL(10,2),\n"
-                + "    proState VARCHAR(20) NOT NULL DEFAULT 'RECIBIDO',\n"
-                + "    proDate DATE NOT NULL,\n"
-                + "    PRIMARY KEY (proId),\n"
-                + "    CONSTRAINT fk_project_UserId FOREIGN KEY (companyId) REFERENCES CompanyContact(userId),\n"
-                + "    CONSTRAINT chk_proState CHECK (proState IN ('RECIBIDO', 'ACEPTADO', 'RECHAZADO'))\n"
-                + ");";
-        try {
-            // Establece la conexión con la base de datos
-            this.connect();
-            
-            // Crea un objeto Statement para ejecutar la consulta
-            Statement stmt = conn.createStatement();
-            
-            // Ejecuta la sentencia SQL para crear la tabla si no existe
-            stmt.execute(sql);
-            
-            // Cierra la conexión a la base de datos
-            this.disconnect();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
-            disconnect();
-        }
-    }
-
-    /**
-    * Establece la conexión con la base de datos.
-    */
-    public void connect() {
-        String url = "jdbc:mariadb://localhost:3306/mydatabase"; 
-        String user = "root"; 
-        String password = "mariadb";
-
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-    * Cierra la conexión con la base de datos.
-    */
-    public void disconnect() {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
     
     @Override
     public int countByStatus(String status) {
@@ -534,5 +468,4 @@ public class ProjectMariaDBRepository implements IProjectRepository {
 
         return success; // Devuelve si se realizó la actualización
     }
-    
 }

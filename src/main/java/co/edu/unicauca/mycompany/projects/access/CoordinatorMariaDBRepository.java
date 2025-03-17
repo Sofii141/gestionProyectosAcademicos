@@ -20,31 +20,12 @@ import java.util.logging.Logger;
  *
  * @author Ana_Sofia
  */
-public class CoordinatorMariaDBRepository implements ICoordinatorRepository{
+public class CoordinatorMariaDBRepository extends MariaDBConnection implements ICoordinatorRepository{
 
-    private Connection conn;
 
     public CoordinatorMariaDBRepository() {
-        initDatabase();
     }
 
-    private void initDatabase() {
-        String sql = "CREATE TABLE IF NOT EXISTS Coordinator (\n"
-                   + "    userId VARCHAR(50) NOT NULL,\n"
-                   + "    PRIMARY KEY (userId),\n"
-                   + "    CONSTRAINT fk_Coordinator_User FOREIGN KEY (userId) REFERENCES User(userId)\n"
-                   + ");";
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            this.disconnect();
-        } catch (SQLException ex) {
-            Logger.getLogger(CoordinatorMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            disconnect();
-        }
-    }
 
     @Override
     public boolean save(Coordinator newCoordinator) {
@@ -130,27 +111,4 @@ public class CoordinatorMariaDBRepository implements ICoordinatorRepository{
         }
         return coordinator;
     }
-
-    private void connect() throws SQLException {
-        String url = "jdbc:mariadb://localhost:3306/mydatabase"; 
-        String user = "root"; 
-        String password = "mariadb";
-
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void disconnect() {
-        try {
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CoordinatorMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
 }

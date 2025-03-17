@@ -4,6 +4,8 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.domain.services.UserService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 import java.awt.Color;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -17,7 +19,12 @@ public class GUIinicioSesion extends javax.swing.JFrame {
     /**
      * Creates new form inicioSesion
      */
-    public GUIinicioSesion() {
+    private UserService service;
+    private ControllerInicioSesion controller;
+    
+    public GUIinicioSesion(UserService prmService) {
+        service = prmService;
+        controller = new ControllerInicioSesion(service, this);
         initComponents();
         initImages();
         initPlaceholders();
@@ -37,9 +44,9 @@ public class GUIinicioSesion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jTextUserName = new javax.swing.JTextField();
+        jButton_iniciarSesion = new javax.swing.JButton();
+        jPasswordField = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -66,28 +73,28 @@ public class GUIinicioSesion extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel3.setText("Contraseña:");
 
-        jTextField2.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField2.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField2.setBorder(null);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextUserName.setBackground(new java.awt.Color(227, 230, 235));
+        jTextUserName.setForeground(new java.awt.Color(130, 134, 140));
+        jTextUserName.setBorder(null);
+        jTextUserName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextUserNameActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(41, 64, 211));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Iniciar sesión");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_iniciarSesion.setBackground(new java.awt.Color(41, 64, 211));
+        jButton_iniciarSesion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_iniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_iniciarSesion.setText("Iniciar sesión");
+        jButton_iniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton_iniciarSesionActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setBackground(new java.awt.Color(227, 230, 235));
-        jPasswordField1.setForeground(new java.awt.Color(130, 134, 140));
-        jPasswordField1.setBorder(null);
+        jPasswordField.setBackground(new java.awt.Color(227, 230, 235));
+        jPasswordField.setForeground(new java.awt.Color(130, 134, 140));
+        jPasswordField.setBorder(null);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -100,13 +107,13 @@ public class GUIinicioSesion extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)))
+                        .addComponent(jPasswordField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextUserName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)))
                 .addGap(41, 41, 41))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                     .addContainerGap(127, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_iniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(118, 118, 118)))
         );
         jPanel3Layout.setVerticalGroup(
@@ -117,20 +124,20 @@ public class GUIinicioSesion extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(126, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                     .addContainerGap(443, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_iniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(12, 12, 12)))
         );
 
-        jTextField2.getAccessibleContext().setAccessibleName("jPanelUsername");
+        jTextUserName.getAccessibleContext().setAccessibleName("jPanelUsername");
 
         jButton1.setBackground(new java.awt.Color(41, 64, 211));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -198,13 +205,15 @@ public class GUIinicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
     
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton_iniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_iniciarSesionActionPerformed
+        String userName = jTextUserName.getText().trim();
+        char[] enteredPassword = jPasswordField.getPassword();
+        controller.actionButtomLogin(userName, enteredPassword);
+    }//GEN-LAST:event_jButton_iniciarSesionActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jTextUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextUserNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jTextUserNameActionPerformed
     private void initImages(){
         Icon mIcono = new ImageIcon(new ImageIcon(getClass().getResource("/burbuja_azul_down.png")).getImage()
         .getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), 0));
@@ -212,13 +221,13 @@ public class GUIinicioSesion extends javax.swing.JFrame {
         jLabel7.setIcon(mIcono);
     }
     private void initPlaceholders(){
-        TextPrompt placeholderUsername = new TextPrompt("Ingresar usuario:",jTextField2);
-        TextPrompt placeholderPassword = new TextPrompt("Ingresar contraseña:", jPasswordField1);
+        TextPrompt placeholderUsername = new TextPrompt("Ingresar usuario:",jTextUserName);
+        TextPrompt placeholderPassword = new TextPrompt("Ingresar contraseña:", jPasswordField);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton_iniciarSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -227,7 +236,7 @@ public class GUIinicioSesion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JTextField jTextUserName;
     // End of variables declaration//GEN-END:variables
 }
