@@ -4,6 +4,14 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.CompanyArraysRepository;
+import co.edu.unicauca.mycompany.projects.access.CompanyMariaDBRepository;
+import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
+import co.edu.unicauca.mycompany.projects.domain.entities.Company;
+import co.edu.unicauca.mycompany.projects.domain.entities.Sector;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
+
 /**
  *
  * @author Ana_Sofia
@@ -13,8 +21,19 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
     /**
      * Creates new form inicioSesion
      */
-    public GUIregistrarEmpresa() {
+    private CompanyService companyService;
+
+    public GUIregistrarEmpresa(CompanyService service) {
+        this.companyService = service;
         initComponents();
+        fillSectors();
+    }
+
+    private void fillSectors() {
+        cboComSector.removeAllItems();
+        for (Sector sector : Sector.values()) {
+            cboComSector.addItem(sector.toString());
+        }
     }
 
     /**
@@ -26,40 +45,33 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtComContactCharge = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        txtComNit = new javax.swing.JTextField();
+        btnCancelar = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtComName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtComContactLastName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtComContactPhone = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtComContactName = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtComEmail = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 372, Short.MAX_VALUE)
-        );
+        cboComSector = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txtComPassword = new javax.swing.JPasswordField();
+        txtComConfirmPassword = new javax.swing.JPasswordField();
+        rbSeePassword = new javax.swing.JRadioButton();
+        rbSeeConfirmPassword = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -70,131 +82,197 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 50)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(38, 42, 65));
         jLabel1.setText("Registrar empresa");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel2.setText("*Nombres de contacto");
 
-        jTextField1.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField1.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField1.setText("Ingresar contraseña");
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtComContactCharge.setBackground(new java.awt.Color(227, 230, 235));
+        txtComContactCharge.setForeground(new java.awt.Color(130, 134, 140));
+        txtComContactCharge.setBorder(null);
+        txtComContactCharge.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtComContactChargeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtComContactChargeFocusLost(evt);
+            }
+        });
+        txtComContactCharge.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtComContactChargeActionPerformed(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jLabel3.setText("*Nombre");
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel3.setText("*Nombre de la empresa");
 
-        jTextField2.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField2.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField2.setText("Ingresar usuario");
-        jTextField2.setBorder(null);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtComNit.setBackground(new java.awt.Color(227, 230, 235));
+        txtComNit.setForeground(new java.awt.Color(130, 134, 140));
+        txtComNit.setBorder(null);
+        txtComNit.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtComNit.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtComNitFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtComNitFocusLost(evt);
+            }
+        });
+        txtComNit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtComNitActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(95, 97, 112));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(95, 97, 112));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(41, 64, 211));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Registrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setBackground(new java.awt.Color(41, 64, 211));
+        btnRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel4.setText("*Email");
 
-        jTextField3.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField3.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField3.setText("Ingresar contraseña");
-        jTextField3.setBorder(null);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtComName.setBackground(new java.awt.Color(227, 230, 235));
+        txtComName.setForeground(new java.awt.Color(130, 134, 140));
+        txtComName.setBorder(null);
+        txtComName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtComNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtComNameFocusLost(evt);
+            }
+        });
+        txtComName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtComNameActionPerformed(evt);
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel5.setText("*Nit de la empresa");
 
-        jTextField4.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField4.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField4.setText("Ingresar usuario");
-        jTextField4.setBorder(null);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtComContactLastName.setBackground(new java.awt.Color(227, 230, 235));
+        txtComContactLastName.setForeground(new java.awt.Color(130, 134, 140));
+        txtComContactLastName.setBorder(null);
+        txtComContactLastName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtComContactLastNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtComContactLastNameFocusLost(evt);
+            }
+        });
+        txtComContactLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtComContactLastNameActionPerformed(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel6.setText("*Telefono de contacto");
 
-        jTextField5.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField5.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField5.setText("Ingresar usuario");
-        jTextField5.setBorder(null);
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        txtComContactPhone.setBackground(new java.awt.Color(227, 230, 235));
+        txtComContactPhone.setForeground(new java.awt.Color(130, 134, 140));
+        txtComContactPhone.setBorder(null);
+        txtComContactPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtComContactPhoneFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtComContactPhoneFocusLost(evt);
+            }
+        });
+        txtComContactPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                txtComContactPhoneActionPerformed(evt);
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel7.setText("*Apellidos de contacto");
 
-        jTextField6.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField6.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField6.setText("Ingresar usuario");
-        jTextField6.setBorder(null);
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        txtComContactName.setBackground(new java.awt.Color(227, 230, 235));
+        txtComContactName.setForeground(new java.awt.Color(130, 134, 140));
+        txtComContactName.setBorder(null);
+        txtComContactName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtComContactNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtComContactNameFocusLost(evt);
+            }
+        });
+        txtComContactName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                txtComContactNameActionPerformed(evt);
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel8.setText("*Sector");
 
-        jTextField7.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField7.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField7.setText("Ingresar contraseña");
-        jTextField7.setBorder(null);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        txtComEmail.setBackground(new java.awt.Color(227, 230, 235));
+        txtComEmail.setForeground(new java.awt.Color(130, 134, 140));
+        txtComEmail.setBorder(null);
+        txtComEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtComEmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtComEmailFocusLost(evt);
+            }
+        });
+        txtComEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                txtComEmailActionPerformed(evt);
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel9.setText("*Cargo del contacto");
 
-        jTextField8.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField8.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField8.setText("Ingresar contraseña");
-        jTextField8.setBorder(null);
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        cboComSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel10.setText("*Contraseña");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel11.setText("*Confirmar contraseña");
+
+        txtComPassword.setBackground(new java.awt.Color(227, 230, 235));
+
+        txtComConfirmPassword.setBackground(new java.awt.Color(227, 230, 235));
+
+        rbSeePassword.setText("ver");
+        rbSeePassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                rbSeePasswordActionPerformed(evt);
+            }
+        });
+
+        rbSeeConfirmPassword.setText("ver");
+        rbSeeConfirmPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbSeeConfirmPasswordActionPerformed(evt);
             }
         });
 
@@ -206,79 +284,101 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(181, 181, 181)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 113, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtComName, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtComEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                            .addComponent(txtComNit)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(txtComPassword)
+                            .addComponent(txtComConfirmPassword))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rbSeePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rbSeeConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtComContactLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtComContactName, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtComContactPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                             .addComponent(jLabel9)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(48, 48, 48))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(195, 195, 195)
+                            .addComponent(txtComContactCharge, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                            .addComponent(jLabel8)
+                            .addComponent(cboComSector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(51, 51, 51))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(247, 247, 247))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(35, 35, 35)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboComSector)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtComContactPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtComContactName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtComContactLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtComContactCharge, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(95, 95, 95))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtComNit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtComName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, 0)
+                        .addComponent(txtComEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtComPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rbSeePassword))
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtComConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rbSeeConfirmPassword))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnRegistrar)
+                    .addComponent(btnCancelar))
                 .addGap(17, 17, 17))
         );
 
@@ -287,7 +387,7 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(58, Short.MAX_VALUE)
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51))
         );
@@ -296,7 +396,7 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -313,49 +413,187 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtComContactChargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactChargeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtComContactChargeActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtComNitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNitActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtComNitActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        //Recuperación de datos ingresados por el usuario
+        String comNit = txtComNit.getText().trim();
+        String comName = txtComName.getText().trim();
+        String comSector = cboComSector.getSelectedItem().toString().trim();
+        String comEmail = txtComEmail.getText().trim();
+        String comPassword = new String(txtComPassword.getPassword()).trim();
+        String comConfirmPassword = new String(txtComConfirmPassword.getPassword()).trim();
+        String comContactName = txtComContactName.getText().trim();
+        String comContactLastName = txtComContactLastName.getText().trim();
+        String comContactCharge = txtComContactCharge.getText().trim();
+        String comContactPhone = txtComContactPhone.getText().trim();
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        // Validación de campos obligatorios
+        //Nit no ingresado
+        if (comNit.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar el NIT", "Atención");
+            txtComNit.requestFocus();
+            return;
+        }
+        //Nombre de empresa no ingresado
+        if (comName.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar el nombre", "Atención");
+            txtComName.requestFocus();
+            return;
+        }
+        //Sector no ingresado
+        if (comSector.isEmpty()) {
+            Messages.showMessageDialog("Debe seleccionar un sector industrial", "Atención");
+            cboComSector.requestFocus();
+            return;
+        }
+        //Email no ingresado
+        if (comEmail.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar un correo electrónico", "Atención");
+            txtComEmail.requestFocus();
+            return;
+        }
+        //Contraseña no ingresada
+        if (comPassword.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar una contraseña", "Atención");
+            txtComPassword.requestFocus();
+            return;
+        }
+        //Confirmar contraseña no ingresado
+        if (comConfirmPassword.isEmpty()) {
+            Messages.showMessageDialog("Debe confirmar la contraseña", "Atención");
+            txtComConfirmPassword.requestFocus();
+            return;
+        }
+        //nombre contacto no ingresado
+        if (comContactName.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar un nombre de contacto", "Atención");
+            txtComContactName.requestFocus();
+            return;
+        }
+        //Apellido contacto no ingresado
+        if (comContactLastName.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar un apellido de contacto", "Atención");
+            txtComContactLastName.requestFocus();
+            return;
+        }
+        //Cargo contacto no ingresado
+        if (comContactCharge.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar un cargo de contacto", "Atención");
+            txtComContactCharge.requestFocus();
+            return;
+        }
+        //Telefono contacto no ingresado
+        if (comContactPhone.isEmpty()) {
+            Messages.showMessageDialog("Debe agregar un telefono de contacto", "Atención");
+            txtComContactPhone.requestFocus();
+            return;
+        }
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+        /* Validación de reglas de negocio*/
+        //Validar que el email sea valido
+        if (!companyService.isValidEmail(comEmail)) {
+            Messages.showMessageDialog("El correo electrónico no es válido", "Atención");
+            txtComEmail.requestFocus();
+            return;
+        }
+        // Validaciones NIT
+        if (!companyService.isNITNumeric(comNit)) {
+            Messages.showMessageDialog("El NIT debe contener solo números", "Atención");
+            txtComNit.requestFocus();
+            return;
+        }
+        if (!companyService.isNITLengthValid(comNit)) {
+            Messages.showMessageDialog("El NIT tener entre 2 y 20 dígitos.", "Atención");
+            txtComNit.requestFocus();
+            return;
+        }
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+        // Validación del nombre de la empresa
+        if (!companyService.isStringValid(comName)) {
+            if (comName.length() < 1 || comName.length() > 20) {
+                Messages.showMessageDialog("El nombre debe tener entre 1 y 20 caracteres", "Atención");
+            } else {
+                Messages.showMessageDialog("El nombre debe contener solo letras", "Atención");
+            }
+            txtComName.requestFocus();
+            return;
+        }
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+        // Validación del teléfono de contacto
+        if (!companyService.isPhoneValid(comContactPhone)) {
+            Messages.showMessageDialog("El teléfono debe contener exactamente 10 dígitos.", "Atención");
+            txtComContactPhone.requestFocus();
+            return;
+        }
+        if (!companyService.isPhoneNotAllSameDigits(comContactPhone)) {
+            Messages.showMessageDialog("El teléfono no debe contener números repetidos 10 veces", "Atención");
+            txtComContactPhone.requestFocus();
+            return;
+        }
+        if (!companyService.isNITNumeric(comContactPhone)) { // Usamos isNITNumeric para verificar que contenga solo números
+            Messages.showMessageDialog("El teléfono debe contener únicamente números enteros positivos", "Atención");
+            txtComContactPhone.requestFocus();
+            return;
+        }
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+        // Validación de nombres del contacto
+        if (!companyService.isStringValid(comContactName)) {
+            if (comContactName.length() < 1 || comContactName.length() > 20) {
+                Messages.showMessageDialog("El nombre del contacto debe tener entre 1 y 20 caracteres", "Atención");
+            } else {
+                Messages.showMessageDialog("El nombre del contacto debe contener solo letras", "Atención");
+            }
+            txtComContactName.requestFocus();
+            return;
+        }
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+        // Validación de apellidos del contacto
+        if (!companyService.isStringValid(comContactLastName)) {
+            if (comContactLastName.length() < 1 || comContactLastName.length() > 20) {
+                Messages.showMessageDialog("El apellido del contacto debe tener entre 1 y 20 caracteres", "Atención");
+            } else {
+                Messages.showMessageDialog("El apellido del contacto debe contener solo letras", "Atención");
+            }
+            txtComContactLastName.requestFocus();
+            return;
+        }
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+        // Validación del cargo del contacto
+        if (!companyService.isStringValid(comContactCharge)) {
+            if (comContactCharge.length() < 1 || comContactCharge.length() > 20) {
+                Messages.showMessageDialog("El cargo del contacto debe tener entre 1 y 20 caracteres", "Atención");
+            } else {
+                Messages.showMessageDialog("El cargo del contacto debe contener solo letras", "Atención");
+            }
+            txtComContactCharge.requestFocus();
+            return;
+        }
+        if (!companyService.arePasswordsMatching(comPassword, comConfirmPassword)) {
+            Messages.showMessageDialog("Las contraseñas ingresadas no coinciden, por favor verifique.", "Atención");
+            txtComPassword.requestFocus();
+            return;
+        }
 
-    /**
-     * @param args the command line arguments
-     */
+        // Convertir el sector seleccionado a enum
+        Sector sector = Sector.valueOf(comSector.toUpperCase());
+        Company company = new Company(comNit, comName, sector, comEmail, comPassword, comContactName, comContactLastName, comContactCharge, comContactPhone);
+        //Registro de empresas
+        if (companyService.saveCompany(company)) {
+            Messages.showMessageDialog("Empresa registrada", "Confirmación");
+            
+
+        } else {
+            Messages.showMessageDialog("Error al registrar empresa", "Error");
+        }
+
+    }//GEN-LAST:event_btnRegistrarActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -370,29 +608,188 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIregistrarEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIregistrarEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIregistrarEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIregistrarEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
-
+        //</editor-fold>
+        //</editor-fold>
+        CompanyMariaDBRepository repository = new CompanyMariaDBRepository();
+        CompanyService companyService = new CompanyService(repository);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIregistrarEmpresa().setVisible(true);
+                new GUIregistrarEmpresa(companyService).setVisible(true);
             }
         });
     }
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtComNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNameActionPerformed
+
+    private void txtComContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactLastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactLastNameActionPerformed
+
+    private void txtComContactPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactPhoneActionPerformed
+
+    private void txtComContactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactNameActionPerformed
+
+    private void txtComEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComEmailActionPerformed
+
+    private void txtComNitFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusGained
+        // TODO add your handling code here:
+        if (txtComNit.getText().equals("Ingrese el NIT")) {
+            txtComNit.setText("");
+        }
+    }//GEN-LAST:event_txtComNitFocusGained
+
+    private void txtComNitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusLost
+        // TODO add your handling code here:
+        if (txtComNit.getText().isEmpty()) {
+            //txtNit.setForeground(Color.GRAY);
+            txtComNit.setText("Ingrese el NIT");
+        }
+    }//GEN-LAST:event_txtComNitFocusLost
+
+    private void txtComNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusGained
+        // TODO add your handling code here:
+        if (txtComName.getText().equals("Ingrese el nombre de la empresa")) {
+            txtComName.setText("");
+        }
+    }//GEN-LAST:event_txtComNameFocusGained
+
+    private void txtComNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusLost
+        // TODO add your handling code here:
+        if (txtComName.getText().isEmpty()) {
+            //txtNit.setForeground(Color.GRAY);
+            txtComName.setText("Ingrese el nombre de la empresa");
+        }
+    }//GEN-LAST:event_txtComNameFocusLost
+
+    private void txtComEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusGained
+        // TODO add your handling code here:
+        if (txtComEmail.getText().equals("Ingrese el correo de la empresa")) {
+            txtComEmail.setText("");
+        }
+    }//GEN-LAST:event_txtComEmailFocusGained
+
+    private void txtComEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusLost
+        // TODO add your handling code here:
+        if (txtComEmail.getText().isEmpty()) {
+            txtComEmail.setText("Ingrese el correo de la empresa");
+        }
+    }//GEN-LAST:event_txtComEmailFocusLost
+
+    private void txtComContactPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusGained
+        // TODO add your handling code here:
+        if (txtComContactPhone.getText().equals("Ingrese el telefono del contacto")) {
+            txtComContactPhone.setText("");
+        }
+    }//GEN-LAST:event_txtComContactPhoneFocusGained
+
+    private void txtComContactPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusLost
+        // TODO add your handling code here:
+        if (txtComContactPhone.getText().isEmpty()) {
+            //txtNit.setForeground(Color.GRAY);
+            txtComContactPhone.setText("Ingrese el telefono del contacto");
+        }
+    }//GEN-LAST:event_txtComContactPhoneFocusLost
+
+    private void txtComContactNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusGained
+        // TODO add your handling code here:
+        if (txtComContactName.getText().equals("Ingrese el nombre del contacto")) {
+            //txtNit.setForeground(Color.GRAY);
+            txtComContactName.setText("");
+        }
+    }//GEN-LAST:event_txtComContactNameFocusGained
+
+    private void txtComContactNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusLost
+        // TODO add your handling code here:
+        if (txtComContactName.getText().isEmpty()) {
+            //txtNit.setForeground(Color.GRAY);
+            txtComContactName.setText("Ingrese el nombre del contacto");
+        }
+    }//GEN-LAST:event_txtComContactNameFocusLost
+
+    private void txtComContactLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusGained
+        // TODO add your handling code here:
+        if (txtComContactLastName.getText().equals("Ingrese el apellido del contacto")) {
+            txtComContactLastName.setText("");
+        }
+    }//GEN-LAST:event_txtComContactLastNameFocusGained
+
+    private void txtComContactLastNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusLost
+        // TODO add your handling code here:
+        if (txtComContactLastName.getText().isEmpty()) {
+            txtComContactLastName.setText("Ingrese el apellido del contacto");
+        }
+    }//GEN-LAST:event_txtComContactLastNameFocusLost
+
+    private void txtComContactChargeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusGained
+        // TODO add your handling code here:
+        if (txtComContactCharge.getText().equals("Ingrese el cargo del contacto")) {
+            txtComContactCharge.setText("");
+        }
+
+    }//GEN-LAST:event_txtComContactChargeFocusGained
+
+    private void txtComContactChargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusLost
+        // TODO add your handling code here:
+        if (txtComContactCharge.getText().isEmpty()) {
+            txtComContactCharge.setText("Ingrese el cargo del contacto");
+        }
+    }//GEN-LAST:event_txtComContactChargeFocusLost
+
+    private void rbSeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeePasswordActionPerformed
+        // TODO add your handling code here:
+        if (rbSeePassword.isSelected()) {
+            // Mostrar contraseña
+            txtComPassword.setEchoChar((char) 0);
+        } else {
+            // Ocultar contraseña
+            txtComPassword.setEchoChar('*'); // Puedes cambiar '*' por el carácter que prefieras
+        }
+    }//GEN-LAST:event_rbSeePasswordActionPerformed
+
+    private void rbSeeConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeeConfirmPasswordActionPerformed
+        // TODO add your handling code here:
+        if (rbSeeConfirmPassword.isSelected()) {
+            // Mostrar contraseña
+            txtComConfirmPassword.setEchoChar((char) 0);
+        } else {
+            // Ocultar contraseña
+            txtComConfirmPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_rbSeeConfirmPasswordActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cboComSector;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -401,17 +798,18 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JRadioButton rbSeeConfirmPassword;
+    private javax.swing.JRadioButton rbSeePassword;
+    private javax.swing.JPasswordField txtComConfirmPassword;
+    private javax.swing.JTextField txtComContactCharge;
+    private javax.swing.JTextField txtComContactLastName;
+    private javax.swing.JTextField txtComContactName;
+    private javax.swing.JTextField txtComContactPhone;
+    private javax.swing.JTextField txtComEmail;
+    private javax.swing.JTextField txtComName;
+    private javax.swing.JTextField txtComNit;
+    private javax.swing.JPasswordField txtComPassword;
     // End of variables declaration//GEN-END:variables
 }
