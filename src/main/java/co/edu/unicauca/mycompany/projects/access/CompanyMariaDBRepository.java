@@ -35,13 +35,13 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
         try {
             // Validar que los campos obligatorios no sean nulos o vacíos
             if (newCompany == null
-                    || newCompany.getComNit().isBlank()
-                    || newCompany.getComName().isBlank()
-                    || newCompany.getComEmail().isBlank()
-                    || newCompany.getComContactName().isBlank()
-                    || newCompany.getComContactLastName().isBlank()
-                    || newCompany.getComContactCharge().isBlank()
-                    || newCompany.getComContactPhone().isBlank()) {
+                    || newCompany.getCompanyNit().isBlank()
+                    || newCompany.getCompanyName().isBlank()
+                    || newCompany.getCompanyEmail().isBlank()
+                    || newCompany.getContactName().isBlank()
+                    || newCompany.getContactLastName().isBlank()
+                    || newCompany.getContactPosition().isBlank()
+                    || newCompany.getContactPhone().isBlank()) {
                 return false;
             }
 
@@ -52,13 +52,13 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newCompany.getComNit()); // userId mapeado a comNit
-            pstmt.setString(2, newCompany.getComName());
-            pstmt.setString(3, newCompany.getComEmail());
-            pstmt.setString(4, newCompany.getComContactPhone());
-            pstmt.setString(5, newCompany.getComContactName());
-            pstmt.setString(6, newCompany.getComContactLastName());
-            pstmt.setString(7, newCompany.getComContactCharge());
+            pstmt.setString(1, newCompany.getCompanyNit()); // userId mapeado a comNit
+            pstmt.setString(2, newCompany.getCompanyName());
+            pstmt.setString(3, newCompany.getCompanyEmail());
+            pstmt.setString(4, newCompany.getContactPhone());
+            pstmt.setString(5, newCompany.getContactName());
+            pstmt.setString(6, newCompany.getContactLastName());
+            pstmt.setString(7, newCompany.getContactPosition());
             pstmt.setString(8, "1"); // secId desde el Sector
 
             pstmt.executeUpdate();
@@ -72,40 +72,6 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
     }
 
     // Método companyInfo de la rama master (manteniendo compatibilidad con Diego)
-    @Override
-    public List<Company> companyInfo() {
-        List<Company> companies = new ArrayList<>();
-
-        String sql = "SELECT userId, comName, comEmail, comContactPhone, comContactName, "
-                + "comContactLastName, comContactCharge, secId FROM CompanyContact";
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while (rs.next()) {
-                Company company = new Company(
-                        rs.getString("userId"),
-                        rs.getString("comName"),
-                        rs.getString("comEmail"),
-                        rs.getString("comContactPhone"),
-                        rs.getString("comContactName"),
-                        rs.getString("comContactLastName"),
-                        rs.getString("comContactCharge"),
-                        Sector.valueOf(rs.getString("secId"))
-                );
-                companies.add(company);
-            }
-            this.disconnect();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            disconnect();
-        }
-        return companies;
-    }
-
     private void initDatabase() {
         String sql = "CREATE TABLE IF NOT EXISTS CompanyContact (\n"
                 + "    userId VARCHAR(50) NOT NULL,\n"
@@ -152,5 +118,61 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
         } catch (SQLException ex) {
             Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public List<Company> listAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean existsNit(String nit) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Company companyInfo(String nit) {
+        // Consulta SQL
+        String sql = "SELECT cc.userId, cc.comName, cc.comEmail, cc.comContactPhone, cc.comContactName, "
+               + "cc.comContactLastName, cc.comContactCharge, s.secName "
+               + "FROM CompanyContact cc "
+               + "JOIN Sector s ON cc.secId = s.secId "
+               + "WHERE cc.userId = ?";
+        
+        // Compañia a retornar
+        Company company = null;
+
+        try {
+            // Establecer conexión con la base de datos
+            this.connect();
+            
+            // Objeto para ejecutar consultas con parametros
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            
+            // Asignar valores a la consulta preparada
+            stmt.setString(1, nit);
+            
+            // Ejecutar la consulta
+            ResultSet rs = stmt.executeQuery();
+            
+            // Iterar sobre los resultados y crear el objeto objeto Company
+            if (rs.next()) {
+                company = new Company(
+                    rs.getString("userId"),
+                    rs.getString("comName"),
+                    rs.getString("comEmail"),
+                    rs.getString("comContactPhone"),
+                    rs.getString("comContactName"),
+                    rs.getString("comContactLastName"),
+                    rs.getString("comContactCharge"),
+                    Sector.valueOf(rs.getString("secName"))
+                );
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al obtener los datos.", e);
+        } finally {
+            disconnect();
+        }
+        return company;
     }
 }
