@@ -9,23 +9,29 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
  * @author User
  */
 public class Project {
+    private String companyNit;
     private String proId; //primary key
     private String proTitle;
     private String proDescription;
     private String proAbstract;
     private String proGoals;
     private int proDeadLine; 
-    private float proBudget; //Puede recibir null
+    private double proBudget; //Puede recibir null
     private String proState; // "PROPUESTO", "ASIGNADO", "FINALIZADO"
 
     /**
      * Constructor de la clase Project.
-     * 
-     * @param titulo     Título del proyecto.
-     * @param descripcion Descripción del proyecto.
-     * 
+     * @param companyNit
+     * @param proId
+     * @param proTitle
+     * @param proDescription
+     * @param proAbstract
+     * @param proGoals
+     * @param proDeadLine
+     * @param proBudget
      */
-    public Project(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, float proBudget) {    
+    public Project(String companyNit,String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, double proBudget) {    
+        this.companyNit = companyNit;
         this.proId = proId;
         this.proTitle = proTitle;
         this.proDescription = proDescription;
@@ -36,6 +42,12 @@ public class Project {
         this.proState = "PROPUESTO"; //Default
     }
 
+    public String getCompanyNit() {
+        return companyNit;
+    }
+
+    
+    
     public String getProId() {
         return proId;
     }
@@ -66,7 +78,7 @@ public class Project {
         return proGoals;
     }
 
-    public float getProBudget() {
+    public double getProBudget() {
         return proBudget;
     }
     
@@ -81,6 +93,10 @@ public class Project {
 
     public int getProDeadLine() {
         return proDeadLine;
+    }
+
+    public void setCompanyNit(String companyNit) {
+        this.companyNit = companyNit;
     }
     
     
@@ -101,7 +117,7 @@ public class Project {
         this.proAbstract = proAbstract;
     }
 
-    public void setProBudget(float proBudget) {
+    public void setProBudget(double proBudget) {
         this.proBudget = proBudget;
     }
 

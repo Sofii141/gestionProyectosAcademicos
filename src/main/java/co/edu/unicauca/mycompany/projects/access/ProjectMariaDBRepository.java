@@ -26,24 +26,25 @@ public class ProjectMariaDBRepository implements IProjectRepository {
     public boolean save(Project newProject) {
         try {
             // Validate product
-            if (newProject == null || newProject.getProId().isBlank() || newProject.getProTitle().isBlank() || 
+            if (newProject == null || newProject.getCompanyNit().isBlank() || newProject.getProId().isBlank() || newProject.getProTitle().isBlank() || 
                 newProject.getProDescription().isBlank() || newProject.getProGoals().isBlank() || newProject.getProAbstract().isBlank() ||
-                newProject.getProDeadLine() < 0){
+                newProject.getProDeadLine() <= 0){
                 return false;
             }
             this.connect();
 
-            String sql = "INSERT INTO Project (proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Project (companyId,proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget) "
+                    + "VALUES (?,?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newProject.getProId());
-            pstmt.setString(2, newProject.getProTitle());
-            pstmt.setString(3, newProject.getProDescription());
-            pstmt.setString(4, newProject.getProGoals());
-            pstmt.setString(5, newProject.getProAbstract());
-            pstmt.setString(6, Integer.toString(newProject.getProDeadLine()));
-            pstmt.setString(7, Float.toString(newProject.getProBudget()));
+            pstmt.setString(1, newProject.getCompanyNit());
+            pstmt.setString(3, newProject.getProId());
+            pstmt.setString(4, newProject.getProTitle());
+            pstmt.setString(5, newProject.getProDescription());
+            pstmt.setString(5, newProject.getProGoals());
+            pstmt.setString(6, newProject.getProAbstract());
+            pstmt.setString(7, Integer.toString(newProject.getProDeadLine()));
+            pstmt.setString(8, Double.toString(newProject.getProBudget()));
             pstmt.executeUpdate();
 
             this.disconnect();
@@ -60,12 +61,12 @@ public class ProjectMariaDBRepository implements IProjectRepository {
         try {
             this.connect();
 
-            String sql = "SELECT proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget FROM Project";
+            String sql = "SELECT companyId,proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget FROM Project";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Project newProject = new Project(rs.getString("proId"), rs.getString("proTitle"), rs.getString("proDescription"),
-                        rs.getString("proAbstract"), rs.getString("proGoals"), Integer.decode(rs.getString("proDeadLine")),Float.parseFloat(rs.getString("proBudget")));
+                Project newProject = new Project(rs.getString("companyId"),rs.getString("proId"), rs.getString("proTitle"), rs.getString("proDescription"),
+                        rs.getString("proAbstract"), rs.getString("proGoals"), Integer.decode(rs.getString("proDeadLine")),Double.parseDouble(rs.getString("proBudget")));
 
                 projects.add(newProject);
             }
