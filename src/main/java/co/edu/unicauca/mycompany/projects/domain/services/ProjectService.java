@@ -4,6 +4,7 @@ import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
 import co.edu.unicauca.mycompany.projects.infra.Subject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,4 +80,31 @@ public class ProjectService extends Subject{
         return repository.countProjectsStudent(studentId);
     }
     
+    public List<Integer> dataGraphicCoordinator() {
+        List<Integer> data = new ArrayList<>();
+
+        data.add(repository.countByStatus("RECIBIDO"));
+        data.add(repository.countByStatus("ACEPTADO"));
+        data.add(repository.countByStatus("RECHAZADO"));
+        data.add(repository.countByStatus("EJECUCION"));
+        data.add(repository.countByStatus("CERRADO"));
+        data.add(repository.countTotalProjects());
+
+        return data;
+    }
+    
+    public boolean updateProjectStatus(String projectId, String newStatus) {
+        boolean success = repository.updateProjectStatus(projectId, newStatus);
+
+        if (success) {
+            notifyAllObserves(); // Notificar a los observadores que hubo un cambio
+        }
+
+        return success;
+    }
+    
 }
+
+    
+
+

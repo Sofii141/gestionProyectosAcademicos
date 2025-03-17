@@ -17,6 +17,7 @@ public class Factory {
     private final Map<String, ICompanyRepository> companyDictionary;
     private final Map<String, IStudentRepository> StudentDictionary;
     private final Map<String, IProjectRepository> projectDictionary;
+    private final Map<String, ICoordinatorRepository> coordinatorDictionary;
 
     /**
      * Constructor privado para evitar la instanciación externa.
@@ -34,6 +35,9 @@ public class Factory {
         // Diccionario para repositorios de proyectos
         projectDictionary = new HashMap<>();
         projectDictionary.put("MARIADB", new ProjectMariaDBRepository()); // Agrega repositorio MariaDB
+        
+        coordinatorDictionary = new HashMap<>();
+        coordinatorDictionary.put("MARIADB", new CoordinatorMariaDBRepository()); // Agrega repositorio MariaDB
     }
     
     /**
@@ -93,6 +97,16 @@ public class Factory {
         if (projectDictionary.containsKey(repository)) {
             // Obtiene la implementación correspondiente
             result = projectDictionary.get(repository);
+        }
+        return result;
+    }
+    
+    public ICoordinatorRepository getRepositoryCoordinator(String repository) {
+        ICoordinatorRepository result = null;
+        // Verifica si el repositorio existe
+        if (coordinatorDictionary.containsKey(repository)) {
+            // Obtiene la implementación correspondiente
+            result = coordinatorDictionary.get(repository);
         }
         return result;
     }

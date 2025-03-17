@@ -59,5 +59,22 @@ public interface IProjectRepository {
      *         de proyectos según su estado.
      */
     List<Integer> countProjectsStudent(String studentId);
+    
+    /**
+     * Cuenta la cantidad de proyectos que tienen un estado específico.
+     * 
+     * @param status Estado del proyecto (ejemplo: "RECIBIDO", "ACEPTADO", etc.).
+     * @return Número de proyectos con ese estado.
+     */
+    int countByStatus(String status);
+    
+    /**
+     * Cuenta la cantidad de proyectos que están actualmente en ejecución.
+     * 
+     * @return Número de proyectos en ejecución.
+     */
+    int countTotalProjects();
+    
+    boolean updateProjectStatus(String projectId, String newStatus);
 }
     

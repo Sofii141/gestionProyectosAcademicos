@@ -44,4 +44,24 @@ public class Coordinator extends User {
     public void setCoordProjects(List<Project> coordProjects) {
         this.coordProjects = coordProjects;
     }
+    
+     /**
+     * Agrega un proyecto a la lista de proyectos que el coordinador gestiona.
+     *
+     * @param project Proyecto a añadir.
+     */
+    public void addProject(Project project) {
+        if (!coordProjects.contains(project)) {
+            coordProjects.add(project);
+        }
+    }
+
+    /**
+     * Elimina un proyecto de la lista de proyectos del coordinador.
+     *
+     * @param project Proyecto a eliminar.
+     */
+    public void removeProject(Project project) {
+        coordProjects.remove(project);
+    }
 }

@@ -11,7 +11,13 @@ public enum ProjectState {
     ACEPTADO,
 
     /** Estado cuando el proyecto ha sido rechazado. */
-    RECHAZADO;
+    RECHAZADO,
+    
+    /** Estado cuando el proyecto se esta ejecutando. */
+    EJECUCION,
+    
+    /** Estado cuando el proyecto ha sido cerrado. */
+    CERRADO;
 
     /**
      * Convierte una cadena de texto en un valor de la enumeración ProjectState.

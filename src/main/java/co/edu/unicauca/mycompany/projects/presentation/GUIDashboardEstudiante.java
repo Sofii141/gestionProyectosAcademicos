@@ -206,7 +206,7 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProyectosActionPerformed
 
     private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
-        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student, projectService,btnPostular);
+        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student, projectService, btnPostular);
         gui.setVisible(true);
         btnPostular.setVisible(false);
     }//GEN-LAST:event_btnPostularActionPerformed

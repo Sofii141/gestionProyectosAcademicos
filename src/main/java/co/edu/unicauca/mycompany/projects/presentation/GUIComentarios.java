@@ -4,6 +4,9 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
+import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import javax.swing.JFrame;
 
 /**
@@ -15,7 +18,15 @@ public class GUIComentarios extends javax.swing.JFrame {
     /**
      * Creates new form GUIComentarios
      */
-    public GUIComentarios() {
+    
+    private Project proyecto;
+    private final Coordinator coordinator; // Estudiante que interactúa con el panel
+    private final ProjectService projectService; // Servicio de proyectos
+
+    public GUIComentarios(ProjectService projectService, Project proyecto, Coordinator coordinator) {
+        this.proyecto = proyecto;
+        this.coordinator = coordinator;
+        this.projectService = projectService;
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         TextPrompt placeholderUsername = new TextPrompt("Ingresar un comentario: ",jTextField12);

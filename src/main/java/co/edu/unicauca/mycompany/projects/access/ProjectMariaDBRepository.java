@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 public class ProjectMariaDBRepository implements IProjectRepository {
     // Objeto para manejar la conexión con la base de datos
     private Connection conn;
+    
 
     /**
     * Constructor que inicializa la base de datos.
@@ -104,9 +105,10 @@ public class ProjectMariaDBRepository implements IProjectRepository {
             
             // Ejecuta la consulta y almacena el resultado
             ResultSet rs = stmt.executeQuery(sql);
-            
+            int count = 0;
             // Itera sobre los resultados
             while (rs.next()) {
+                count++;
                 // Crea un nuevo objeto Project con los datos obtenidos
                 Project newProject = new Project(
                     rs.getString("proId"),
@@ -127,6 +129,7 @@ public class ProjectMariaDBRepository implements IProjectRepository {
                 // Agrega el proyecto a la lista
                 projects.add(newProject);
             }
+            System.out.println("Proyectos obtenidos de la BD: " + count);
             
             // Cierra la conexión con la base de datos
             this.disconnect();
@@ -135,7 +138,7 @@ public class ProjectMariaDBRepository implements IProjectRepository {
         }finally {
             disconnect();
         }
-        
+        System.out.println("Proyectos en la lista antes de retornar: " + projects.size());
         // Retorna la lista de proyectos
         return projects;
     }
@@ -462,4 +465,74 @@ public class ProjectMariaDBRepository implements IProjectRepository {
             System.out.println(ex.getMessage());
         }
     }
+    
+    @Override
+    public int countByStatus(String status) {
+        String sql = "SELECT COUNT(*) FROM Project WHERE proState = ?";
+        int count = 0;
+
+        try {
+            this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, status);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            disconnect();
+        }
+
+        return count;
+    }
+
+    @Override
+    public int countTotalProjects() {
+        String sql = "SELECT COUNT(*) FROM Project"; // Eliminamos la condición de filtrado
+        int total = 0;
+        
+        try {
+            this.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+        return total;
+    }
+    
+    @Override
+    public boolean updateProjectStatus(String projectId, String newStatus) {
+        System.out.println("Estado recibido: " + newStatus);
+        String sql = "UPDATE Project SET proState = ? WHERE proId = ?";
+        boolean success = false;
+
+        try {
+            this.connect(); // Conectar a la base de datos
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, newStatus);
+            stmt.setString(2, projectId); // Ahora usamos setString en lugar de setInt
+
+            int rowsAffected = stmt.executeUpdate();
+            success = rowsAffected > 0; // Si al menos una fila fue afectada, la actualización fue exitosa
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.disconnect(); // Cerrar la conexión
+        }
+
+        return success; // Devuelve si se realizó la actualización
+    }
+    
 }

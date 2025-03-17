@@ -41,4 +41,5 @@ public interface ICompanyRepository {
      * @return Objeto Company con la información de la compañía, o null si no se encuentra.
      */
     Company companyInfo (String nit);
+    
 }

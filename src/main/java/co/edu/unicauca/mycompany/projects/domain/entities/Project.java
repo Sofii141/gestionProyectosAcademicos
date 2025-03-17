@@ -1,5 +1,6 @@
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
+import co.edu.unicauca.mycompany.projects.infra.ProjectStatePatron;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,12 +24,13 @@ public class Project {
     private int proDeadLine; // Plazo del proyecto en días
     private double proBudget; // Presupuesto asignado al proyecto
     private ProjectState proState; // Estado actual del proyecto (Ej: RECIBIDO, ACEPTADO)
-
+    private ProjectStatePatron proStatePatron;
+    
     private List<Student> proTeam; // Lista de estudiantes asignados al proyecto
     private List<Student> proPostulates; // Lista de estudiantes que postulan al proyecto
     private String proCoordinator; // Coordinador del proyecto
     private String idcompany; // Identificador de la empresa asociada
-
+    
     /**
      * Constructor de la clase Project.
      *
@@ -56,8 +58,10 @@ public class Project {
         this.proPostulates = new ArrayList<>(); // Inicializa la lista de postulantes
         this.proCoordinator = null; // No hay coordinador asignado inicialmente
         this.idcompany = idcompany;
+        this.proStatePatron = proStatePatron;
     }
 
+   
     /**
      * Obtiene el identificador del proyecto.
      *
@@ -219,6 +223,12 @@ public class Project {
     public void setProState(ProjectState proState) {
         this.proState = proState;
     }
+
+    public void setProStatePatron(ProjectStatePatron proStatePatron) {
+        this.proStatePatron = proStatePatron;  
+        this.proState = ProjectState.valueOf(proStatePatron.toString()); 
+    }
+
 
     /**
      * Obtiene la lista de estudiantes asignados al proyecto.

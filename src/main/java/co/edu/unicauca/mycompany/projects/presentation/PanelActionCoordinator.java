@@ -4,19 +4,33 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Ana_Sofia
  */
-public class PanelAction extends javax.swing.JPanel {
-    private Project proyecto;
+public class PanelActionCoordinator extends javax.swing.JPanel {
     
-    /**
-     * Creates new form PanelAction
+    private Project proyecto;
+    private final Coordinator coordinator; // Estudiante que interactúa con el panel
+    private final ProjectService projectService; // Servicio de proyectos
+
+     /**
+     * Constructor de la clase.
+     * 
+     * @param projectService Servicio de gestión de proyectos
+     * @param proyecto Proyecto sobre el cual se realizarán acciones
+     * @param coordinator coordinador que interactúa con el proyecto
      */
-    public PanelAction() {
+    public PanelActionCoordinator(ProjectService projectService, Project proyecto, Coordinator coordinator) {
+        this.proyecto = proyecto;
+        this.coordinator = coordinator;
+        this.projectService = projectService;
+
         initComponents();
     }
     
@@ -91,17 +105,18 @@ public class PanelAction extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
-        GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
-        detallesFrame.setVisible(true);
+
+       GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
+       detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
-        GUIEstado estadoFrame = new GUIEstado();
+        GUIEstado estadoFrame = new GUIEstado(projectService, proyecto, coordinator);
         estadoFrame.setVisible(true);
     }//GEN-LAST:event_btnEstadoActionPerformed
 
     private void btnComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarioActionPerformed
-        GUIComentarios comentariosFrame = new GUIComentarios();
+        GUIComentarios comentariosFrame = new GUIComentarios(projectService, proyecto, coordinator);
         comentariosFrame.setVisible(true);
     }//GEN-LAST:event_btnComentarioActionPerformed
 
