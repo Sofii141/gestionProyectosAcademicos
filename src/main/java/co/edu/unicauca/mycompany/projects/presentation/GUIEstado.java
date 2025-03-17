@@ -4,18 +4,33 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
+import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.AceptadoState;
+import co.edu.unicauca.mycompany.projects.infra.CerradoState;
+import co.edu.unicauca.mycompany.projects.infra.EjecucionState;
+import co.edu.unicauca.mycompany.projects.infra.ProjectStatePatron;
+import co.edu.unicauca.mycompany.projects.infra.RechazadoState;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Ana_Sofia
- */
+
 public class GUIEstado extends javax.swing.JFrame {
 
     /**
      * Creates new form GUIEstado
      */
-    public GUIEstado() {
+    
+    private Project proyecto;
+    private final Coordinator coordinator; // Estudiante que interactúa con el panel
+    private final ProjectService projectService; // Servicio de proyectos
+
+    public GUIEstado(ProjectService projectService, Project proyecto, Coordinator coordinator) {
+        this.proyecto = proyecto;
+        this.coordinator = coordinator;
+        this.projectService = projectService;
+        
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -29,23 +44,13 @@ public class GUIEstado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel10 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(38, 42, 65));
-        jLabel10.setText("Estado del Proyecto");
-
-        jLabel40.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel40.setText("La descripción del proyecto se escribe aqui, no debe ser muy detallada");
+        btnCerrado = new javax.swing.JButton();
+        btnAceptado = new javax.swing.JButton();
+        btnRechazado = new javax.swing.JButton();
+        btnEjecucion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,43 +64,43 @@ public class GUIEstado extends javax.swing.JFrame {
         jLabel41.setForeground(new java.awt.Color(130, 134, 140));
         jLabel41.setText("Seleccione una opcion para cambiar de estado");
 
-        jButton1.setBackground(new java.awt.Color(123, 125, 134));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Cerrado");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrado.setBackground(new java.awt.Color(123, 125, 134));
+        btnCerrado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCerrado.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrado.setText("Cerrado");
+        btnCerrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCerradoActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(22, 192, 152));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Aceptado");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptado.setBackground(new java.awt.Color(22, 192, 152));
+        btnAceptado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAceptado.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptado.setText("Aceptado");
+        btnAceptado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAceptadoActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(220, 71, 71));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Rechazado");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnRechazado.setBackground(new java.awt.Color(220, 71, 71));
+        btnRechazado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnRechazado.setForeground(new java.awt.Color(255, 255, 255));
+        btnRechazado.setText("Rechazado");
+        btnRechazado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnRechazadoActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(41, 64, 211));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("En ejecución");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnEjecucion.setBackground(new java.awt.Color(41, 64, 211));
+        btnEjecucion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEjecucion.setForeground(new java.awt.Color(255, 255, 255));
+        btnEjecucion.setText("En ejecución");
+        btnEjecucion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnEjecucionActionPerformed(evt);
             }
         });
 
@@ -113,10 +118,10 @@ public class GUIEstado extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(167, 167, 167)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -127,13 +132,13 @@ public class GUIEstado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel41)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );
 
@@ -151,21 +156,61 @@ public class GUIEstado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAceptadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        // Cambiar estado del proyecto
+        ProjectStatePatron estado = new AceptadoState();
+        proyecto.setProStatePatron(estado);
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        // Actualizar estado en BD usando el servicio
+        if (estado.updateDatabase(proyecto, projectService)) {
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Aceptado.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAceptadoActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnRechazadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRechazadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ProjectStatePatron estado = new RechazadoState();
+        proyecto.setProStatePatron(estado);
+
+        // Actualizar estado en BD usando el servicio
+        if (estado.updateDatabase(proyecto, projectService)) {
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a RECHAZADO.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRechazadoActionPerformed
+
+    private void btnEjecucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecucionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        ProjectStatePatron estado = new EjecucionState();
+        proyecto.setProStatePatron(estado);
+
+        // Actualizar estado en BD usando el servicio
+        if (estado.updateDatabase(proyecto, projectService)) {
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a EJECUCION.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEjecucionActionPerformed
+
+    private void btnCerradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerradoActionPerformed
+        // TODO add your handling code here:
+
+        ProjectStatePatron estado = new CerradoState();
+        proyecto.setProStatePatron(estado);
+
+        // Actualizar estado en BD usando el servicio
+        if (estado.updateDatabase(proyecto, projectService)) {
+            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a CERRADO.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCerradoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,23 +238,14 @@ public class GUIEstado extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUIEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIEstado().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JButton btnAceptado;
+    private javax.swing.JButton btnCerrado;
+    private javax.swing.JButton btnEjecucion;
+    private javax.swing.JButton btnRechazado;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

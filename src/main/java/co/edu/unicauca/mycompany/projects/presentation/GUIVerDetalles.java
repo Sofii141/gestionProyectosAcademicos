@@ -1,23 +1,56 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
+import co.edu.unicauca.mycompany.projects.domain.entities.Company;
+import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import javax.swing.JFrame;
 
 /**
- *
- * @author Ana_Sofia
+ * Clase que representa la interfaz gráfica para visualizar los detalles de un proyecto específico.
+ * Muestra información sobre el proyecto y la empresa asociada.
  */
 public class GUIVerDetalles extends javax.swing.JFrame {
+    
+    private final Project project;
+    private final Company company;
+    private final CompanyService companyService;
 
     /**
-     * Creates new form GUIVerDetalles
+     * Constructor de la clase GUIVerDetalles.
+     * Inicializa la interfaz con la información del proyecto y su empresa asociada.
+     *
+     * @param project Proyecto cuyos detalles se van a visualizar.
      */
-    public GUIVerDetalles() {
+    public GUIVerDetalles(Project project) {
+        // Obtener el repositorio de empresas desde la fábrica
+        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
+
+        this.project = project;
+        this.companyService = new CompanyService(companyRepository);
+
+        // Obtener la empresa asociada al proyecto
+        this.company = companyService.getCompany(project.getIdcompany());
+
+        // Inicializar los componentes gráficos de la interfaz
         initComponents();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Configurar la apariencia de la ventana
+        initVisual();
+
+        // Cargar los datos del proyecto y la empresa en la interfaz
+        obtenerDatos();
+    }
+
+    /**
+     * Configura la apariencia inicial de la ventana.
+     * Bloquea el cambio de tamaño, la centra en la pantalla y define la acción de cierre.
+     */
+    public final void initVisual() {
+        setResizable(false); // Evita que la ventana cambie de tamaño
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana sin afectar la aplicación principal
     }
 
     /**
@@ -29,59 +62,43 @@ public class GUIVerDetalles extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel13 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jLabel24 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        lblNit = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        lblGmail = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        lblSector = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
+        lblNombreEmpresa = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        lblCargoPersona = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
+        lblNombrePersona = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
+        lblApellidosPersona = new javax.swing.JLabel();
+        lblNombreProyecto = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
+        lblResumenProyecto = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
+        lblPresupuesto = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
+        lblObjetivosProyecto = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
+        lblDescripcionProyecto = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
+        lblTiempoProyecto = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
+        lblFechaProyecto = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
-        jLabel46 = new javax.swing.JLabel();
-
-        jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(58, 60, 64));
-        jLabel13.setText("*Nombre");
-
-        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        jLabel24.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(38, 42, 65));
-        jLabel24.setText("Contacto:");
+        lblEstadoProyecto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -94,51 +111,51 @@ public class GUIVerDetalles extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(84, 84, 84));
-        jLabel14.setText("Gmail:");
+        jLabel14.setText("Email:");
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel15.setText("10203023");
+        lblNit.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblNit.setForeground(new java.awt.Color(130, 134, 140));
+        lblNit.setText("10203023");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(84, 84, 84));
         jLabel16.setText("Nit:");
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel17.setText("empresa@gmail.com");
+        lblGmail.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblGmail.setForeground(new java.awt.Color(130, 134, 140));
+        lblGmail.setText("empresa@gmail.com");
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(84, 84, 84));
         jLabel18.setText("Sector:");
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel19.setText("Tecnologia");
+        lblSector.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblSector.setForeground(new java.awt.Color(130, 134, 140));
+        lblSector.setText("Tecnologia");
 
         jLabel20.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(84, 84, 84));
         jLabel20.setText("Telefono:");
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel21.setText("3106683378");
+        lblTelefono.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(130, 134, 140));
+        lblTelefono.setText("3106683378");
 
         jLabel22.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(84, 84, 84));
         jLabel22.setText("Empresa:");
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel23.setText("Nombre empresa");
+        lblNombreEmpresa.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblNombreEmpresa.setForeground(new java.awt.Color(130, 134, 140));
+        lblNombreEmpresa.setText("Nombre empresa");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(38, 42, 65));
         jLabel11.setText("Informacion de la Empresa");
 
-        jLabel25.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel25.setText("Cargo de la persona");
+        lblCargoPersona.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblCargoPersona.setForeground(new java.awt.Color(130, 134, 140));
+        lblCargoPersona.setText("Cargo de la persona");
 
         jLabel26.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(84, 84, 84));
@@ -148,21 +165,21 @@ public class GUIVerDetalles extends javax.swing.JFrame {
         jLabel27.setForeground(new java.awt.Color(84, 84, 84));
         jLabel27.setText("Nombre del contacto:");
 
-        jLabel28.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel28.setText("Nombre de la Persona");
+        lblNombrePersona.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblNombrePersona.setForeground(new java.awt.Color(130, 134, 140));
+        lblNombrePersona.setText("Nombre de la Persona");
 
         jLabel29.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(84, 84, 84));
         jLabel29.setText("Apellidos del contacto:");
 
-        jLabel30.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel30.setText("Apellidos de la persona");
+        lblApellidosPersona.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblApellidosPersona.setForeground(new java.awt.Color(130, 134, 140));
+        lblApellidosPersona.setText("Apellidos de la persona");
 
-        jLabel31.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel31.setText("Nombre del proyecto");
+        lblNombreProyecto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblNombreProyecto.setForeground(new java.awt.Color(130, 134, 140));
+        lblNombreProyecto.setText("Nombre del proyecto");
 
         jLabel32.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(84, 84, 84));
@@ -172,57 +189,57 @@ public class GUIVerDetalles extends javax.swing.JFrame {
         jLabel33.setForeground(new java.awt.Color(84, 84, 84));
         jLabel33.setText("Presupuesto:");
 
-        jLabel34.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel34.setText("Resumen del proyecto, se escribe aqui");
+        lblResumenProyecto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblResumenProyecto.setForeground(new java.awt.Color(130, 134, 140));
+        lblResumenProyecto.setText("Resumen del proyecto, se escribe aqui");
 
         jLabel35.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(84, 84, 84));
         jLabel35.setText("Nombre:");
 
-        jLabel36.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel36.setText("100");
+        lblPresupuesto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblPresupuesto.setForeground(new java.awt.Color(130, 134, 140));
+        lblPresupuesto.setText("100");
 
         jLabel37.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(84, 84, 84));
         jLabel37.setText("Resumen:");
 
-        jLabel38.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel38.setText("Objetivos del proyecto, se escribe aqui");
+        lblObjetivosProyecto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblObjetivosProyecto.setForeground(new java.awt.Color(130, 134, 140));
+        lblObjetivosProyecto.setText("Objetivos del proyecto, se escribe aqui");
 
         jLabel39.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(84, 84, 84));
         jLabel39.setText("Descripción:");
 
-        jLabel40.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(130, 134, 140));
-        jLabel40.setText("La descripción del proyecto se escribe aqui, no debe ser muy detallada");
+        lblDescripcionProyecto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblDescripcionProyecto.setForeground(new java.awt.Color(130, 134, 140));
+        lblDescripcionProyecto.setText("La descripción del proyecto se escribe aqui, no debe ser muy detallada");
 
         jLabel41.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(111, 155, 221));
         jLabel41.setText("Tiempo maximo en meses:");
 
-        jLabel42.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(111, 155, 221));
-        jLabel42.setText("Cantidad en meses");
+        lblTiempoProyecto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblTiempoProyecto.setForeground(new java.awt.Color(111, 155, 221));
+        lblTiempoProyecto.setText("Cantidad en meses");
 
         jLabel43.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(111, 155, 221));
         jLabel43.setText("Fecha:");
 
-        jLabel44.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        jLabel44.setForeground(new java.awt.Color(111, 155, 221));
-        jLabel44.setText("dd/mm/yyyy");
+        lblFechaProyecto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblFechaProyecto.setForeground(new java.awt.Color(111, 155, 221));
+        lblFechaProyecto.setText("dd/mm/yyyy");
 
         jLabel45.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jLabel45.setForeground(new java.awt.Color(111, 155, 221));
         jLabel45.setText("Estado:");
 
-        jLabel46.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        jLabel46.setForeground(new java.awt.Color(111, 155, 221));
-        jLabel46.setText("Recibido/Aceptado...");
+        lblEstadoProyecto.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblEstadoProyecto.setForeground(new java.awt.Color(111, 155, 221));
+        lblEstadoProyecto.setText("Recibido/Aceptado...");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -235,66 +252,66 @@ public class GUIVerDetalles extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel16)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel15))
-                                            .addComponent(jLabel22))
-                                        .addGap(154, 154, 154)
+                                                .addComponent(lblNit, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel28)
-                                            .addComponent(jLabel27)))
+                                            .addComponent(jLabel27)
+                                            .addComponent(lblNombrePersona, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel23)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel20)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel21))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(lblTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel14)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel17))
-                                            .addComponent(jLabel18)
-                                            .addComponent(jLabel19))
-                                        .addGap(98, 98, 98)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel30)
+                                                .addComponent(lblGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+                                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblSector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblNombreEmpresa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(5, 5, 5)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel29)
-                                            .addComponent(jLabel26)
-                                            .addComponent(jLabel25)))))
+                                            .addComponent(lblCargoPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                                            .addComponent(lblApellidosPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel32)
-                                    .addComponent(jLabel34)
                                     .addComponent(jLabel37)
-                                    .addComponent(jLabel38)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel35)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel31)
-                                        .addGap(63, 63, 63)
+                                        .addComponent(lblNombreProyecto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel33)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel36))
+                                        .addComponent(lblPresupuesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jLabel39)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel43)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel44)
+                                        .addComponent(lblFechaProyecto)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel45)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel46))
-                                    .addComponent(jLabel40)
+                                        .addComponent(lblEstadoProyecto))
+                                    .addComponent(lblDescripcionProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel41)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel42)))))
+                                        .addComponent(lblTiempoProyecto))
+                                    .addComponent(lblResumenProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblObjetivosProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 27, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -325,39 +342,39 @@ public class GUIVerDetalles extends javax.swing.JFrame {
                     .addComponent(jLabel27)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16)
-                        .addComponent(jLabel15)))
+                        .addComponent(lblNit)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel28)
+                        .addComponent(lblNombrePersona)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel29)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel30)
+                            .addComponent(lblApellidosPersona)
                             .addComponent(jLabel18)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel23)))
+                        .addComponent(lblNombreEmpresa)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jLabel26))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jLabel19)
+                        .addComponent(lblSector)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lblGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel25)
+                    .addComponent(lblCargoPersona)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
-                            .addComponent(jLabel21))))
+                            .addComponent(lblTelefono))))
                 .addGap(26, 26, 26)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -365,31 +382,31 @@ public class GUIVerDetalles extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel35)
-                    .addComponent(jLabel31)
+                    .addComponent(lblNombreProyecto)
                     .addComponent(jLabel33)
-                    .addComponent(jLabel36))
+                    .addComponent(lblPresupuesto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel37)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel34)
+                .addComponent(lblResumenProyecto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel38)
+                .addComponent(lblObjetivosProyecto)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel39)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel40)
+                .addComponent(lblDescripcionProyecto)
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel41)
-                    .addComponent(jLabel42))
+                    .addComponent(lblTiempoProyecto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel45)
-                    .addComponent(jLabel46)
+                    .addComponent(lblEstadoProyecto)
                     .addComponent(jLabel43)
-                    .addComponent(jLabel44))
+                    .addComponent(lblFechaProyecto))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -410,81 +427,68 @@ public class GUIVerDetalles extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * @param args the command line arguments
+     * Método encargado de cargar los datos del proyecto y de la empresa en la interfaz gráfica.
+     * Se asignan los valores correspondientes a los labels de la ventana.
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIVerDetalles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIVerDetalles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIVerDetalles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIVerDetalles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    public final void obtenerDatos() {
+        // Información de la empresa asociada al proyecto
+        lblApellidosPersona.setText(company.getContactLastName());  // Apellido del contacto de la empresa
+        lblCargoPersona.setText(company.getContactPosition());      // Cargo del contacto de la empresa
+        lblGmail.setText(company.getCompanyEmail());               // Correo electrónico de la empresa
+        lblNit.setText(company.getCompanyNit());                   // NIT de la empresa
+        lblNombreEmpresa.setText(company.getCompanyName());        // Nombre de la empresa
+        lblNombrePersona.setText(company.getContactName());        // Nombre del contacto de la empresa
+        lblSector.setText(company.getCompanySector().toString());  // Sector al que pertenece la empresa
+        lblTelefono.setText(company.getContactPhone());            // Teléfono de contacto de la empresa
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIVerDetalles().setVisible(true);
-            }
-        });
+        // Información del proyecto
+        lblDescripcionProyecto.setText(project.getProDescription()); // Descripción del proyecto
+        lblEstadoProyecto.setText(project.getProState().toString()); // Estado actual del proyecto
+        lblFechaProyecto.setText(project.getProDate().toString());   // Fecha de creación del proyecto
+        lblNombreProyecto.setText(project.getProTitle());           // Título del proyecto
+        lblObjetivosProyecto.setText(project.getProGoals());        // Objetivos del proyecto
+        lblPresupuesto.setText(String.valueOf(project.getProBudget())); // Presupuesto del proyecto
+        lblResumenProyecto.setText(project.getProAbstract());       // Resumen o abstract del proyecto
+        lblTiempoProyecto.setText(String.valueOf(project.getProDeadLine())); // Tiempo estimado del proyecto
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
-    private javax.swing.JLabel jLabel46;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel lblApellidosPersona;
+    private javax.swing.JLabel lblCargoPersona;
+    private javax.swing.JLabel lblDescripcionProyecto;
+    private javax.swing.JLabel lblEstadoProyecto;
+    private javax.swing.JLabel lblFechaProyecto;
+    private javax.swing.JLabel lblGmail;
+    private javax.swing.JLabel lblNit;
+    private javax.swing.JLabel lblNombreEmpresa;
+    private javax.swing.JLabel lblNombrePersona;
+    private javax.swing.JLabel lblNombreProyecto;
+    private javax.swing.JLabel lblObjetivosProyecto;
+    private javax.swing.JLabel lblPresupuesto;
+    private javax.swing.JLabel lblResumenProyecto;
+    private javax.swing.JLabel lblSector;
+    private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblTiempoProyecto;
     // End of variables declaration//GEN-END:variables
 }

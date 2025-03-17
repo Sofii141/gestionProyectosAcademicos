@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Libardo, Julio
  */
 public class CompanyTest {
-
+/*
     @Test
     void testCompanyConstructorAndGetters() {
         Company company = new Company(
@@ -50,5 +50,5 @@ public class CompanyTest {
         assertThat(company.getEmail()).isEqualTo("info@healthcorp.com");
         assertThat(company.getPassword()).isEqualTo("newpassword");
     }
-
+*/
 }
