@@ -18,7 +18,7 @@ public class UserService {
         repository = prmRepo;
     }
     
-    public boolean iniciarSesion(String prmUserName, char[] prmPassword){
+    public int iniciarSesion(String prmUserName, char[] prmPassword){
         User newUser = new User(prmUserName, prmPassword);
         return repository.iniciarSesion(newUser);
     }

@@ -9,7 +9,6 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
  * @author spart
  */
 public class User {
-    private String nombre;
     private char[] password; //Se usa char[] por cuestiones de seguridad en el jPasswordField de Swing
     private String id;
     private String email;
@@ -24,8 +23,8 @@ public class User {
      * @param nombre
      * @param password 
      */
-    public User(String nombre, char[] password) {
-        this.nombre = nombre;
+    public User(String id, char[] password) {
+        this.id = id;
         this.password = password;
     }
     /**
@@ -36,18 +35,9 @@ public class User {
      * @param email 
      */
     public User(String nombre, char[] password, String id, String email) {
-        this.nombre = nombre;
         this.password = password;
         this.id = id;
         this.email = email;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public char[] getPassword() {

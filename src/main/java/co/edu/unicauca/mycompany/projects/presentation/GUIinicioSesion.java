@@ -207,13 +207,28 @@ public class GUIinicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = jTextUserName.getText().trim();
         char[] enteredPassword = jPasswordField.getPassword();
-        if (service.iniciarSesion(userName, enteredPassword)){
-            Messages.showMessageDialog("Conectado", "Estado:");
+        if (service.iniciarSesion(userName, enteredPassword) == 1){
+            this.setVisible(false);
+            GUIDashboardEstudiante instance = new GUIDashboardEstudiante(null);
+            //GUIDashboardEstudiante instance = new GUIDashboardEstudiante(userName);  Este se prueba cuando haga merge
+            instance.setVisible(true);
+            
         }
-        else
+        if (service.iniciarSesion(userName, enteredPassword) == 2){
+            this.setVisible(false);
+            GUIDashboardCoordinador instance = new GUIDashboardCoordinador();
+            instance.setVisible(true);
+        }
+        if (service.iniciarSesion(userName, enteredPassword) == 3){
+            this.setVisible(false);
+            GUIDashboardEmpresa instance = new GUIDashboardEmpresa();
+            instance.setVisible(true);
+        }
+        if (service.iniciarSesion(userName, enteredPassword) == 0)
         {
-            Messages.showMessageDialog("Fallo al conectar", "Estado:");
+            Messages.showMessageDialog("Usuario o clave incorrecta", "ERROR:");
         }
+
     }//GEN-LAST:event_jButton_iniciarSesionActionPerformed
 
     private void jTextUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextUserNameActionPerformed
