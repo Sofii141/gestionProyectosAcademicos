@@ -13,6 +13,10 @@ import co.edu.unicauca.mycompany.projects.domain.entities.User;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.UserService;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
+import co.edu.unicauca.mycompany.projects.infra.ValidationException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JComponent;
 
 /**
  *
@@ -26,7 +30,7 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
     private UserService userService;
     private CompanyService companyService;
 
-    public GUIregistrarEmpresa(CompanyService companyService,UserService userService ) {
+    public GUIregistrarEmpresa(CompanyService companyService, UserService userService) {
         this.companyService = companyService;
         this.userService = userService;
         initComponents();
@@ -455,150 +459,10 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         String comContactCharge = txtComContactCharge.getText().trim();
         String comContactPhone = txtComContactPhone.getText().trim();
 
-        // Validación de campos obligatorios
-        //Nit no ingresado
-        if (comNit.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar el NIT", "Atención");
-            txtComNit.requestFocus();
-            return;
-        }
-        //Nombre de empresa no ingresado
-        if (comName.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar el nombre", "Atención");
-            txtComName.requestFocus();
-            return;
-        }
-        //Sector no ingresado
-        if (comSector.isEmpty()) {
-            Messages.showMessageDialog("Debe seleccionar un sector industrial", "Atención");
-            cboComSector.requestFocus();
-            return;
-        }
-        //Email no ingresado
-        if (comEmail.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar un correo electrónico", "Atención");
-            txtComEmail.requestFocus();
-            return;
-        }
-        //Contraseña no ingresada
-        if (comPassword.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar una contraseña", "Atención");
-            txtComPassword.requestFocus();
-            return;
-        }
-        //Confirmar contraseña no ingresado
-        if (comConfirmPassword.isEmpty()) {
-            Messages.showMessageDialog("Debe confirmar la contraseña", "Atención");
-            txtComConfirmPassword.requestFocus();
-            return;
-        }
-        //nombre contacto no ingresado
-        if (comContactName.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar un nombre de contacto", "Atención");
-            txtComContactName.requestFocus();
-            return;
-        }
-        //Apellido contacto no ingresado
-        if (comContactLastName.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar un apellido de contacto", "Atención");
-            txtComContactLastName.requestFocus();
-            return;
-        }
-        //Cargo contacto no ingresado
-        if (comContactCharge.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar un cargo de contacto", "Atención");
-            txtComContactCharge.requestFocus();
-            return;
-        }
-        //Telefono contacto no ingresado
-        if (comContactPhone.isEmpty()) {
-            Messages.showMessageDialog("Debe agregar un telefono de contacto", "Atención");
-            txtComContactPhone.requestFocus();
-            return;
-        }
-
-        /* Validación de reglas de negocio*/
-        //Validar que el email sea valido
-        if (!companyService.isValidEmail(comEmail)) {
-            Messages.showMessageDialog("El correo electrónico no es válido", "Atención");
-            txtComEmail.requestFocus();
-            return;
-        }
-        // Validaciones NIT
-        if (!companyService.isNITNumeric(comNit)) {
-            Messages.showMessageDialog("El NIT debe contener solo números", "Atención");
-            txtComNit.requestFocus();
-            return;
-        }
-        if (!companyService.isNITLengthValid(comNit)) {
-            Messages.showMessageDialog("El NIT tener entre 2 y 20 dígitos.", "Atención");
-            txtComNit.requestFocus();
-            return;
-        }
-
-        // Validación del nombre de la empresa
-        if (!companyService.isStringValid(comName)) {
-            if (comName.length() < 1 || comName.length() > 20) {
-                Messages.showMessageDialog("El nombre debe tener entre 1 y 20 caracteres", "Atención");
-            } else {
-                Messages.showMessageDialog("El nombre debe contener solo letras", "Atención");
-            }
-            txtComName.requestFocus();
-            return;
-        }
-
-        // Validación del teléfono de contacto
-        if (!companyService.isPhoneValid(comContactPhone)) {
-            Messages.showMessageDialog("El teléfono debe contener exactamente 10 dígitos.", "Atención");
-            txtComContactPhone.requestFocus();
-            return;
-        }
-        if (!companyService.isPhoneNotAllSameDigits(comContactPhone)) {
-            Messages.showMessageDialog("El teléfono no debe contener números repetidos 10 veces", "Atención");
-            txtComContactPhone.requestFocus();
-            return;
-        }
-        if (!companyService.isNITNumeric(comContactPhone)) { // Usamos isNITNumeric para verificar que contenga solo números
-            Messages.showMessageDialog("El teléfono debe contener únicamente números enteros positivos", "Atención");
-            txtComContactPhone.requestFocus();
-            return;
-        }
-
-        // Validación de nombres del contacto
-        if (!companyService.isStringValid(comContactName)) {
-            if (comContactName.length() < 1 || comContactName.length() > 20) {
-                Messages.showMessageDialog("El nombre del contacto debe tener entre 1 y 20 caracteres", "Atención");
-            } else {
-                Messages.showMessageDialog("El nombre del contacto debe contener solo letras", "Atención");
-            }
-            txtComContactName.requestFocus();
-            return;
-        }
-
-        // Validación de apellidos del contacto
-        if (!companyService.isStringValid(comContactLastName)) {
-            if (comContactLastName.length() < 1 || comContactLastName.length() > 20) {
-                Messages.showMessageDialog("El apellido del contacto debe tener entre 1 y 20 caracteres", "Atención");
-            } else {
-                Messages.showMessageDialog("El apellido del contacto debe contener solo letras", "Atención");
-            }
-            txtComContactLastName.requestFocus();
-            return;
-        }
-
-        // Validación del cargo del contacto
-        if (!companyService.isStringValid(comContactCharge)) {
-            if (comContactCharge.length() < 1 || comContactCharge.length() > 20) {
-                Messages.showMessageDialog("El cargo del contacto debe tener entre 1 y 20 caracteres", "Atención");
-            } else {
-                Messages.showMessageDialog("El cargo del contacto debe contener solo letras", "Atención");
-            }
-            txtComContactCharge.requestFocus();
-            return;
-        }
-        if (!companyService.arePasswordsMatching(comPassword, comConfirmPassword)) {
+        //Valida que las contraseñas sean iguales
+        if (!arePasswordsMatching(comPassword, comConfirmPassword)) {
             Messages.showMessageDialog("Las contraseñas ingresadas no coinciden, por favor verifique.", "Atención");
-            txtComPassword.requestFocus();
+            txtComConfirmPassword.requestFocus();
             return;
         }
 
@@ -607,10 +471,44 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         Company company = new Company(comName, comContactName, comContactLastName, comContactPhone, comContactCharge, sector, comNit, comEmail, comPassword);
         User user = new User(comNit, comEmail, comPassword);
         //Registro de empresas
-        if (userService.saveUser(user) && companyService.saveCompany(company)) {
-            Messages.showMessageDialog("Empresa registrada", "Confirmación");
+        if (!userService.existUserId(comNit)) {
+            try {
+                if (userService.validData(user) && companyService.validData(company)) {
+                    userService.saveUser(user);
+                    companyService.saveCompany(company);
+                    this.dispose();
+                    Messages.showMessageDialog("Empresa de nit " + comNit + " registrada correctamente", "Registro correcto");
+                }
+
+            } catch (ValidationException ve) {
+
+                Messages.showErrorDialog(ve.getMessage(), "Error de validación");
+
+                Map<String, JComponent> mapError = new HashMap<>();
+                mapError.put("userId", txtComNit);
+                mapError.put("companyName", txtComName);
+                mapError.put("companySector", cboComSector);
+                mapError.put("userEmail", txtComEmail);
+                mapError.put("userPassword", txtComPassword);
+                mapError.put("contactName", txtComContactName);
+                mapError.put("contactLastName", txtComContactLastName);
+                mapError.put("contactPhone", txtComContactPhone);
+                mapError.put("contactPosition", txtComContactCharge);
+
+                JComponent campoError = mapError.get(ve.getAtributoError());
+                campoError.requestFocus();
+                return;
+
+            } catch (Exception ex) {
+
+                Messages.showErrorDialog(ex.getMessage(), "Error desconocido");
+                return;
+
+            }
         } else {
-            Messages.showMessageDialog("Error al registrar empresa", "Error");
+            Messages.showMessageDialog("El NIT ingresado ya se encuentra en uso.", "Atención");
+            txtComNit.requestFocus();
+            return;
         }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -651,6 +549,18 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Valida que las contraseñas ingresadas sean iguales.
+     *
+     * @param password String de la contraseña ingresada por el usuario
+     * @param confirmPassword String de la confirmación de la contraseña
+     * ingresada por el usuario
+     * @return true si ambas contraseñas son iguales, false en caso contrario.
+     */
+    private boolean arePasswordsMatching(String password, String confirmPassword) {
+        return password.equals(confirmPassword);
+    }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -677,106 +587,73 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
 
     private void txtComNitFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusGained
         // TODO add your handling code here:
-        if (txtComNit.getText().equals("Ingrese el NIT")) {
-            txtComNit.setText("");
-        }
+
     }//GEN-LAST:event_txtComNitFocusGained
 
     private void txtComNitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusLost
         // TODO add your handling code here:
-        if (txtComNit.getText().isEmpty()) {
-            //txtNit.setForeground(Color.GRAY);
-            txtComNit.setText("Ingrese el NIT");
-        }
+
     }//GEN-LAST:event_txtComNitFocusLost
 
     private void txtComNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusGained
         // TODO add your handling code here:
-        if (txtComName.getText().equals("Ingrese el nombre de la empresa")) {
-            txtComName.setText("");
-        }
+
     }//GEN-LAST:event_txtComNameFocusGained
 
     private void txtComNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusLost
         // TODO add your handling code here:
-        if (txtComName.getText().isEmpty()) {
-            //txtNit.setForeground(Color.GRAY);
-            txtComName.setText("Ingrese el nombre de la empresa");
-        }
+
     }//GEN-LAST:event_txtComNameFocusLost
 
     private void txtComEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusGained
         // TODO add your handling code here:
-        if (txtComEmail.getText().equals("Ingrese el correo de la empresa")) {
-            txtComEmail.setText("");
-        }
+
     }//GEN-LAST:event_txtComEmailFocusGained
 
     private void txtComEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusLost
         // TODO add your handling code here:
-        if (txtComEmail.getText().isEmpty()) {
-            txtComEmail.setText("Ingrese el correo de la empresa");
-        }
+
     }//GEN-LAST:event_txtComEmailFocusLost
 
     private void txtComContactPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusGained
         // TODO add your handling code here:
-        if (txtComContactPhone.getText().equals("Ingrese el telefono del contacto")) {
-            txtComContactPhone.setText("");
-        }
+
     }//GEN-LAST:event_txtComContactPhoneFocusGained
 
     private void txtComContactPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusLost
         // TODO add your handling code here:
-        if (txtComContactPhone.getText().isEmpty()) {
-            //txtNit.setForeground(Color.GRAY);
-            txtComContactPhone.setText("Ingrese el telefono del contacto");
-        }
+
     }//GEN-LAST:event_txtComContactPhoneFocusLost
 
     private void txtComContactNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusGained
         // TODO add your handling code here:
-        if (txtComContactName.getText().equals("Ingrese el nombre del contacto")) {
-            //txtNit.setForeground(Color.GRAY);
-            txtComContactName.setText("");
-        }
+
     }//GEN-LAST:event_txtComContactNameFocusGained
 
     private void txtComContactNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusLost
         // TODO add your handling code here:
-        if (txtComContactName.getText().isEmpty()) {
-            //txtNit.setForeground(Color.GRAY);
-            txtComContactName.setText("Ingrese el nombre del contacto");
-        }
+
     }//GEN-LAST:event_txtComContactNameFocusLost
 
     private void txtComContactLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusGained
         // TODO add your handling code here:
-        if (txtComContactLastName.getText().equals("Ingrese el apellido del contacto")) {
-            txtComContactLastName.setText("");
-        }
+
     }//GEN-LAST:event_txtComContactLastNameFocusGained
 
     private void txtComContactLastNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusLost
         // TODO add your handling code here:
-        if (txtComContactLastName.getText().isEmpty()) {
-            txtComContactLastName.setText("Ingrese el apellido del contacto");
-        }
+
     }//GEN-LAST:event_txtComContactLastNameFocusLost
 
     private void txtComContactChargeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusGained
         // TODO add your handling code here:
-        if (txtComContactCharge.getText().equals("Ingrese el cargo del contacto")) {
-            txtComContactCharge.setText("");
-        }
+
 
     }//GEN-LAST:event_txtComContactChargeFocusGained
 
     private void txtComContactChargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusLost
         // TODO add your handling code here:
-        if (txtComContactCharge.getText().isEmpty()) {
-            txtComContactCharge.setText("Ingrese el cargo del contacto");
-        }
+
     }//GEN-LAST:event_txtComContactChargeFocusLost
 
     private void rbSeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeePasswordActionPerformed
