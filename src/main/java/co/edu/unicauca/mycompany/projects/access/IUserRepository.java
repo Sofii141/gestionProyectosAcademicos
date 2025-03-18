@@ -11,7 +11,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.User;
  * @author spart
  */
 public interface IUserRepository {
-    int iniciarSesion(User usuario);
+    int iniciarSesion(String usuario, char[] pwd);
     boolean cerrarSesion();
     boolean save(User newUser);
 }

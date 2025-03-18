@@ -29,15 +29,6 @@ public class User {
     }
     
     /**
-     * Constructor de usuario para inicio de sesion
-     * @param nombre
-     * @param password 
-     */
-    public User(String id, String password){
-        this.userId = id;
-        userPassword = password;
-    }
-    /**
      * Obtiene el identificador del usuario.
      * 
      * @return Identificador único del usuario.
@@ -81,7 +72,7 @@ public class User {
     public String getUserPassword() {
         return userPassword;
     }
-
+    
     /**
      * Establece la contraseña del usuario.
      * 

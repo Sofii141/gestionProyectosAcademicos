@@ -8,6 +8,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,38 +20,56 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
 
     public UserMariaDBRepository() {
     }
-
-    @Override
-    public int iniciarSesion(User user) {
+    /**
+     * se encarga de verificar si se inicia sesion correctamente mediante una funcion almacenada,
+     * borra el valor de password imnediatamente despues de hacer la verificación
+     * @param userId el nombre de usuario
+     * @param passwordCharArray la contraseña
+     * @return 1:inicio Estudiante, 2:inicio coordinador, 3:inicio empresa
+     */
+    public int iniciarSesion(String userId, char[] passwordCharArray) {
         String sql = "SELECT login(?,?)";
-        String userId = user.getUserId();
-        String password = user.getUserPassword();
+
+        // Convertir char[] a String temporalmente
+        String password = new String(passwordCharArray);
+
         try {
-            if (this.connect()) { // Solo continua si la conexión fue exitosa
+            if (this.connect()) {
                 PreparedStatement stmt = conn.prepareStatement(sql);
-                // Pasar parámetros a la función
                 stmt.setString(1, userId);
                 stmt.setString(2, password);
 
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        int result = rs.getInt(1); // Obtener el resultado de la función
+                        int result = rs.getInt(1);
                         return result;
                     }
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(MariaDBConnection.class.getName()).log(Level.SEVERE, "Error al ejecutar initDatabase", ex);
+        } finally {
+            // Sobrescribir la contraseña para reducir el tiempo de exposición en memoria
+            Arrays.fill(passwordCharArray, '\0'); // Borra el char[]
         }
+
         return -1;
     }
-    
 
+    
+    /**
+     * Cierra sesion
+     * @return retorna el exito de la operacion 
+     */
     @Override
     public boolean cerrarSesion() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    /**
+     * Se encarga de hacer una nueva insercion de usuario
+     * @param newUser Objeto Usuario 
+     * @return True: Exito de operacion, False: Fracaso de operacion
+     */
     @Override
     public boolean save(User newUser) {
         try {

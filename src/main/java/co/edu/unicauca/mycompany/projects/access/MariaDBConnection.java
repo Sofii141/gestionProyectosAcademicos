@@ -18,12 +18,15 @@ import java.util.logging.Logger;
 public abstract class MariaDBConnection {
     
     protected Connection conn;
-
+    /**
+     * Se encarga de conectar a la base de datos con nombre mariadb
+     * @return True: conexion exitosa, False: conexion fallida
+     */
     public boolean connect() {
         // URL de conexión para MariaDB
         String url = "jdbc:mariadb://localhost:3306/mydatabase"; // Cambia 'mydatabase' por el nombre de tu base de datos
         String user = "root"; // Cambia 'root' por tu usuario de MariaDB
-        String password = "mariadb"; // Cambia 'password' por tu contraseña de MariaDB
+        String password = ""; // Cambia 'password' por tu contraseña de MariaDB
 
         try {
             conn = DriverManager.getConnection(url, user, password);
@@ -34,7 +37,9 @@ public abstract class MariaDBConnection {
         }
 
     }
-
+    /**
+     *  Se encarga de desconectar la base de datos
+     */
     public void disconnect() {
         try {
             if (conn != null) {
