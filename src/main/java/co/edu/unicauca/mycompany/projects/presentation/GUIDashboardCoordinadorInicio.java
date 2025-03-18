@@ -13,10 +13,7 @@ import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.CoordinatorService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 
-/**
- *
- * @author Ana_Sofia
- */
+
 public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
 
     /**
