@@ -14,4 +14,5 @@ public interface IUserRepository {
     int iniciarSesion(String usuario, char[] pwd);
     boolean cerrarSesion();
     boolean save(User newUser);
+    boolean existId(String id);
 }
