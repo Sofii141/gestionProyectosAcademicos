@@ -26,6 +26,8 @@ public class GUIinicioSesion extends javax.swing.JFrame {
         service = prmService;
         controller = new ControllerInicioSesion(service, this);
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         initImages();
         initPlaceholders();
     }
@@ -202,7 +204,7 @@ public class GUIinicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void jButton_iniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_iniciarSesionActionPerformed

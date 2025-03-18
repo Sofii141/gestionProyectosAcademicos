@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.domain.services;
 
-import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
 import co.edu.unicauca.mycompany.projects.access.IUserRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
@@ -12,7 +8,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.EmailService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
-import javax.swing.JButton;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -39,6 +35,8 @@ public class GUIComentarios extends javax.swing.JFrame {
         this.companyService = new CompanyService(companyRepository); // Se inicializa correctamente
         
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         TextPrompt placeholderUsername = new TextPrompt("Ingresar un comentario: ",textFielCorreo);
     }
@@ -159,14 +157,14 @@ public class GUIComentarios extends javax.swing.JFrame {
             // Obtener la empresa asociada al proyecto
             Company empresa = companyService.getCompany(proyecto.getIdcompany());
 
-            if (empresa == null || empresa.getCompanyEmail() == null || empresa.getCompanyEmail().trim().isEmpty()) {
+            if (empresa == null || empresa.getUserEmail() == null || empresa.getUserEmail().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No se encontró la empresa asociada al proyecto o su correo no está definido.", 
                                               "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Definir destinatario y cuerpo del correo
-            String destinatarioEmpresa = empresa.getCompanyEmail();
+            String destinatarioEmpresa = empresa.getUserEmail();
             String asunto = "Nuevo Comentario del Proyecto: " + proyecto.getProTitle();
             String cuerpo = "Coordinador: " + coordinator.getUserId()+ "\n"
                           + "Proyecto: " + proyecto.getProTitle()+ "\n"
@@ -175,12 +173,12 @@ public class GUIComentarios extends javax.swing.JFrame {
             // Enviar el correo
             EmailService.sendEmail(destinatarioEmpresa, asunto, cuerpo);
 
-            // Mostrar mensaje de confirmación
-            JOptionPane.showMessageDialog(this, "Comentario enviado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
             // Limpiar el campo de texto y cerrar la ventana
             textFielCorreo.setText("");
             this.dispose();
+            
+             // Mostrar mensaje de confirmación
+            Messages.mensajeVario("Comentario enviado correctamente.");
     }//GEN-LAST:event_btnEnviarComentarioActionPerformed
 
 

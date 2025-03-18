@@ -65,7 +65,7 @@ public class TableProjectsObserver extends JFrame implements Observer {
                 project.getProId(),
                 company.getCompanyName(),
                 project.getProTitle(),
-                project.getProDeadLine(),
+                project.getProDate(),
                 project.getProAbstract(),
                 "Acciones"
             });

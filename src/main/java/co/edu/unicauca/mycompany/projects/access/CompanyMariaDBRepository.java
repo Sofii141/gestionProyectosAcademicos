@@ -5,15 +5,11 @@
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
-import co.edu.unicauca.mycompany.projects.domain.entities.Project;
-import co.edu.unicauca.mycompany.projects.domain.entities.Sector;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,9 +30,9 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
         try {
             // Validar que los campos obligatorios no sean nulos o vacíos
             if (newCompany == null
-                    || newCompany.getCompanyNit().isBlank()
+                    || newCompany.getUserId().isBlank()
                     || newCompany.getCompanyName().isBlank()
-                    || newCompany.getCompanyEmail().isBlank()
+                    || newCompany.getUserEmail().isBlank()
                     || newCompany.getContactName().isBlank()
                     || newCompany.getContactLastName().isBlank()
                     || newCompany.getContactPosition().isBlank()
@@ -51,9 +47,9 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newCompany.getCompanyNit()); // userId mapeado a comNit
+            pstmt.setString(1, newCompany.getUserId());
             pstmt.setString(2, newCompany.getCompanyName());
-            pstmt.setString(3, newCompany.getCompanyEmail());
+            pstmt.setString(3, newCompany.getUserEmail());
             pstmt.setString(4, newCompany.getContactPhone());
             pstmt.setString(5, newCompany.getContactName());
             pstmt.setString(6, newCompany.getContactLastName());
@@ -110,10 +106,11 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
     @Override
     public Company companyInfo(String nit) {
         // Consulta SQL
-        String sql = "SELECT cc.userId, cc.comName, cc.comEmail, cc.comContactPhone, cc.comContactName, "
-                + "cc.comContactLastName, cc.comContactCharge, s.secName "
+        String sql = "SELECT cc.userId, cc.comName, cc.comContactPhone, cc.comContactName, "
+                + "cc.comContactLastName, cc.comContactCharge, s.secName, u.userEmail "
                 + "FROM CompanyContact cc "
                 + "JOIN Sector s ON cc.secId = s.secId "
+                + "JOIN User u ON u.userId = cc.userId "
                 + "WHERE cc.userId = ?";
 
         // Compañia a retornar
@@ -135,14 +132,15 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
             // Iterar sobre los resultados y crear el objeto objeto Company
             if (rs.next()) {
                 company = new Company(
-                        rs.getString("userId"),
                         rs.getString("comName"),
-                        rs.getString("comEmail"),
-                        rs.getString("comContactPhone"),
                         rs.getString("comContactName"),
                         rs.getString("comContactLastName"),
+                        rs.getString("comContactPhone"),
                         rs.getString("comContactCharge"),
-                        Sector.valueOf(rs.getString("secName"))
+                        enumSector.valueOf(rs.getString("secName")),
+                        rs.getString("userId"),
+                        rs.getString("userEmail"),
+                        null // No return password
                 );
             }
         } catch (SQLException e) {

@@ -42,7 +42,7 @@ public class CerradoState implements ProjectStatePatron {
         Company company = companyService.getCompany(project.getIdcompany()); // Buscar empresa
 
         if (company != null) {
-            EmailService.sendEmail(company.getCompanyEmail(), "Estado actualizado", 
+            EmailService.sendEmail(company.getUserEmail(), "Estado actualizado", 
             "Se le informa que su proyecto ha sido cambiado a CERRADO.");
         } else {
             System.out.println("Error: No se encontró la empresa asociada al proyecto.");

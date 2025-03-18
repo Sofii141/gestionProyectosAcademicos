@@ -1,7 +1,7 @@
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
-import co.edu.unicauca.mycompany.projects.domain.entities.ProjectState;
+import co.edu.unicauca.mycompany.projects.domain.entities.enumProjectState;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
@@ -118,14 +118,12 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
                     rs.getString("proAbstract"),
                     rs.getString("proGoals"),
                     rs.getInt("proDeadLine"),
+                        rs.getDate("proDate"),
                     rs.getBigDecimal("proBudget").doubleValue(),
                     rs.getString("companyId")
                 );
                 // Asigna el estado del proyecto
-                newProject.setProState(ProjectState.valueOf(rs.getString("proState")));
-                
-                // Asigna la fecha del proyecto
-                newProject.setProDate(rs.getDate("proDate"));
+                newProject.setProState(enumProjectState.valueOf(rs.getString("proState")));
                 
                 // Agrega el proyecto a la lista
                 projects.add(newProject);
@@ -183,14 +181,12 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
                     rs.getString("proAbstract"),
                     rs.getString("proGoals"),
                     rs.getInt("proDeadLine"),
+                        rs.getDate("proDate"),
                     rs.getBigDecimal("proBudget").doubleValue(),
                     rs.getString("companyId")
                 );
                 // Establecer estado del proyecto
-                newProject.setProState(ProjectState.valueOf(rs.getString("proState")));
-                
-                // Establecer fecha del proyecto
-                newProject.setProDate(rs.getDate("proDate"));
+                newProject.setProState(enumProjectState.valueOf(rs.getString("proState")));
                 
                 // Agregar proyecto a la lista
                 projects.add(newProject);
@@ -245,14 +241,12 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
                     rs.getString("proAbstract"),
                     rs.getString("proGoals"),
                     rs.getInt("proDeadLine"),
+                    rs.getDate("proDate"),
                     rs.getBigDecimal("proBudget").doubleValue(),
                     rs.getString("companyId")
                 );
                 // Establecer estado del proyecto
-                project.setProState(ProjectState.valueOf(rs.getString("proState")));
-                
-                // Establecer fecha del proyecto
-                project.setProDate(rs.getDate("proDate"));
+                project.setProState(enumProjectState.valueOf(rs.getString("proState")));
             }
             
             // Desconectar de la base de datos

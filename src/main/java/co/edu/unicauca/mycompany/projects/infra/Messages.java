@@ -1,7 +1,10 @@
 package co.edu.unicauca.mycompany.projects.infra;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JWindow;
@@ -57,30 +60,33 @@ public class Messages {
         // Crear una ventana emergente sin bordes
         JWindow window = new JWindow();
 
-        // Crear una etiqueta con el mensaje de confirmación
         JLabel label = new JLabel(message, JLabel.CENTER);
-        // Hacer que la etiqueta tenga un fondo visible
-        label.setOpaque(true); 
-        // Establecer el fondo en color blanco
-        label.setBackground(Color.WHITE); 
-        // Establecer un borde azul
-        label.setBorder(new LineBorder(new Color(90, 111, 228), 2)); 
-        // Color del texto
+        label.setOpaque(true);
+        label.setBackground(Color.WHITE);
+        label.setBorder(new LineBorder(new Color(90, 111, 228), 2));
         label.setForeground(Color.BLACK);
-        // Establecer la fuente
-        label.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14)); 
+        label.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 
-        // Agregar la etiqueta a la ventana emergente
+        // Añadir márgenes dentro del label
+        label.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(90, 111, 228), 2), // Borde azul
+                BorderFactory.createEmptyBorder(20, 30, 20, 30) // Espaciado interno
+        ));
+
+        // Agregar la etiqueta a la ventana
         window.getContentPane().add(label);
-        // Definir el tamaño de la ventana emergente
-        window.setSize(500, 50);
-        // Posicionar la ventana en la pantalla
-        window.setLocation(0,0);
+        window.pack(); // Ajusta el tamaño automáticamente
 
-        // Configurar un temporizador para cerrar la ventana emergente automáticamente en 2 segundos
+        // Obtener tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - window.getWidth()) / 2;
+        int y = (screenSize.height - window.getHeight()) / 2;
+        window.setLocation(x, y); // Centrar la ventana en la pantalla
+
+        // Temporizador para cerrar la ventana automáticamente
         new Timer(2000, e -> window.dispose()).start();
 
-        // Hacer visible la ventana emergente
+        // Mostrar la ventana emergente
         window.setVisible(true);
     }
 }

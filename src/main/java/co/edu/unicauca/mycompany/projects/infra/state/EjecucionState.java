@@ -46,9 +46,9 @@ public class EjecucionState implements ProjectStatePatron {
         System.out.println("Empresa encontrada: " + company);
 
         // También imprimir el correo para asegurarte de que no es null
-        System.out.println("Correo de la empresa: " + company.getCompanyEmail());
+        System.out.println("Correo de la empresa: " + company.getUserEmail());
 
-        EmailService.sendEmail(company.getCompanyEmail(), "Estado actualizado", 
+        EmailService.sendEmail(company.getUserEmail(), "Estado actualizado", 
             "Se le informa que su proyecto esta en EJECUCION.");
         } else {
             System.out.println("Error: No se encontró la empresa asociada al proyecto.");

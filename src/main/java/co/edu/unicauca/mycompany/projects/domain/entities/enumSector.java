@@ -3,7 +3,7 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
 /**
  * Enumeración que representa los diferentes sectores en los que puede operar una empresa.
  */
-public enum Sector {
+public enum enumSector {
     /** Sector tecnológico. */
     TECHNOLOGY,
 
@@ -26,9 +26,9 @@ public enum Sector {
      * @param secName Cadena de texto que representa el sector.
      * @return El sector correspondiente de la enumeración Sector o OTHER si no es válido.
      */
-    public static Sector fromString(String secName) {
+    public static enumSector fromString(String secName) {
         try {
-            return Sector.valueOf(secName.toUpperCase());
+            return enumSector.valueOf(secName.toUpperCase());
         } catch (IllegalArgumentException e) {
             return OTHER;
         }

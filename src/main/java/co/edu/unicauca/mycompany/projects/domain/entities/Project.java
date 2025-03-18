@@ -23,7 +23,7 @@ public class Project {
     private Date proDate; // Fecha de creación del proyecto
     private int proDeadLine; // Plazo del proyecto en días
     private double proBudget; // Presupuesto asignado al proyecto
-    private ProjectState proState; // Estado actual del proyecto (Ej: RECIBIDO, ACEPTADO)
+    private enumProjectState proState; // Estado actual del proyecto (Ej: RECIBIDO, ACEPTADO)
     private ProjectStatePatron proStatePatron;
     
     private List<Student> proTeam; // Lista de estudiantes asignados al proyecto
@@ -40,23 +40,24 @@ public class Project {
      * @param proAbstract Resumen del proyecto.
      * @param proGoals Objetivos del proyecto.
      * @param proDeadLine Plazo del proyecto en días.
+     * @param proDate
      * @param proBudget Presupuesto del proyecto.
      * @param idcompany Identificador de la empresa asociada.
      */
     public Project(String proId, String proTitle, String proDescription, String proAbstract,
-                   String proGoals, int proDeadLine, double proBudget, String idcompany) {
+                   String proGoals, int proDeadLine, Date proDate, double proBudget, String idcompany) {
         this.proId = proId;
         this.proTitle = proTitle;
         this.proDescription = proDescription;
         this.proAbstract = proAbstract;
         this.proGoals = proGoals;
         this.proDeadLine = proDeadLine;
+        this.proDate = proDate; 
         this.proBudget = proBudget;
-        this.proDate = null; // Inicialmente, la fecha es nula hasta que se asigne
-        this.proState = ProjectState.RECIBIDO; // Estado inicial por defecto
-        this.proTeam = new ArrayList<>(); // Inicializa la lista de estudiantes del equipo
-        this.proPostulates = new ArrayList<>(); // Inicializa la lista de postulantes
-        this.proCoordinator = null; // No hay coordinador asignado inicialmente
+        this.proState = enumProjectState.RECIBIDO; 
+        this.proTeam = new ArrayList<>(); 
+        this.proPostulates = new ArrayList<>(); 
+        this.proCoordinator = null; 
         this.idcompany = idcompany;
         this.proStatePatron = proStatePatron;
     }
@@ -211,7 +212,7 @@ public class Project {
      *
      * @return Estado del proyecto.
      */
-    public ProjectState getProState() {
+    public enumProjectState getProState() {
         return proState;
     }
 
@@ -220,13 +221,13 @@ public class Project {
      *
      * @param proState Nuevo estado del proyecto.
      */
-    public void setProState(ProjectState proState) {
+    public void setProState(enumProjectState proState) {
         this.proState = proState;
     }
 
     public void setProStatePatron(ProjectStatePatron proStatePatron) {
         this.proStatePatron = proStatePatron;  
-        this.proState = ProjectState.valueOf(proStatePatron.toString()); 
+        this.proState = enumProjectState.valueOf(proStatePatron.toString()); 
     }
 
 

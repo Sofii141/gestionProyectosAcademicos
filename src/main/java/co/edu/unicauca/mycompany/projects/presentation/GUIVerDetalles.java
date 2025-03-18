@@ -434,8 +434,8 @@ public class GUIVerDetalles extends javax.swing.JFrame {
         // Información de la empresa asociada al proyecto
         lblApellidosPersona.setText(company.getContactLastName());  // Apellido del contacto de la empresa
         lblCargoPersona.setText(company.getContactPosition());      // Cargo del contacto de la empresa
-        lblGmail.setText(company.getCompanyEmail());               // Correo electrónico de la empresa
-        lblNit.setText(company.getCompanyNit());                   // NIT de la empresa
+        lblGmail.setText(company.getUserEmail());               // Correo electrónico de la empresa
+        lblNit.setText(company.getUserId());                   // NIT de la empresa
         lblNombreEmpresa.setText(company.getCompanyName());        // Nombre de la empresa
         lblNombrePersona.setText(company.getContactName());        // Nombre del contacto de la empresa
         lblSector.setText(company.getCompanySector().toString());  // Sector al que pertenece la empresa

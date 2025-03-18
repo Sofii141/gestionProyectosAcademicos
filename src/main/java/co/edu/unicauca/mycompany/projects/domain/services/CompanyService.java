@@ -2,6 +2,7 @@ package co.edu.unicauca.mycompany.projects.domain.services;
 
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
+import co.edu.unicauca.mycompany.projects.domain.entities.User;
 import java.util.List;
 
 /**
@@ -50,6 +51,7 @@ public class CompanyService {
     public boolean saveCompany(Company newCompany) {
         return repository.save(newCompany);
     }
+    
     /*-----------------REGLAS DE NEGOCIO---------------*/
     /**
      * Valida que el email ingresado cumpla las reglas de negocio

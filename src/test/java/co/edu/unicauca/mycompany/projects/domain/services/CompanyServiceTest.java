@@ -2,7 +2,7 @@ package co.edu.unicauca.mycompany.projects.domain.services;
 
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
-import co.edu.unicauca.mycompany.projects.domain.entities.Sector;
+import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

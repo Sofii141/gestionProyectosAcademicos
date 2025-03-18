@@ -15,6 +15,8 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
      */
     public GUIDashboardEmpresa() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         initPlaceHolders();
     }
 

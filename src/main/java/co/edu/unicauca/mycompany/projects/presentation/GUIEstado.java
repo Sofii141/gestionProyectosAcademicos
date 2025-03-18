@@ -8,12 +8,14 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 import co.edu.unicauca.mycompany.projects.infra.state.AceptadoState;
 import co.edu.unicauca.mycompany.projects.infra.state.CerradoState;
 import co.edu.unicauca.mycompany.projects.infra.state.EjecucionState;
 import co.edu.unicauca.mycompany.projects.infra.state.ProjectStatePatron;
 import co.edu.unicauca.mycompany.projects.infra.state.RechazadoState;
 import co.edu.unicauca.mycompany.projects.infra.state.RecibidoState;
+import javax.mail.Message;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -36,6 +38,8 @@ public class GUIEstado extends javax.swing.JFrame {
         this.companyService = companyService;
                 
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
@@ -179,11 +183,11 @@ public class GUIEstado extends javax.swing.JFrame {
         // Cambiar estado del proyecto
         ProjectStatePatron estado = new AceptadoState(companyService, projectService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
-
+        dispose();
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Aceptado.");
+            Messages.mensajeVario("El estado del proyecto ha sido cambiado a Aceptado.");
         } else {
-            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.mensajeVario("Error al actualizar el estado en la base de datos.");
         }
     }//GEN-LAST:event_btnAceptadoActionPerformed
 
@@ -193,11 +197,11 @@ public class GUIEstado extends javax.swing.JFrame {
         // Cambiar estado del proyecto
         ProjectStatePatron estado = new RechazadoState(companyService, projectService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
-
+        dispose();
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Rechazado.");
+            Messages.mensajeVario("El estado del proyecto ha sido cambiado a Rechazado.");
         } else {
-            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.mensajeVario("Error al actualizar el estado en la base de datos.");
         }
     }//GEN-LAST:event_btnRechazadoActionPerformed
 
@@ -207,11 +211,11 @@ public class GUIEstado extends javax.swing.JFrame {
         // Cambiar estado del proyecto
         ProjectStatePatron estado = new EjecucionState(companyService, projectService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
-
+        dispose();
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Ejecucion.");
+            Messages.mensajeVario("El estado del proyecto ha sido cambiado a Ejecucion.");
         } else {
-            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.mensajeVario("Error al actualizar el estado en la base de datos.");
         }
     }//GEN-LAST:event_btnEjecucionActionPerformed
 
@@ -221,11 +225,11 @@ public class GUIEstado extends javax.swing.JFrame {
         // Cambiar estado del proyecto
         ProjectStatePatron estado = new CerradoState(companyService, projectService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
-
+        dispose();
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Cerrado.");
+            Messages.mensajeVario("El estado del proyecto ha sido cambiado a Cerrado.");
         } else {
-            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.mensajeVario("Error al actualizar el estado en la base de datos.");
         }
     }//GEN-LAST:event_btnCerradoActionPerformed
 
@@ -234,11 +238,12 @@ public class GUIEstado extends javax.swing.JFrame {
         // Cambiar estado del proyecto
         ProjectStatePatron estado = new RecibidoState(companyService, projectService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
-
+        dispose();
+        
         if (estado.updateDatabase(proyecto, projectService)) {
-            JOptionPane.showMessageDialog(this, "El estado del proyecto ha sido cambiado a Recibido.");
+            Messages.mensajeVario("El estado del proyecto ha sido cambiado a Recibido.");
         } else {
-            JOptionPane.showMessageDialog(this, "Error al actualizar el estado en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.mensajeVario("Error al actualizar el estado en la base de datos.");
         }
     }//GEN-LAST:event_btnRecibidoActionPerformed
 

@@ -3,7 +3,7 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
 /**
  * Enumeración que representa los posibles estados de un proyecto.
  */
-public enum ProjectState {
+public enum enumProjectState {
     /** Estado cuando el proyecto ha sido recibido pero aún no evaluado. */
     RECIBIDO,
 
@@ -26,9 +26,9 @@ public enum ProjectState {
      * @return El estado correspondiente de la enumeración ProjectState.
      * @throws IllegalArgumentException Si el estado proporcionado no es válido.
      */
-    public static ProjectState fromString(String state) {
+    public static enumProjectState fromString(String state) {
         try {
-            return ProjectState.valueOf(state.toUpperCase());
+            return enumProjectState.valueOf(state.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Estado de proyecto inválido: " + state);
         }

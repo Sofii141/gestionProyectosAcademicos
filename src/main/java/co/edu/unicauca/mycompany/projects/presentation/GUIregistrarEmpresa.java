@@ -8,7 +8,7 @@ import co.edu.unicauca.mycompany.projects.access.CompanyMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.access.UserMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
-import co.edu.unicauca.mycompany.projects.domain.entities.Sector;
+import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.UserService;
@@ -30,12 +30,14 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         this.companyService = companyService;
         this.userService = userService;
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         fillSectors();
     }
 
     private void fillSectors() {
         cboComSector.removeAllItems();
-        for (Sector sector : Sector.values()) {
+        for (enumSector sector : enumSector.values()) {
             cboComSector.addItem(sector.toString());
         }
     }
@@ -601,14 +603,12 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         }
 
         // Convertir el sector seleccionado a enum
-        Sector sector = Sector.valueOf(comSector.toUpperCase());
-        Company company = new Company(comNit, comName, comEmail, comContactPhone, comContactName, comContactLastName, comContactCharge, sector);
+        enumSector sector = enumSector.valueOf(comSector.toUpperCase());
+        Company company = new Company(comName, comContactName, comContactLastName, comContactPhone, comContactCharge, sector, comNit, comEmail, comPassword);
         User user = new User(comNit, comEmail, comPassword);
         //Registro de empresas
         if (userService.saveUser(user) && companyService.saveCompany(company)) {
             Messages.showMessageDialog("Empresa registrada", "Confirmación");
-            
-
         } else {
             Messages.showMessageDialog("Error al registrar empresa", "Error");
         }

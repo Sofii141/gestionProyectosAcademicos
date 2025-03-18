@@ -1,75 +1,43 @@
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Representa una empresa que puede registrar proyectos en el sistema.
  */
-public class Company {
-
-    private String companyNit; // Identificador único (NIT) de la empresa
+public class Company extends User{
     private String companyName; // Nombre de la empresa
     private String contactName; // Nombre de la persona de contacto
     private String contactLastName; // Apellido de la persona de contacto
     private String contactPhone; // Teléfono de contacto
-    private String companyEmail; // Correo electrónico de la empresa
     private String contactPosition; // Cargo de la persona de contacto
-    private Sector companySector; // Sector al que pertenece la empresa
+    private enumSector companySector; // Sector al que pertenece la empresa
 
     private List<Project> companyProjects; // Lista de proyectos asociados a la empresa
 
     /**
      * Constructor de la clase Company con todos los atributos.
      * 
-     * @param nit             NIT de la empresa.
      * @param companyName     Nombre de la empresa.
-     * @param email           Correo electrónico de la empresa.
      * @param contactPhone    Teléfono de contacto.
      * @param contactName     Nombre del contacto.
      * @param contactLastName Apellido del contacto.
      * @param contactPosition Cargo del contacto.
-     * @param sector          Sector empresarial.
+     * @param companySector   Sector empresarial.
+     * @param userId
+     * @param userEmail
      */
-    public Company(String nit, String companyName, String email, String contactPhone, 
-                   String contactName, String contactLastName, String contactPosition, Sector sector) {
-        this.companyNit = nit;
+    public Company(String companyName, String contactName, String contactLastName, String contactPhone, String contactPosition, enumSector companySector, String userId, String userEmail, String userPassword) {
+        super(userId, userEmail, userPassword);
         this.companyName = companyName;
-        this.companyEmail = email;
-        this.contactPhone = contactPhone;
         this.contactName = contactName;
         this.contactLastName = contactLastName;
+        this.contactPhone = contactPhone;
         this.contactPosition = contactPosition;
-        this.companySector = sector;
+        this.companySector = companySector;
         this.companyProjects = new ArrayList<>();
-    }
-
-    /**
-     * Constructor de la clase Company que solo recibe el NIT.
-     * 
-     * @param nit NIT de la empresa.
-     */
-    public Company(String nit) {
-        this.companyNit = nit;
-        this.companyProjects = new ArrayList<>();
-    }
-
-    /**
-     * Obtiene el NIT de la empresa.
-     * 
-     * @return NIT de la empresa.
-     */
-    public String getCompanyNit() {
-        return companyNit;
-    }
-
-    /**
-     * Establece el NIT de la empresa.
-     * 
-     * @param companyNit Nuevo NIT de la empresa.
-     */
-    public void setCompanyNit(String companyNit) {
-        this.companyNit = companyNit;
     }
 
     /**
@@ -145,24 +113,6 @@ public class Company {
     }
 
     /**
-     * Obtiene el correo electrónico de la empresa.
-     * 
-     * @return Correo electrónico de la empresa.
-     */
-    public String getCompanyEmail() {
-        return companyEmail;
-    }
-
-    /**
-     * Establece el correo electrónico de la empresa.
-     * 
-     * @param companyEmail Nuevo correo electrónico de la empresa.
-     */
-    public void setCompanyEmail(String companyEmail) {
-        this.companyEmail = companyEmail;
-    }
-
-    /**
      * Obtiene el cargo de la persona de contacto de la empresa.
      * 
      * @return Cargo de la persona de contacto de la empresa.
@@ -185,7 +135,7 @@ public class Company {
      * 
      * @return Sector de la empresa.
      */
-    public Sector getCompanySector() {
+    public enumSector getCompanySector() {
         return companySector;
     }
 
@@ -194,7 +144,7 @@ public class Company {
      * 
      * @param companySector Nuevo sector de la empresa.
      */
-    public void setCompanySector(Sector companySector) {
+    public void setCompanySector(enumSector companySector) {
         this.companySector = companySector;
     }
 
@@ -228,9 +178,8 @@ public class Company {
      * @param proBudget      Presupuesto del proyecto.
      */
     public void addProject(String proId, String proTitle, String proDescription, String proAbstract,
-                           String proGoals, int proDeadLine, double proBudget) {
-        Project project = new Project(proId, proTitle, proDescription, proAbstract, proGoals, 
-                                      proDeadLine, proBudget, this.companyNit);
+                           String proGoals, int proDeadLine, Date proDate, double proBudget) {
+        Project project = new Project(proId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proDate, proBudget, this.getUserId());
         companyProjects.add(project);
     }
 }

@@ -24,7 +24,6 @@ public class ControllerInicioSesion {
             view.setVisible(false);
             GUIDashboardEstudiante instance = new GUIDashboardEstudiante(userName); 
             instance.setVisible(true);
-            
         }
         if (service.iniciarSesion(userName, enteredPassword) == 2){
             view.setVisible(false);
@@ -39,7 +38,7 @@ public class ControllerInicioSesion {
         }
         if (service.iniciarSesion(userName, enteredPassword) == 0)
         {
-            Messages.showMessageDialog("Usuario o clave incorrecta", "ERROR:");
+            Messages.mensajeVario("Usuario o clave incorrecta");
         }
     }
 }
