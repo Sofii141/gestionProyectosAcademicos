@@ -121,7 +121,7 @@ public class PanelActionCoordinator extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEstadoActionPerformed
 
     private void btnComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarioActionPerformed
-        GUIComentarios comentariosFrame = new GUIComentarios(projectService, proyecto, coordinator);
+        GUIComentarios comentariosFrame = new GUIComentarios(projectService, proyecto, coordinator, companyService);
         comentariosFrame.setVisible(true);
     }//GEN-LAST:event_btnComentarioActionPerformed
 

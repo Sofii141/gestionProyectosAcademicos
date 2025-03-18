@@ -67,7 +67,7 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
         setResizable(false);
 
         // Mostrar el ID del estudiante en el botón de inicio
-        labelCoordiName.setText("Coordinador " + coordinator.getUserId());
+        btnCoordiName.setText("Coordinador " + coordinator.getUserId());
 
         // Configurar los textos de los labels con la información del estudiante
         lbCoordinatorTitle.setText("Bienvenido Coordinador " + coordinator.getUserId());
@@ -84,13 +84,14 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCoordinador = new javax.swing.JTable();
+        labelCoordiName = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        labelCoordiName = new javax.swing.JLabel();
         btnProyectos = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         lblCoordinatorCorreo = new javax.swing.JLabel();
+        btnCoordiName = new javax.swing.JButton();
         lbCoordinatorTitle = new javax.swing.JLabel();
         jPanelGraficoCoordinator = new javax.swing.JPanel();
 
@@ -128,6 +129,11 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableCoordinador);
         jTableCoordinador.getAccessibleContext().setAccessibleDescription("");
 
+        labelCoordiName.setBackground(new java.awt.Color(255, 255, 255));
+        labelCoordiName.setFont(new java.awt.Font("Segoe UI Semibold", 1, 22)); // NOI18N
+        labelCoordiName.setForeground(new java.awt.Color(255, 255, 255));
+        labelCoordiName.setText("Coordinador x");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -136,12 +142,6 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(90, 111, 228));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        labelCoordiName.setBackground(new java.awt.Color(255, 255, 255));
-        labelCoordiName.setFont(new java.awt.Font("Segoe UI Semibold", 1, 22)); // NOI18N
-        labelCoordiName.setForeground(new java.awt.Color(255, 255, 255));
-        labelCoordiName.setText("Coordinador x");
-        jPanel4.add(labelCoordiName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, 30));
 
         btnProyectos.setBackground(new java.awt.Color(90, 111, 228));
         btnProyectos.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
@@ -182,6 +182,18 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
         lblCoordinatorCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCoordinatorCorreo.setText("tuCoordinador@gmail.com");
         jPanel4.add(lblCoordinatorCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+
+        btnCoordiName.setBackground(new java.awt.Color(90, 111, 228));
+        btnCoordiName.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        btnCoordiName.setForeground(new java.awt.Color(255, 255, 255));
+        btnCoordiName.setText("Coordinador x");
+        btnCoordiName.setBorder(null);
+        btnCoordiName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCoordiNameActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnCoordiName, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 210, 50));
 
         lbCoordinatorTitle.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         lbCoordinatorTitle.setForeground(new java.awt.Color(38, 42, 65));
@@ -243,7 +255,7 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         GUIDashboardCoordinador gui = new GUIDashboardCoordinador(coordinator, projectService, companyService, btnProyectos);
         gui.setVisible(true);
-        btnProyectos.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnProyectosActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -253,6 +265,13 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btnCoordiNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoordiNameActionPerformed
+        // TODO add your handling code here:
+        GUIDashboardCoordinadorInicio gui = new GUIDashboardCoordinadorInicio(coordinator.getUserId());
+        gui.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCoordiNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,6 +318,7 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCoordiName;
     private javax.swing.JButton btnProyectos;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

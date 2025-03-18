@@ -89,10 +89,13 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
         ));
 
         // Configuración de la apariencia de la tabla
+        /*
         jTableCoordinator.setGridColor(new java.awt.Color(204, 204, 204));
         jTableCoordinator.setRowHeight(45);
         jTableCoordinator.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTableCoordinator);
+        
+        */
 
         // Configuración de la columna de acciones
         jTableCoordinator.getColumnModel().getColumn(5).setMinWidth(325);

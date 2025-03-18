@@ -137,6 +137,7 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
         jLabel10.setText("Postularme en proyectos");
 
+        jTableEstudiante.setForeground(new java.awt.Color(38, 42, 65));
         jTableEstudiante.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

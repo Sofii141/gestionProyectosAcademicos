@@ -17,8 +17,10 @@ import javax.mail.internet.MimeMessage;
 public class EmailService {
     
     public static void sendEmail(String recipient, String subject, String body) {
-        final String senderEmail = System.getenv("EMAIL_USER");
-        final String senderPassword = System.getenv("EMAIL_PASS");
+        //final String senderEmail = System.getenv("EMAIL_USER");
+        //final String senderPassword = System.getenv("EMAIL_PASS");
+        final String senderEmail = "sofiaarango141@gmail.com";
+        final String senderPassword = "zmswzgudkjoazdrq"; 
         
         System.out.println(System.getenv("EMAIL_USER"));
         System.out.println(System.getenv("EMAIL_PASS"));

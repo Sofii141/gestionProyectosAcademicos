@@ -4,10 +4,17 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
+import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
+import co.edu.unicauca.mycompany.projects.domain.services.EmailService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,14 +29,18 @@ public class GUIComentarios extends javax.swing.JFrame {
     private Project proyecto;
     private final Coordinator coordinator; // Estudiante que interactúa con el panel
     private final ProjectService projectService; // Servicio de proyectos
+    private final CompanyService companyService;
 
-    public GUIComentarios(ProjectService projectService, Project proyecto, Coordinator coordinator) {
+    public GUIComentarios(ProjectService projectService, Project proyecto, Coordinator coordinator, CompanyService companyService) {
         this.proyecto = proyecto;
         this.coordinator = coordinator;
         this.projectService = projectService;
+        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB"); 
+        this.companyService = new CompanyService(companyRepository); // Se inicializa correctamente
+        
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        TextPrompt placeholderUsername = new TextPrompt("Ingresar un comentario: ",jTextField12);
+        TextPrompt placeholderUsername = new TextPrompt("Ingresar un comentario: ",textFielCorreo);
     }
 
     /**
@@ -44,8 +55,8 @@ public class GUIComentarios extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        textFielCorreo = new javax.swing.JTextField();
+        btnEnviarComentario = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -60,19 +71,24 @@ public class GUIComentarios extends javax.swing.JFrame {
         jLabel29.setForeground(new java.awt.Color(84, 84, 84));
         jLabel29.setText("Escribe un comentario para la empresa");
 
-        jTextField12.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField12.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField12.setBorder(null);
-        jTextField12.addActionListener(new java.awt.event.ActionListener() {
+        textFielCorreo.setBackground(new java.awt.Color(227, 230, 235));
+        textFielCorreo.setForeground(new java.awt.Color(130, 134, 140));
+        textFielCorreo.setBorder(null);
+        textFielCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
+                textFielCorreoActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(41, 64, 211));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Enviar");
+        btnEnviarComentario.setBackground(new java.awt.Color(41, 64, 211));
+        btnEnviarComentario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEnviarComentario.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviarComentario.setText("Enviar");
+        btnEnviarComentario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarComentarioActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(95, 97, 112));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -88,11 +104,11 @@ public class GUIComentarios extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFielCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEnviarComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
@@ -105,10 +121,10 @@ public class GUIComentarios extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel29)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textFielCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnEnviarComentario)
                     .addComponent(jButton2))
                 .addGap(21, 21, 21))
         );
@@ -127,18 +143,54 @@ public class GUIComentarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
+    private void textFielCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFielCorreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
+    }//GEN-LAST:event_textFielCorreoActionPerformed
+
+    private void btnEnviarComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarComentarioActionPerformed
+        // TODO add your handling code here:
+            String comentario = textFielCorreo.getText().trim(); // Captura el texto del campo de entrada
+
+            if (comentario.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El comentario no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener la empresa asociada al proyecto
+            Company empresa = companyService.getCompany(proyecto.getIdcompany());
+
+            if (empresa == null || empresa.getCompanyEmail() == null || empresa.getCompanyEmail().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontró la empresa asociada al proyecto o su correo no está definido.", 
+                                              "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Definir destinatario y cuerpo del correo
+            String destinatarioEmpresa = empresa.getCompanyEmail();
+            String asunto = "Nuevo Comentario del Proyecto: " + proyecto.getProTitle();
+            String cuerpo = "Coordinador: " + coordinator.getUserId()+ "\n"
+                          + "Proyecto: " + proyecto.getProTitle()+ "\n"
+                          + "Comentario:\n" + comentario;
+
+            // Enviar el correo
+            EmailService.sendEmail(destinatarioEmpresa, asunto, cuerpo);
+
+            // Mostrar mensaje de confirmación
+            JOptionPane.showMessageDialog(this, "Comentario enviado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpiar el campo de texto y cerrar la ventana
+            textFielCorreo.setText("");
+            this.dispose();
+    }//GEN-LAST:event_btnEnviarComentarioActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnEnviarComentario;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField textFielCorreo;
     // End of variables declaration//GEN-END:variables
 }
