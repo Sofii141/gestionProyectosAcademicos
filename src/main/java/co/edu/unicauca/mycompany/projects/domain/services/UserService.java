@@ -23,5 +23,14 @@ public class UserService {
         User newUser = new User(prmUserName, str_password);
         return repository.iniciarSesion(newUser);
     }
+    /**
+     * Guarda un nuevo user en el sistema.
+     * 
+     * @param newUser Objeto User con la información del user a registrar.
+     * @return true si el user fue guardado correctamente, false en caso contrario.
+     */
+    public boolean saveUser(User newUser) {
+        return repository.save(newUser);
+    }
     
 }

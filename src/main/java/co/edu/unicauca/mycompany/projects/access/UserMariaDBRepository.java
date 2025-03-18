@@ -5,6 +5,7 @@
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author spart
  */
-public class UserMariaDBRepository extends MariaDBConnection implements IUserRepository{
+public class UserMariaDBRepository extends MariaDBConnection implements IUserRepository {
 
     public UserMariaDBRepository() {
     }
@@ -45,10 +46,41 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
         }
         return -1;
     }
+    
 
     @Override
     public boolean cerrarSesion() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean save(User newUser) {
+        try {
+            // Validar que los campos obligatorios no sean nulos o vacíos
+            if (newUser == null
+                    || newUser.getUserId().isBlank()
+                    || newUser.getUserEmail().isBlank()
+                    || newUser.getUserPassword().isBlank()) {
+                return false;
+            }
+
+            this.connect();
+
+            String sql = "INSERT INTO User (userId, userEmail, userPassword) VALUES (?, ?, ?)";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newUser.getUserId());
+            pstmt.setString(2, newUser.getUserEmail());
+            pstmt.setString(3, newUser.getUserPassword());
+
+            pstmt.executeUpdate();
+
+            this.disconnect();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
 }

@@ -13,4 +13,5 @@ import co.edu.unicauca.mycompany.projects.domain.entities.User;
 public interface IUserRepository {
     int iniciarSesion(User usuario);
     boolean cerrarSesion();
+    boolean save(User newUser);
 }

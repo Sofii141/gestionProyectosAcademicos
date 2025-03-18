@@ -22,9 +22,8 @@ import java.util.logging.Logger;
  *
  * @author USUARIO
  */
-public class CompanyMariaDBRepository implements ICompanyRepository {
+public class CompanyMariaDBRepository extends MariaDBConnection implements ICompanyRepository {
 
-    private Connection conn;
 
     public CompanyMariaDBRepository() {
         initDatabase();
@@ -98,28 +97,6 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
         }
     }
 
-    public void connect() {
-        String url = "jdbc:mariadb://localhost:3306/mydatabase"; // Cambia 'mydatabase' por el nombre de tu base de datos
-        String user = "root"; // Cambia 'root' por tu usuario de MariaDB
-        String password = "mariadb"; // Cambia 'mariadb' por tu contraseña de MariaDB
-
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void disconnect() {
-        try {
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @Override
     public List<Company> listAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -134,38 +111,38 @@ public class CompanyMariaDBRepository implements ICompanyRepository {
     public Company companyInfo(String nit) {
         // Consulta SQL
         String sql = "SELECT cc.userId, cc.comName, cc.comEmail, cc.comContactPhone, cc.comContactName, "
-               + "cc.comContactLastName, cc.comContactCharge, s.secName "
-               + "FROM CompanyContact cc "
-               + "JOIN Sector s ON cc.secId = s.secId "
-               + "WHERE cc.userId = ?";
-        
+                + "cc.comContactLastName, cc.comContactCharge, s.secName "
+                + "FROM CompanyContact cc "
+                + "JOIN Sector s ON cc.secId = s.secId "
+                + "WHERE cc.userId = ?";
+
         // Compañia a retornar
         Company company = null;
 
         try {
             // Establecer conexión con la base de datos
             this.connect();
-            
+
             // Objeto para ejecutar consultas con parametros
             PreparedStatement stmt = conn.prepareStatement(sql);
-            
+
             // Asignar valores a la consulta preparada
             stmt.setString(1, nit);
-            
+
             // Ejecutar la consulta
             ResultSet rs = stmt.executeQuery();
-            
+
             // Iterar sobre los resultados y crear el objeto objeto Company
             if (rs.next()) {
                 company = new Company(
-                    rs.getString("userId"),
-                    rs.getString("comName"),
-                    rs.getString("comEmail"),
-                    rs.getString("comContactPhone"),
-                    rs.getString("comContactName"),
-                    rs.getString("comContactLastName"),
-                    rs.getString("comContactCharge"),
-                    Sector.valueOf(rs.getString("secName"))
+                        rs.getString("userId"),
+                        rs.getString("comName"),
+                        rs.getString("comEmail"),
+                        rs.getString("comContactPhone"),
+                        rs.getString("comContactName"),
+                        rs.getString("comContactLastName"),
+                        rs.getString("comContactCharge"),
+                        Sector.valueOf(rs.getString("secName"))
                 );
             }
         } catch (SQLException e) {
