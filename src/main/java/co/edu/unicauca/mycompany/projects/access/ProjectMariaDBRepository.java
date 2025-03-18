@@ -1,5 +1,6 @@
 package co.edu.unicauca.mycompany.projects.access;
 
+import co.edu.unicauca.mycompany.projects.domain.entities.EnumProjectState;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,43 +17,46 @@ import java.util.logging.Logger;
  * @author User
  */
 public class ProjectMariaDBRepository implements IProjectRepository {
+    
     private Connection conn;
 
     public ProjectMariaDBRepository() {
-        initDatabase();
     }
-
     @Override
     public boolean save(Project newProject) {
+        
+        // Validate product
+        if (newProject == null || newProject.getCompanyNit().isBlank() || newProject.getProId().isBlank() || newProject.getProTitle().isBlank() || 
+            newProject.getProDescription().isBlank() || newProject.getProGoals().isBlank() || newProject.getProAbstract().isBlank() ||
+            newProject.getProDeadLine() <= 0){
+            return false;
+        }
+        int rowsAffected = 0;
         try {
-            // Validate product
-            if (newProject == null || newProject.getCompanyNit().isBlank() || newProject.getProId().isBlank() || newProject.getProTitle().isBlank() || 
-                newProject.getProDescription().isBlank() || newProject.getProGoals().isBlank() || newProject.getProAbstract().isBlank() ||
-                newProject.getProDeadLine() <= 0){
-                return false;
-            }
             this.connect();
 
-            String sql = "INSERT INTO Project (companyId,proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget) "
+            String sql = "INSERT INTO Project (proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget, companyId) "
                     + "VALUES (?,?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newProject.getCompanyNit());
-            pstmt.setString(3, newProject.getProId());
-            pstmt.setString(4, newProject.getProTitle());
-            pstmt.setString(5, newProject.getProDescription());
+            
+            pstmt.setString(1, newProject.getProId());
+            pstmt.setString(2, newProject.getProTitle());
+            pstmt.setString(3, newProject.getProDescription());
+            pstmt.setString(4, newProject.getProAbstract());
             pstmt.setString(5, newProject.getProGoals());
-            pstmt.setString(6, newProject.getProAbstract());
-            pstmt.setString(7, Integer.toString(newProject.getProDeadLine()));
-            pstmt.setString(8, Double.toString(newProject.getProBudget()));
-            pstmt.executeUpdate();
+            pstmt.setString(6, Integer.toString(newProject.getProDeadLine()));
+            pstmt.setString(7, Double.toString(newProject.getProBudget()));
+            pstmt.setString(8, newProject.getCompanyNit());
+            
+            rowsAffected = pstmt.executeUpdate();
 
             this.disconnect();
-            return true;
+            
         } catch (SQLException ex) {
             Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return rowsAffected > 0;
     }
 
     @Override
@@ -61,13 +65,22 @@ public class ProjectMariaDBRepository implements IProjectRepository {
         try {
             this.connect();
 
-            String sql = "SELECT companyId,proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget FROM Project";
+            String sql = "SELECT companyId,proId, proTitle, proDescription, proAbstract, proGoals ,proDeadLine, proBudget, proState FROM Project";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Project newProject = new Project(rs.getString("companyId"),rs.getString("proId"), rs.getString("proTitle"), rs.getString("proDescription"),
-                        rs.getString("proAbstract"), rs.getString("proGoals"), Integer.decode(rs.getString("proDeadLine")),Double.parseDouble(rs.getString("proBudget")));
-
+                Project newProject = new Project(
+                                                rs.getString("proId"),
+                                                rs.getString("proTitle"),
+                                                rs.getString("proDescription"),
+                                                rs.getString("proAbstract"),
+                                                rs.getString("proGoals"),
+                                                Integer.decode(rs.getString("proDeadLine")),
+                                                Double.parseDouble(rs.getString("proBudget")),
+                                                rs.getString("companyId"));
+                // Asigna el estado del proyecto
+                newProject.setProState(EnumProjectState.valueOf(rs.getString("proState")));
+                
                 projects.add(newProject);
             }
             this.disconnect();
@@ -78,30 +91,6 @@ public class ProjectMariaDBRepository implements IProjectRepository {
         return projects;
     }
 
-    private void initDatabase() {
-        // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS Project (\n"
-                + "    proId VARCHAR(50) NOT NULL,\n"
-                + "    proTitle VARCHAR(100) NOT NULL,\n"
-                + "    proDescription TEXT,\n"
-                + "    proAbstract TEXT,\n"
-                + "    proGoals TEXT,\n"
-                + "    proDeadLine INT NOT NULL,\n"
-                + "    proBudget FLOAT,\n"
-                + "    proState VARCHAR(20) NOT NULL,"
-                + "    PRIMARY KEY (proId),,\n"
-                + "    CONSTRAINT chk_proState CHECK (proState IN ('PROPUESTO', 'ASIGNADO', 'FINALIZADO'))\n"
-                + ");";
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            this.disconnect();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     public void connect() {
         // URL de conexión para MariaDB

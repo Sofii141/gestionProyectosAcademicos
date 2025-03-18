@@ -229,8 +229,8 @@ public class Company {
      */
     public void addProject(String proId, String proTitle, String proDescription, String proAbstract,
                            String proGoals, int proDeadLine, double proBudget) {
-        Project project = new Project( this.companyNit,proId, proTitle, proDescription, proAbstract, proGoals, 
-                                      proDeadLine, proBudget);
+        Project project = new Project( proId, proTitle, proDescription, proAbstract, proGoals, 
+                                      proDeadLine, proBudget,this.companyNit);
         companyProjects.add(project);
     }
 }

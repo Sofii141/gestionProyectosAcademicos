@@ -8,6 +8,6 @@ package co.edu.unicauca.mycompany.projects.domain.entities;
  *
  * @author User
  */
-public enum EnumState {
-    PROPUESTO, ASIGNADO, FINALIZADO
+public enum EnumProjectState {
+    PROPUESTO, ACEPTADO, ASIGNADO, FINALIZADO
 }

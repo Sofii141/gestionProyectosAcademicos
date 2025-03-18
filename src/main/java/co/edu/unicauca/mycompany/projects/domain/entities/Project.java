@@ -1,27 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
+//import co.edu.unicauca.mycompany.projects.domain.entities.EnumProjectState;
+//import java.util.ArrayList;
+//import java.util.Date;
+//import java.util.List;
+
 /**
- *
- * @author User
+ * Representa un proyecto dentro del sistema.
+ * 
+ * Un proyecto tiene un identificador, título, descripción, objetivos, presupuesto,
+ * estado y fechas clave. Además, puede tener un equipo de desarrollo, postulantes,
+ * un coordinador y una empresa asociada.
+ * 
  */
 public class Project {
-    private String companyNit;
-    private String proId; //primary key
-    private String proTitle;
-    private String proDescription;
-    private String proAbstract;
-    private String proGoals;
-    private int proDeadLine; 
-    private double proBudget; //Puede recibir null
-    private String proState; // "PROPUESTO", "ASIGNADO", "FINALIZADO"
+    
+    private String proId; //Identificador del Proyecto
+    private String proTitle; //Título del proyecto 
+    private String proDescription; //Descripción detallada del proyecto
+    private String proAbstract; //Resumen del Proyecto
+    private String proGoals; //Objetivos del Proyecto
+    private int proDeadLine;  // Plazo en meses del proyecto
+    private double proBudget; // Presupuesto del Proyecto - En la BD puede recibir null
+    private EnumProjectState proState; // Estado del proyecto: "PROPUESTO", "ACEPTADO", "ASIGNADO", "FINALIZADO"
 
+    private String companyNit;
+    
     /**
      * Constructor de la clase Project.
-     * @param companyNit
      * @param proId
      * @param proTitle
      * @param proDescription
@@ -29,8 +35,9 @@ public class Project {
      * @param proGoals
      * @param proDeadLine
      * @param proBudget
+     * @param companyNit
      */
-    public Project(String companyNit,String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, double proBudget) {    
+    public Project(String proId, String proTitle, String proDescription, String proAbstract, String proGoals, int proDeadLine, double proBudget, String companyNit) {    
         this.companyNit = companyNit;
         this.proId = proId;
         this.proTitle = proTitle;
@@ -39,14 +46,10 @@ public class Project {
         this.proGoals = proGoals;
         this.proDeadLine = proDeadLine;
         this.proBudget = proBudget;
-        this.proState = "PROPUESTO"; //Default
+        this.proState = EnumProjectState.PROPUESTO;
     }
-
-    public String getCompanyNit() {
-        return companyNit;
-    }
-
     
+//Getter & Setter
     
     public String getProId() {
         return proId;
@@ -82,25 +85,25 @@ public class Project {
         return proBudget;
     }
     
+    public int getProDeadLine() {
+        return proDeadLine;
+    }
+    
     /**
      * Obtiene el estado actual del proyecto.
      * 
      * @return Estado del proyecto.
      */
-    public String getProState() {
+    
+    public EnumProjectState getProState() {
         return proState;
     }
 
-    public int getProDeadLine() {
-        return proDeadLine;
-    }
-
-    public void setCompanyNit(String companyNit) {
-        this.companyNit = companyNit;
+    
+    public String getCompanyNit() {
+        return companyNit;
     }
     
-    
-
     public void setProId(String proId) {
         this.proId = proId;
     }
@@ -130,10 +133,12 @@ public class Project {
         this.proDeadLine = proDeadLine;
     }
 
-    
-    public void setProState(String proState) {
+    public void setProState(EnumProjectState proState) {
         this.proState = proState;
     }
     
-    
+    public void setCompanyNit(String companyNit) {
+        this.companyNit = companyNit;
+    }
+
 }

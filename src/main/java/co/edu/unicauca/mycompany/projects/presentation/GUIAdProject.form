@@ -193,9 +193,6 @@
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="txtCompanyId"/>
           </AccessibilityProperties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtProjectIdActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTitleProject">
           <Properties>
@@ -208,9 +205,6 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTitleProjectActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblDescriptionProject">
           <Properties>
@@ -259,9 +253,6 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDeadLineProjectActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblBudget">
           <Properties>

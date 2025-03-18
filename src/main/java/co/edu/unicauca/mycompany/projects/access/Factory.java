@@ -16,12 +16,11 @@ public class Factory {
      */
     private static Factory instance;
 
-    private Map<String, ICompanyRepository> dictionary;
+    private Map<String, IProjectRepository> projectDictionary;
 
     private Factory() {
-        dictionary = new HashMap<>();
-        dictionary.put("ARRAYS", new CompanyArraysRepository());
-        dictionary.put("SQLITE", new CompanySqliteRepository());
+        projectDictionary = new HashMap<>();
+        projectDictionary.put("MARIADB", new ProjectMariaDBRepository());
     }
 
     /**
@@ -44,12 +43,12 @@ public class Factory {
      * @param repository cadena que indica qué tipo de clase hija debe instanciar
      * @return una clase hija de la abstracción IProductRepository
      */
-    public ICompanyRepository getRepository(String repository) {
+    public IProjectRepository getRepository(String repository) {
 
-        ICompanyRepository result = null;
+        IProjectRepository result = null;
 
-        if (dictionary.containsKey(repository)) {
-            result = dictionary.get(repository);
+        if (projectDictionary.containsKey(repository)) {
+            result = projectDictionary.get(repository);
         }
 
         return result;

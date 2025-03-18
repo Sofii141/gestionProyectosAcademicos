@@ -74,20 +74,10 @@ public class GUIAdProject extends javax.swing.JFrame {
         lblProyectId.setText("Id del Proyecto*");
 
         txtProjectId.setBackground(new java.awt.Color(242, 242, 242));
-        txtProjectId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProjectIdActionPerformed(evt);
-            }
-        });
 
         lblTitleProject.setText("Título del Proyecto*");
 
         txtTitleProject.setBackground(new java.awt.Color(242, 242, 242));
-        txtTitleProject.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTitleProjectActionPerformed(evt);
-            }
-        });
 
         lblDescriptionProject.setText("Descripción");
 
@@ -104,11 +94,6 @@ public class GUIAdProject extends javax.swing.JFrame {
         lblDeadLine.setText("Fecha Límite (en cuantos meses)*");
 
         txtDeadLineProject.setBackground(new java.awt.Color(242, 242, 242));
-        txtDeadLineProject.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDeadLineProjectActionPerformed(evt);
-            }
-        });
 
         lblBudget.setText("Presupuesto");
 
@@ -201,18 +186,6 @@ public class GUIAdProject extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtProjectIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProjectIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtProjectIdActionPerformed
-
-    private void txtTitleProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTitleProjectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTitleProjectActionPerformed
-
-    private void txtDeadLineProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeadLineProjectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDeadLineProjectActionPerformed
-
     private void btnAddProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProjectActionPerformed
         String proId = txtProjectId.getText();
         String proTitle = txtTitleProject.getText();
@@ -221,7 +194,7 @@ public class GUIAdProject extends javax.swing.JFrame {
         String proGoals = txtGoalsProject.getText();
         String proDeadLine = txtDeadLineProject.getText();
         String proBudget = txtBudgetProject.getText(); 
-        if(projectService.saveProject(new Project("123",proId,proTitle,proDescription,proAbstract,proGoals,Integer.getInteger(proDeadLine),Double.parseDouble(proBudget)))){
+        if(projectService.saveProject(new Project(proId,proTitle,proDescription,proAbstract,proGoals,Integer.getInteger(proDeadLine),Double.parseDouble(proBudget),"123"))){
             Messages.showMessageDialog("El proyecto se registró exitosamente","Atención");
             this.dispose();
         }
