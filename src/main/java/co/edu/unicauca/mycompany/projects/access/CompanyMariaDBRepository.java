@@ -54,7 +54,8 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
             pstmt.setString(5, newCompany.getContactName());
             pstmt.setString(6, newCompany.getContactLastName());
             pstmt.setString(7, newCompany.getContactPosition());
-            pstmt.setString(8, "1"); // secId desde el Sector
+            pstmt.setString(8, getSectorIdByName(newCompany.getCompanySector().toString()));
+
 
             pstmt.executeUpdate();
 
@@ -98,10 +99,7 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public boolean existsNit(String nit) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
 
     @Override
     public Company companyInfo(String nit) {
@@ -150,4 +148,31 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
         }
         return company;
     }
+        /**
+     * Obtiene el ID de un sector dado su nombre.
+     *
+     * @param sectorName Nombre del sector a buscar.
+     * @return El ID del sector si existe, null en caso contrario.
+     */
+    public String getSectorIdByName(String sectorName) {
+        String sql = "SELECT secId FROM Sector WHERE secName = ?";
+        String sectorId = null;
+
+        try {
+            this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, sectorName);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                sectorId = rs.getString("secId");
+            }
+
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al obtener secId del sector", ex);
+        }
+        return sectorId;
+    }
+
 }

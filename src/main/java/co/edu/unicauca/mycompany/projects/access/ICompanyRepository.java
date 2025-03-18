@@ -26,13 +26,6 @@ public interface ICompanyRepository {
      */
     List<Company> listAll();
 
-    /**
-     * Verifica si una compañía con un determinado NIT existe en el repositorio.
-     * 
-     * @param nit Número de Identificación Tributaria (NIT) de la compañía.
-     * @return true si la compañía existe, false en caso contrario.
-     */   
-    boolean existsNit(String nit);
 
     /**
      * Obtiene la información detallada de una compañía a partir de su NIT.
