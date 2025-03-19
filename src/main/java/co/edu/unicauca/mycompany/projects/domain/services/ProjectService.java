@@ -15,6 +15,11 @@ import java.util.List;
 public class ProjectService extends Subject{
 
     private final IProjectRepository repository;
+    
+    /**
+     * Validador de los datos de las empresas.
+     */
+    private IValidation validator;
 
     /**
      * Constructor que inicializa el servicio con un repositorio de proyectos.
@@ -111,6 +116,30 @@ public class ProjectService extends Subject{
         }
 
         return success;
+    }
+    
+    /**
+     * Verifica si un usuario con el ID especificado ya existe en la base de datos.
+     *
+     * @param userId El identificador único del usuario a verificar.
+     * @return true si el ID del usuario ya existe en el repositorio, false en caso contrario.
+     */
+    public boolean existProjectId(String projectId) {
+        return repository.existProjectId(projectId);
+    }
+    
+    /**
+     * Valida los datos de un proyecto utilizando la clase
+     * DataValidationProject.
+     *
+     * @param newProject El proyecto cuyos datos se desean validar.
+     * @return true si los datos del proyecto son válidos, false en caso
+     * contrario.
+     * @throws Exception Si ocurre un error durante la validación.
+     */
+    public boolean validData(Project newProject) throws Exception {
+        validator = new DataValidationProject(newProject);
+        return validator.isValid();
     }
     
 }

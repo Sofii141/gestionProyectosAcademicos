@@ -76,5 +76,7 @@ public interface IProjectRepository {
     int countTotalProjects();
     
     boolean updateProjectStatus(String projectId, String newStatus);
+    
+    public boolean existProjectId(String projectId);
 }
     
