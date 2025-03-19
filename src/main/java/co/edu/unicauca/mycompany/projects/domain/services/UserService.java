@@ -27,8 +27,7 @@ public class UserService {
     public int iniciarSesion(String prmUserName, char[] prmPassword) {
         String str_password = new String(prmPassword);
         //User newUser = new User(prmUserName, str_password);
-        //return repository.iniciarSesion(newUser);
-        return 0;
+        return repository.iniciarSesion(prmUserName, prmPassword);
     }
 
     /**
