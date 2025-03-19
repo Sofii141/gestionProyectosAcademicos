@@ -56,9 +56,8 @@ public class ControllerInicioSesion {
                 instancee.setVisible(true);
                 break;
             case 3:
-                view.dispose();
-                //GUIDashboardEmpresa instance = new GUIDashboardEmpresa(userName); Cuando lo de la empresa ya este descomentar
-                GUIDashboardEmpresa instanceee = new GUIDashboardEmpresa();
+                view.setVisible(false);
+                GUIDashboardEmpresa instanceee = new GUIDashboardEmpresa(userName); 
                 instanceee.setVisible(true);
                 break;
             default:

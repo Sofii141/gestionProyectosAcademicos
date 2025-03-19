@@ -462,4 +462,29 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
 
         return success; // Devuelve si se realizó la actualización
     }
+    
+    @Override
+    public boolean existProjectId(String projectId) {
+        String sql = "SELECT COUNT(*) FROM Project WHERE proId = ?";
+
+        try {
+            if (this.connect()) { // Conectar a la base de datos
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, projectId);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        int count = rs.getInt(1); // Obtener el número de coincidencias
+                        return count > 0; // Si es mayor a 0, el ID ya existe
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al verificar existencia de proId", ex);
+        } finally {
+            this.disconnect(); // Asegurar la desconexión después de la consulta
+        }
+
+        return false; // En caso de error, asumimos que no existe
+    }
 }
