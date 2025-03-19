@@ -75,32 +75,40 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
      */
     @Override
     public boolean save(User newUser) {
-        try {
-            // Validar que los campos obligatorios no sean nulos o vacíos
-            if (newUser == null
-                    || newUser.getUserId().isBlank()
-                    || newUser.getUserEmail().isBlank()
-                    || newUser.getUserPassword().isBlank()) {
-                return false;
-            }
-
-            this.connect();
-
-            String sql = "INSERT INTO User (userId, userEmail, userPassword) VALUES (?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newUser.getUserId());
-            pstmt.setString(2, newUser.getUserEmail());
-            pstmt.setString(3, newUser.getUserPassword());
-
-            pstmt.executeUpdate();
-
-            this.disconnect();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(UserMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al guardar usuario", ex);
+    try {
+        // Validar que los campos obligatorios no sean nulos o vacíos
+        if (newUser == null
+                || newUser.getUserId().isBlank()
+                || newUser.getUserEmail().isBlank()
+                || newUser.getUserPassword().isBlank()) {
+            return false;
         }
-        return false;
+
+        this.connect();
+
+        // Insertar usuario en la tabla User
+        String sqlUser = "INSERT INTO User (userId, userEmail, userPassword) VALUES (?, ?, ?)";
+        PreparedStatement pstmtUser = conn.prepareStatement(sqlUser);
+        pstmtUser.setString(1, newUser.getUserId());
+        pstmtUser.setString(2, newUser.getUserEmail());
+        pstmtUser.setString(3, newUser.getUserPassword());
+        pstmtUser.executeUpdate();
+
+        // Insertar rol en la tabla Rol
+        String sqlRol = "INSERT INTO Rol (userId, rolName) VALUES (?, ?)";
+        PreparedStatement pstmtRol = conn.prepareStatement(sqlRol);
+        pstmtRol.setString(1, newUser.getUserId());
+        pstmtRol.setString(2, "CONTACTO EMPRESA");
+        pstmtRol.executeUpdate();
+
+        this.disconnect();
+        return true;
+    } catch (SQLException ex) {
+        Logger.getLogger(UserMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al guardar usuario y rol", ex);
     }
+    return false;
+}
+
 
     /**
      * Verifica si un userId ya existe en la base de datos.
