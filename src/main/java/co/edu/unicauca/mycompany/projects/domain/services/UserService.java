@@ -22,23 +22,18 @@ public class UserService {
     public UserService(IUserRepository prmRepo) {
         repository = prmRepo;
     }
-<<<<<<< HEAD
+
     /**
-     * Se encarga de llamar al iniciar sesion del repositorio mandandole como instancia el usuario
+     * Se encarga de llamar al iniciar sesion del repositorio mandandole como
+     * instancia el usuario
+     *
      * @param prmUserName Nombre de usuario
      * @param prmPassword Contraseña
      * @return el exito de la operacion con enteros segun el repositorio
      */
-    public int iniciarSesion(String prmUserName, char[] prmPassword){
-        String str_password = new String(prmPassword); 
-        return repository.iniciarSesion(prmUserName, prmPassword);
-=======
-
     public int iniciarSesion(String prmUserName, char[] prmPassword) {
         String str_password = new String(prmPassword);
-        User newUser = new User(prmUserName, str_password);
-        return repository.iniciarSesion(newUser);
->>>>>>> 3cdcb1b1bc17dedbc1e02ab278c0bc2cb3c8ec84
+        return repository.iniciarSesion(prmUserName, prmPassword);
     }
 
     /**
@@ -52,11 +47,13 @@ public class UserService {
         return repository.save(newUser);
     }
 
-        /**
-     * Verifica si un usuario con el ID especificado ya existe en la base de datos.
+    /**
+     * Verifica si un usuario con el ID especificado ya existe en la base de
+     * datos.
      *
      * @param userId El identificador único del usuario a verificar.
-     * @return true si el ID del usuario ya existe en el repositorio, false en caso contrario.
+     * @return true si el ID del usuario ya existe en el repositorio, false en
+     * caso contrario.
      */
     public boolean existUserId(String userId) {
         return repository.existId(userId);
@@ -66,7 +63,8 @@ public class UserService {
      * Valida los datos de un usuario utilizando la clase DataValidationUser.
      *
      * @param newUser El usuario cuyos datos se desean validar.
-     * @return true si los datos del usuario son válidos, false en caso contrario.
+     * @return true si los datos del usuario son válidos, false en caso
+     * contrario.
      * @throws Exception Si ocurre un error durante la validación.
      */
     public boolean validData(User newUser) throws Exception {
