@@ -53,6 +53,16 @@ public class ProjectService extends Subject{
     public Project getProject(String nit) {
         return repository.getProject(nit);
     }
+    /**
+     * Guarda un Proyecto en el sistema.
+     *
+     * @param newProject Objeto Project con la información del proyect de la empresa.
+     * @return true si el proyecto fue guardado correctamente, false en caso
+     * contrario.
+     */
+    public boolean saveProject(Project newProject) {
+        return repository.save(newProject);
+    }
 
     /**
      * Permite que un estudiante se postule a un proyecto.

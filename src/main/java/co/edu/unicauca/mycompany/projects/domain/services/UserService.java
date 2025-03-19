@@ -22,23 +22,13 @@ public class UserService {
     public UserService(IUserRepository prmRepo) {
         repository = prmRepo;
     }
-<<<<<<< HEAD
-    /**
-     * Se encarga de llamar al iniciar sesion del repositorio mandandole como instancia el usuario
-     * @param prmUserName Nombre de usuario
-     * @param prmPassword Contraseña
-     * @return el exito de la operacion con enteros segun el repositorio
-     */
-    public int iniciarSesion(String prmUserName, char[] prmPassword){
-        String str_password = new String(prmPassword); 
-        return repository.iniciarSesion(prmUserName, prmPassword);
-=======
+
 
     public int iniciarSesion(String prmUserName, char[] prmPassword) {
         String str_password = new String(prmPassword);
-        User newUser = new User(prmUserName, str_password);
-        return repository.iniciarSesion(newUser);
->>>>>>> 3cdcb1b1bc17dedbc1e02ab278c0bc2cb3c8ec84
+        //User newUser = new User(prmUserName, str_password);
+        //return repository.iniciarSesion(newUser);
+        return 0;
     }
 
     /**

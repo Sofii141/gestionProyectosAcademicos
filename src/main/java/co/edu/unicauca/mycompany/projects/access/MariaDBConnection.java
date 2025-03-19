@@ -26,7 +26,7 @@ public abstract class MariaDBConnection {
         // URL de conexión para MariaDB
         String url = "jdbc:mariadb://localhost:3306/mydatabase"; // Cambia 'mydatabase' por el nombre de tu base de datos
         String user = "root"; // Cambia 'root' por tu usuario de MariaDB
-        String password = ""; // Cambia 'password' por tu contraseña de MariaDB
+        String password = "mariadb"; // Cambia 'password' por tu contraseña de MariaDB
 
         try {
             conn = DriverManager.getConnection(url, user, password);

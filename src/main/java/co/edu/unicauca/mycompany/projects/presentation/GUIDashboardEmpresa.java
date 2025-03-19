@@ -4,22 +4,65 @@
  */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
+import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
+import co.edu.unicauca.mycompany.projects.domain.entities.Company;
+import co.edu.unicauca.mycompany.projects.domain.entities.Project;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  *
  * @author Ana_Sofia
  */
 public class GUIDashboardEmpresa extends javax.swing.JFrame {
-
+    private Company company;
+    private CompanyService companyService;
+    private ProjectService projectService;
     /**
      * Creates new form inicioSesion
      */
-    public GUIDashboardEmpresa() {
+    public GUIDashboardEmpresa(String nit) {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         initPlaceHolders();
+        
+        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
+        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        this.projectService = new ProjectService(projectRepository);
+        this.companyService = new CompanyService(companyRepository);
+        this.company = companyService.getCompany(nit);
+        
+        initVisual();
+        
     }
+    /**
+     * Configura la apariencia y elementos visuales del dashboard.
+     * Hace visible la ventana, la centra en la pantalla y deshabilita la opción de redimensionar.
+     */
+    public final void initVisual() {
+        // Mostrar la ventana
+        this.setVisible(true);
+        
+        // Centrar la ventana en la pantalla
+        setLocationRelativeTo(null); 
+        
+        // Bloquear el cambio de tamaño de la ventana
+        setResizable(false);
 
+        // Mostrar el ID del estudiante en el botón de inicio
+        lblNameCompany.setText("Compañia " + company.getContactName());
+
+        // Configurar los textos de los labels con la información del estudiante
+        lblEmailCompany.setText(company.getUserEmail());
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,29 +74,30 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        lblNameCompany = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
+        lblEmailCompany = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        txtAbstractProject = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
+        txtTitleProject = new javax.swing.JTextField();
+        txtDeadLineProject = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        txtDescriptionProject = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        txtDateProject = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
+        txtBudgetProject = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
+        txtGoalsProject = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnSendProject = new javax.swing.JButton();
+        txtProjectId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -64,11 +108,11 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(90, 111, 228));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Empresa x");
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, 30));
+        lblNameCompany.setBackground(new java.awt.Color(255, 255, 255));
+        lblNameCompany.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        lblNameCompany.setForeground(new java.awt.Color(255, 255, 255));
+        lblNameCompany.setText("Empresa x");
+        jPanel4.add(lblNameCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, 30));
 
         jButton3.setBackground(new java.awt.Color(90, 111, 228));
         jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
@@ -118,22 +162,17 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         });
         jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 50));
 
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("correoEmpres@gmail.com");
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+        lblEmailCompany.setForeground(new java.awt.Color(255, 255, 255));
+        lblEmailCompany.setText("correoEmpres@gmail.com");
+        jPanel4.add(lblEmailCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
         jLabel10.setText("Publicación de proyecto");
 
-        jTextField9.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField9.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField9.setBorder(null);
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
+        txtAbstractProject.setBackground(new java.awt.Color(227, 230, 235));
+        txtAbstractProject.setForeground(new java.awt.Color(130, 134, 140));
+        txtAbstractProject.setBorder(null);
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(58, 60, 64));
@@ -143,36 +182,21 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(58, 60, 64));
         jLabel14.setText("*Resumen");
 
-        jTextField10.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField10.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField10.setBorder(null);
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
-            }
-        });
+        txtTitleProject.setBackground(new java.awt.Color(227, 230, 235));
+        txtTitleProject.setForeground(new java.awt.Color(130, 134, 140));
+        txtTitleProject.setBorder(null);
 
-        jTextField11.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField11.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField11.setBorder(null);
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
+        txtDeadLineProject.setBackground(new java.awt.Color(227, 230, 235));
+        txtDeadLineProject.setForeground(new java.awt.Color(130, 134, 140));
+        txtDeadLineProject.setBorder(null);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(58, 60, 64));
         jLabel15.setText("*Tiempo maximo en meses");
 
-        jTextField12.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField12.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField12.setBorder(null);
-        jTextField12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
-            }
-        });
+        txtDescriptionProject.setBackground(new java.awt.Color(227, 230, 235));
+        txtDescriptionProject.setForeground(new java.awt.Color(130, 134, 140));
+        txtDescriptionProject.setBorder(null);
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(58, 60, 64));
@@ -182,40 +206,25 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(58, 60, 64));
         jLabel17.setText("*Fecha");
 
-        jTextField14.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField14.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField14.setBorder(null);
-        jTextField14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField14ActionPerformed(evt);
-            }
-        });
+        txtDateProject.setBackground(new java.awt.Color(227, 230, 235));
+        txtDateProject.setForeground(new java.awt.Color(130, 134, 140));
+        txtDateProject.setBorder(null);
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(58, 60, 64));
         jLabel18.setText("*Objetivos");
 
-        jTextField16.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField16.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField16.setBorder(null);
-        jTextField16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField16ActionPerformed(evt);
-            }
-        });
+        txtBudgetProject.setBackground(new java.awt.Color(227, 230, 235));
+        txtBudgetProject.setForeground(new java.awt.Color(130, 134, 140));
+        txtBudgetProject.setBorder(null);
 
         jLabel19.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(58, 60, 64));
         jLabel19.setText("Presupuesto");
 
-        jTextField17.setBackground(new java.awt.Color(227, 230, 235));
-        jTextField17.setForeground(new java.awt.Color(130, 134, 140));
-        jTextField17.setBorder(null);
-        jTextField17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField17ActionPerformed(evt);
-            }
-        });
+        txtGoalsProject.setBackground(new java.awt.Color(227, 230, 235));
+        txtGoalsProject.setForeground(new java.awt.Color(130, 134, 140));
+        txtGoalsProject.setBorder(null);
 
         jButton7.setBackground(new java.awt.Color(95, 97, 112));
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -227,15 +236,17 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setBackground(new java.awt.Color(41, 64, 211));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Enviar");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnSendProject.setBackground(new java.awt.Color(41, 64, 211));
+        btnSendProject.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSendProject.setForeground(new java.awt.Color(255, 255, 255));
+        btnSendProject.setText("Enviar");
+        btnSendProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnSendProjectActionPerformed(evt);
             }
         });
+
+        txtProjectId.setBackground(new java.awt.Color(227, 230, 235));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -251,73 +262,78 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
                         .addComponent(jLabel17)
                         .addGap(252, 252, 252))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
+                        .addComponent(txtTitleProject, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 426, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAbstractProject, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSendProject, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField12)
-                                    .addComponent(jLabel10)
+                                    .addComponent(txtDescriptionProject)
                                     .addComponent(jLabel16)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel15)
-                                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDeadLineProject, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel14))
                                         .addGap(103, 103, 103)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel19)
                                             .addComponent(jLabel18)
-                                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 20, Short.MAX_VALUE))))
+                                            .addComponent(txtBudgetProject, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtGoalsProject, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDateProject, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(0, 41, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtProjectId, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtProjectId, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTitleProject, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDateProject, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jLabel19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDeadLineProject, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBudgetProject, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAbstractProject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGoalsProject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(txtDescriptionProject, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton7)
-                    .addComponent(jButton8))
+                    .addComponent(btnSendProject))
                 .addGap(20, 20, 20))
         );
 
@@ -353,41 +369,52 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
-
-    private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField14ActionPerformed
-
-    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField16ActionPerformed
-
-    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField17ActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void btnSendProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendProjectActionPerformed
+
+        String proId = txtProjectId.getText().trim();
+        String proTitle = txtTitleProject.getText().trim();
+        String proDescription = txtDescriptionProject.getText().trim();
+        String proAbstract = txtAbstractProject.getText().trim();
+        String proGoals = txtGoalsProject.getText().trim();
+        String proDeadLine = txtDeadLineProject.getText().trim();
+        String proBudget = txtBudgetProject.getText().trim();
+
+        String idCompany = company.getUserId();
+        // Validar y convertir proDeadLine
+        int proDeadLineInt = 0;
+        try {
+            proDeadLineInt = Integer.parseInt(proDeadLine);
+        } catch (NumberFormatException e) {
+            Messages.showMessageDialog("El plazo del proyecto debe ser un número válido", "Error");
+            txtDeadLineProject.requestFocus();
+            return;
+        }
+        // Validar y convertir proBudget
+        double proBudgetDouble = 0.0;
+        try {
+            proBudgetDouble = Double.parseDouble(proBudget);
+        } catch (NumberFormatException e) {
+            Messages.showMessageDialog("El presupuesto del proyecto debe ser un número válido", "Error");
+            txtBudgetProject.requestFocus();
+            return;
+        }
+        // Crear la fecha y hora actuales del proyecto
+        Date proDate = new Date(); // Obtiene la fecha y hora actuales
+
+        Project project = new Project(proId, proTitle, proDescription, proAbstract, proGoals, proDeadLineInt, proDate, proBudgetDouble, idCompany);
+        // Guardar el proyecto
+        if (projectService.saveProject(project)) {
+            Messages.showMessageDialog("El proyecto se registró exitosamente", "Atención");
+            this.dispose();
+        } else {
+            Messages.showMessageDialog("Hubo un error al registrar el proyecto", "Error");
+        }
+
+    }//GEN-LAST:event_btnSendProjectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -422,7 +449,7 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIDashboardEmpresa().setVisible(true);
+                new GUIDashboardEmpresa("U004").setVisible(true);
             }
         });
     }
@@ -430,26 +457,25 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
      * Crea los placeholders para la creacion de la empresa
      */
     private void initPlaceHolders(){
-        TextPrompt placeholderName = new TextPrompt("Ingresar nombre:",jTextField10);
-        TextPrompt placeholderFecha = new TextPrompt("Ingresar fecha:",jTextField14);
-        TextPrompt placeholderTiempo = new TextPrompt("Ingresar tiempo maximo en meses:",jTextField11);
-        TextPrompt placeholderPresupuesto = new TextPrompt("Ingresar fecha:",jTextField16);
-        TextPrompt placeholderResumen = new TextPrompt("Ingresar resumen:",jTextField9);
-        TextPrompt placeholderObjetivos = new TextPrompt("Ingresar onjetivos:",jTextField17);
-        TextPrompt placeholderDescripcion  = new TextPrompt("Ingrese descripción:",jTextField12);
+        TextPrompt placeholderName = new TextPrompt("Ingresar nombre:",txtTitleProject);
+        TextPrompt placeholderFecha = new TextPrompt("Ingresar fecha:",txtDateProject);
+        TextPrompt placeholderTiempo = new TextPrompt("Ingresar tiempo maximo en meses:",txtDeadLineProject);
+        TextPrompt placeholderPresupuesto = new TextPrompt("Ingresar fecha:",txtBudgetProject);
+        TextPrompt placeholderResumen = new TextPrompt("Ingresar resumen:",txtAbstractProject);
+        TextPrompt placeholderObjetivos = new TextPrompt("Ingresar onjetivos:",txtGoalsProject);
+        TextPrompt placeholderDescripcion  = new TextPrompt("Ingrese descripción:",txtDescriptionProject);
+        TextPrompt placeholderProId  = new TextPrompt("Ingrese el id del proyecto:",txtProjectId);
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSendProject;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -459,12 +485,15 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel lblEmailCompany;
+    private javax.swing.JLabel lblNameCompany;
+    private javax.swing.JTextField txtAbstractProject;
+    private javax.swing.JTextField txtBudgetProject;
+    private javax.swing.JTextField txtDateProject;
+    private javax.swing.JTextField txtDeadLineProject;
+    private javax.swing.JTextField txtDescriptionProject;
+    private javax.swing.JTextField txtGoalsProject;
+    private javax.swing.JTextField txtProjectId;
+    private javax.swing.JTextField txtTitleProject;
     // End of variables declaration//GEN-END:variables
 }
