@@ -477,6 +477,8 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
                     userService.saveUser(user);
                     companyService.saveCompany(company);
                     this.dispose();
+                    GUIinicioSesion instance = new GUIinicioSesion(this.userService);
+                    instance.setVisible(true);
                     Messages.showMessageDialog("Empresa de nit " + comNit + " registrada correctamente", "Registro correcto");
                 }
 
@@ -512,43 +514,6 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIDashboardEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        CompanyMariaDBRepository repository = new CompanyMariaDBRepository();
-        CompanyService companyService = new CompanyService(repository);
-        UserMariaDBRepository repository2 = new UserMariaDBRepository();
-        UserService userService = new UserService(repository2);
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIregistrarEmpresa(companyService, userService).setVisible(true);
-            }
-        });
-    }
 
     /**
      * Valida que las contraseñas ingresadas sean iguales.
@@ -562,7 +527,9 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         return password.equals(confirmPassword);
     }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        GUIinicioSesion instance = new GUIinicioSesion(this.userService);
+        instance.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtComNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNameActionPerformed
