@@ -14,7 +14,7 @@ import co.edu.unicauca.mycompany.projects.domain.services.CoordinatorService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 
 
-public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
+public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame implements Dashboard{
 
     /**
     * Creates new form inicioSesion
@@ -328,4 +328,11 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
     private javax.swing.JLabel lbCoordinatorTitle;
     private javax.swing.JLabel lblCoordinatorCorreo;
     // End of variables declaration//GEN-END:variables
+    /**
+     * Se encarga de mostrar la interfaz, se hace para poder utilizar la fabrica y el principio abierto cerrado
+     */
+    @Override
+    public void mostrar() {
+        this.setVisible(true);
+    }
 }

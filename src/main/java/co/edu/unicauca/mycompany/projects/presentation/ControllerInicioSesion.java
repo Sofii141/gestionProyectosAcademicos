@@ -40,29 +40,23 @@ public class ControllerInicioSesion {
      * @param enteredPassword Es la contraseña como char[]
      */
     public void actionButtomLogin(String userName, char[] enteredPassword) {
+        if(userName.isEmpty() || enteredPassword.length == 0){
+            Messages.mensajeVario("Ambos campos son obligatorios");
+            return;
+        }
         int result = service.iniciarSesion(userName, enteredPassword);
-        switch (result) {
-            case 0:
-                Messages.mensajeVario("Usuario o clave incorrecta");
-                break;
-            case 1:
-                view.dispose();
-                GUIDashboardEstudiante instance = new GUIDashboardEstudiante(userName);
-                instance.setVisible(true);
-                break;
-            case 2:
-                view.dispose();
-                GUIDashboardCoordinadorInicio instancee = new GUIDashboardCoordinadorInicio(userName);
-                instancee.setVisible(true);
-                break;
-            case 3:
-                view.setVisible(false);
-                GUIDashboardEmpresa instanceee = new GUIDashboardEmpresa(userName); 
-                instanceee.setVisible(true);
-                break;
-            default:
-                Messages.mensajeVario("ERROR EN BASE DE DATOS");
-                break;
+        if (result == 0) {
+            Messages.mensajeVario("Usuario o clave incorrecta");
+            return;
+        }
+
+        Dashboard dashboard = DashboardFactory.crearDashboard(result, userName);
+
+        if (dashboard != null) {
+            view.dispose();
+            dashboard.mostrar();
+        } else {
+            Messages.mensajeVario("ERROR EN BASE DE DATOS");
         }
     }
 

@@ -11,7 +11,7 @@ import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
  * Clase que representa el panel principal (dashboard) de un estudiante en la interfaz gráfica.
  * Permite visualizar información del estudiante, proyectos disponibles y gráficos relacionados.
  */
-public class GUIDashboardEstudiante extends javax.swing.JFrame {
+public class GUIDashboardEstudiante extends javax.swing.JFrame implements Dashboard{
 
     private final StudentService studentService;
     private final ProjectService projectService;
@@ -221,4 +221,11 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
+    /**
+     * Se encarga de mostrar la interfaz, se hace para poder utilizar la fabrica y el principio abierto cerrado
+     */
+    @Override
+    public void mostrar() {
+        this.setVisible(true);
+    }
 }

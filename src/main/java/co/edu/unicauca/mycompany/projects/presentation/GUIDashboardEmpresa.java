@@ -23,7 +23,7 @@ import javax.swing.JComponent;
  *
  * @author Ana_Sofia
  */
-public class GUIDashboardEmpresa extends javax.swing.JFrame {
+public class GUIDashboardEmpresa extends javax.swing.JFrame implements Dashboard{
     private Company company;
     private CompanyService companyService;
     private ProjectService projectService;
@@ -523,4 +523,12 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
     private javax.swing.JTextField txtProjectId;
     private javax.swing.JTextField txtTitleProject;
     // End of variables declaration//GEN-END:variables
+    
+    /**
+     * Se encarga de mostrar la interfaz, se hace para poder utilizar la fabrica y el principio abierto cerrado
+     */
+    @Override
+    public void mostrar() {
+        this.setVisible(true);
+    }
 }
