@@ -25,7 +25,7 @@ El proyecto sigue un enfoque de **arquitectura en capas** y el patrón **Modelo-
 - **Desempeño:** Procesamiento eficiente de solicitudes concurrentes.
 
 ## Prototipos y Diseño
-- [Prototipos de Interfaz Gráfica](https://www.figma.com/design/xtrR8g8GnDTOGKsR7NAF7U/Gesti%C3%B3n-De-Proyectos-Acad%C3%A9micos-V.2?node-id=0-1&t=B7LqdQA19FCZxWi0-1)
+- [Prototipos de Interfaz Gráfica]([https://www.figma.com/design/xtrR8g8GnDTOGKsR7NAF7U/Gesti%C3%B3n-De-Proyectos-Acad%C3%A9micos-V.2?node-id=0-1&t=B7LqdQA19FCZxWi0-1](https://www.figma.com/design/5V1ec7uQPEZeMPGu4EzIRq/Gestión-De-Proyectos-Académicos?node-id=450-259&p=f&t=W0WP2pIvaqkZJR3k-0))
 - [Diagrama Entidad-Relación](https://drive.google.com/file/d/1I6pi0R7gYwSiqrWNn6MVyKbS7FnPlVaR/view?usp=sharing)
 - [Modelo C4](https://drive.google.com/file/d/1I6pi0R7gYwSiqrWNn6MVyKbS7FnPlVaR/view?usp=sharing)
 - [Levantamiento de requisitos](https://docs.google.com/spreadsheets/d/1hG2GuJDQpcxUXRv70Yiytuf38SZNCaiGbclfKXcRKBk/edit?usp=sharing)
