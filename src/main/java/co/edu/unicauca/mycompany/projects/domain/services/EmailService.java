@@ -23,9 +23,11 @@ public class EmailService {
      * 
      * @param recipient Dirección de correo electrónico del destinatario.
      * @param subject   Asunto del correo electrónico.
-     * @param body      Cuerpo del mensaje a enviar.
+     * @param body Cuerpo de mensaje.
      */
     public static void sendEmail(String recipient, String subject, String body) {
+        
+        
         final String senderEmail = System.getenv("EMAIL_USER"); // Correo del remitente
         final String senderPassword = System.getenv("EMAIL_PASS"); // Contraseña del remitente
         

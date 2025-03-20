@@ -5,6 +5,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.EmailService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 
 /**
  * Clase que representa el estado "CERRADO" dentro del patrón de estado para proyectos.
@@ -51,8 +52,8 @@ public class CerradoState implements ProjectStatePatron {
         Company company = companyService.getCompany(project.getIdcompany()); // Buscar empresa
 
         if (company != null) {
-            EmailService.sendEmail(company.getUserEmail(), "Estado actualizado", 
-                "Se le informa que su proyecto ha sido cambiado a CERRADO.");
+            String mensaje = Messages.mensajeCambioEstado(company.getCompanyName(), project.getProTitle(), "CERRADO");
+            EmailService.sendEmail(company.getUserEmail(), "Notificación de Cambio de Estado en Proyecto de Software", mensaje);
         } else {
             System.out.println("Error: No se encontró la empresa asociada al proyecto.");
             System.out.println("ID de la empresa buscada: " + project.getIdcompany());

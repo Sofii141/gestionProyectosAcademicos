@@ -5,6 +5,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.EmailService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 
 
 /**
@@ -52,12 +53,8 @@ public class EjecucionState implements ProjectStatePatron {
         Company company = companyService.getCompany(project.getIdcompany()); // Buscar empresa
 
         if (company != null) {
-            // Imprimir detalles para depuración
-            System.out.println("Empresa encontrada: " + company);
-            System.out.println("Correo de la empresa: " + company.getUserEmail());
-
-            EmailService.sendEmail(company.getUserEmail(), "Estado actualizado", 
-                "Se le informa que su proyecto está en EJECUCIÓN.");
+            String mensaje = Messages.mensajeCambioEstado(company.getCompanyName(), project.getProTitle(), "EN EJECUCION");
+            EmailService.sendEmail(company.getUserEmail(), "Notificación de Cambio de Estado en Proyecto de Software", mensaje);
         } else {
             System.out.println("Error: No se encontró la empresa asociada al proyecto.");
             System.out.println("ID de la empresa buscada: " + project.getIdcompany());
@@ -71,7 +68,7 @@ public class EjecucionState implements ProjectStatePatron {
      */
     @Override
     public String toString() {
-        return "EJECUCIÓN";
+        return "EJECUCION";
     }
 
     /**
@@ -83,6 +80,6 @@ public class EjecucionState implements ProjectStatePatron {
      */
     @Override
     public boolean updateDatabase(Project project, ProjectService projectService) {
-        return projectService.updateProjectStatus(project.getProId(), "EJECUCIÓN"); // Usamos el servicio
+        return projectService.updateProjectStatus(project.getProId(), "EJECUCION"); // Usamos el servicio
     }
 }

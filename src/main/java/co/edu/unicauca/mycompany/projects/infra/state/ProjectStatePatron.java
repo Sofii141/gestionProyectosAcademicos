@@ -10,7 +10,6 @@ import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
  * notificar a la empresa asociada y actualizar la base de datos.
  */
 public interface ProjectStatePatron {
-
     /**
      * Maneja el cambio de estado de un proyecto.
      * 
@@ -33,5 +32,6 @@ public interface ProjectStatePatron {
      * @return true si la actualización fue exitosa, false en caso contrario.
      */
     boolean updateDatabase(Project project, ProjectService projectService);
+
 }
 

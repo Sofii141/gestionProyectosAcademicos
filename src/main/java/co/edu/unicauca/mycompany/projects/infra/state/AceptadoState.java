@@ -5,6 +5,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.EmailService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 
 
 /**
@@ -22,7 +23,6 @@ public class AceptadoState implements ProjectStatePatron {
      * Constructor que inicializa el estado "ACEPTADO" con los servicios necesarios.
      * 
      * @param companyService Servicio para la gestión de empresas.
-     * @param projectService Servicio para la gestión de proyectos.
      */
     public AceptadoState(CompanyService companyService) {
         this.companyService = companyService;
@@ -53,14 +53,9 @@ public class AceptadoState implements ProjectStatePatron {
         Company company = companyService.getCompany(project.getIdcompany()); // Buscar empresa
 
         if (company != null) {
-            // Imprimir el objeto para verificar su contenido
-            System.out.println("Empresa encontrada: " + company);
-
-            // También imprimir el correo para asegurarse de que no es null
-            System.out.println("Correo de la empresa: " + company.getUserEmail());
-
-            EmailService.sendEmail(company.getUserEmail(), "Estado actualizado", 
-                "Se le informa que su proyecto ha sido cambiado a ACEPTADO.");
+            String mensaje = Messages.mensajeCambioEstado(company.getCompanyName(), project.getProTitle(), "ACEPTADO");
+            
+            EmailService.sendEmail(company.getUserEmail(), "Notificación de Cambio de Estado en Proyecto de Software", mensaje);
         } else {
             System.out.println("Error: No se encontró la empresa asociada al proyecto.");
             System.out.println("ID de la empresa buscada: " + project.getIdcompany());

@@ -5,6 +5,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.EmailService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 
 /**
  * Representa el estado "RECHAZADO" de un proyecto dentro del sistema.
@@ -56,13 +57,8 @@ public class RechazadoState implements ProjectStatePatron {
         Company company = companyService.getCompany(project.getIdcompany()); // Buscar empresa asociada
 
         if (company != null) {
-            // Imprimir información de depuración
-            System.out.println("Empresa encontrada: " + company);
-            System.out.println("Correo de la empresa: " + company.getUserEmail());
-
-            // Enviar notificación por correo
-            EmailService.sendEmail(company.getUserEmail(), "Estado actualizado", 
-                "Se le informa que su proyecto ha sido cambiado a RECHAZADO.");
+            String mensaje = Messages.mensajeCambioEstado(company.getCompanyName(), project.getProTitle(), "RECHAZADO");
+            EmailService.sendEmail(company.getUserEmail(), "Notificación de Cambio de Estado en Proyecto de Software", mensaje);
         } else {
             System.out.println("Error: No se encontró la empresa asociada al proyecto.");
             System.out.println("ID de la empresa buscada: " + project.getIdcompany());

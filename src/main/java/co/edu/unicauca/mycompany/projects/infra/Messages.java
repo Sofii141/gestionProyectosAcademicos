@@ -89,4 +89,21 @@ public class Messages {
         // Mostrar la ventana emergente
         window.setVisible(true);
     }
+    
+    public static String mensajeCambioEstado(String nombreCompany,String nombreProyecto, String estado){
+    return "Estimado/a "+ nombreCompany +",\n" +
+            "\n" +
+            "Nos permitimos informarle que el estado de su proyecto "+ nombreProyecto +" ha sido actualizado en el sistema de gestión de proyectos de software.\n" +
+            "\n" +
+            "Detalles del Proyecto:\n" +
+            "Empresa: "+ nombreCompany +"\n" +
+            "Estado: "+ estado +"\n" +
+            "\n" +
+            "Este cambio ha sido realizado como parte del proceso de evaluación del proyecto por parte del coordinador académico. Si tiene alguna inquietud o desea más información sobre este cambio, no dude en ponerse en contacto con nosotros. Agradecemos su participación y colaboración en el desarrollo de proyectos para la comunidad académica.\n" +
+            "\n" +
+            "Cordialmente,\n" +
+            "\n" +
+            "Coordinación de Proyectos de Software\n" +
+            "Universidad del Cauca ";
+    }
 }
