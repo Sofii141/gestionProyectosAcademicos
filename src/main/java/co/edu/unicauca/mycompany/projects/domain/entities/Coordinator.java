@@ -8,11 +8,14 @@ import java.util.List;
  * la capacidad de gestionar proyectos.
  * 
  * Un coordinador tiene una lista de proyectos asociados que puede supervisar o administrar.
- * 
+ * Esta clase extiende la clase User, heredando sus propiedades y funcionalidades.
  */
 public class Coordinator extends User {
 
-    // Lista de proyectos asignados al coordinador
+    /**
+     * Lista de proyectos asignados al coordinador. Estos proyectos pueden ser 
+     * supervisados o administrados por el coordinador según sus permisos.
+     */
     private List<Project> coordProjects;
 
     /**
@@ -39,13 +42,18 @@ public class Coordinator extends User {
     /**
      * Establece la lista de proyectos que el coordinador gestionará.
      *
-     * @param coordProjects Lista de proyectos a asignar al coordinador.
+     * @param coordProjects Lista de proyectos a asignar al coordinador. 
+     *                      Si es null, se asignará una lista vacía.
      */
     public void setCoordProjects(List<Project> coordProjects) {
-        this.coordProjects = coordProjects;
+        if (coordProjects == null) {
+            this.coordProjects = new ArrayList<>(); // Evita asignar null
+        } else {
+            this.coordProjects = coordProjects;
+        }
     }
     
-     /**
+    /**
      * Agrega un proyecto a la lista de proyectos que el coordinador gestiona.
      *
      * @param project Proyecto a añadir.

@@ -1,71 +1,66 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
+import co.edu.unicauca.mycompany.projects.access.IUserRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.domain.services.UserService;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
 import co.edu.unicauca.mycompany.projects.infra.ValidationException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComponent;
 
 /**
- *
- * @author Ana_Sofia
+ * Interfaz gráfica del panel de inicio para empresas.
+ * Permite la gestión y visualización de información de la empresa y sus proyectos.
  */
-public class GUIDashboardEmpresa extends javax.swing.JFrame {
+public class GUIDashboardEmpresa extends javax.swing.JFrame implements Dashboard{
+     /**
+     * Empresa que ha iniciado sesión en el sistema.
+     */
     private Company company;
     private CompanyService companyService;
     private ProjectService projectService;
+
+
+
+
     /**
-     * Creates new form inicioSesion
+     * Constructor del panel de inicio para empresas.Inicializa los servicios, obtiene los datos de la empresa y configura la interfaz.
+     *
+     * @param company Instancia de una empresa
      */
-    public GUIDashboardEmpresa(String nit) {
+    public GUIDashboardEmpresa(Company company) {
+        // Inicializar componentes gráficos
         initComponents();
-        setLocationRelativeTo(null);
-        setResizable(false);
+        
+        // Inicializar los place holders
         initPlaceHolders();
+
+        // Obtener los datos de la empresa a partir del NIT proporcionado
+        this.company = company;
         
-        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
-        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
-        this.projectService = new ProjectService(projectRepository);
-        this.companyService = new CompanyService(companyRepository);
-        this.company = companyService.getCompany(nit);
-        
+        // Configurar la apariencia y los datos visuales
         initVisual();
-        
     }
+
     /**
      * Configura la apariencia y elementos visuales del dashboard.
      * Hace visible la ventana, la centra en la pantalla y deshabilita la opción de redimensionar.
      */
     public final void initVisual() {
-        // Mostrar la ventana
         this.setVisible(true);
-        
-        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null); 
-        
-        // Bloquear el cambio de tamaño de la ventana
         setResizable(false);
-
-        // Mostrar el ID del estudiante en el botón de inicio
-        lblNameCompany.setText("Compañia " + company.getContactName());
-
-        // Configurar los textos de los labels con la información del estudiante
+        lblNameCompany.setText("Compañía " + company.getUserId());
         lblEmailCompany.setText(company.getUserEmail());
     }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,11 +74,12 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         lblNameCompany = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnCerrarSesión = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         lblEmailCompany = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtAbstractProject = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -114,26 +110,33 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         lblNameCompany.setBackground(new java.awt.Color(255, 255, 255));
         lblNameCompany.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         lblNameCompany.setForeground(new java.awt.Color(255, 255, 255));
+        lblNameCompany.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNameCompany.setText("Empresa x");
-        jPanel4.add(lblNameCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, 30));
+        lblNameCompany.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblNameCompany.setFocusable(false);
+        jPanel4.add(lblNameCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 110, 210, 30));
 
-        jButton3.setBackground(new java.awt.Color(90, 111, 228));
-        jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Mensajes");
-        jButton3.setBorder(null);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesión.setBackground(new java.awt.Color(90, 111, 228));
+        btnCerrarSesión.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnCerrarSesión.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesión.setText("Cerrar Sesión");
+        btnCerrarSesión.setBorder(null);
+        btnCerrarSesión.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrarSesión.setFocusable(false);
+        btnCerrarSesión.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnCerrarSesiónActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 210, 50));
+        jPanel4.add(btnCerrarSesión, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 210, 50));
 
         jButton4.setBackground(new java.awt.Color(90, 111, 228));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Publicar proyecto");
         jButton4.setBorder(null);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.setFocusable(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -143,9 +146,11 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(90, 111, 228));
         jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setForeground(new java.awt.Color(186, 195, 241));
         jButton5.setText("Solicitudes");
         jButton5.setBorder(null);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.setFocusable(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -155,9 +160,11 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
         jButton6.setBackground(new java.awt.Color(90, 111, 228));
         jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setForeground(new java.awt.Color(186, 195, 241));
         jButton6.setText("Evaluaciones");
         jButton6.setBorder(null);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton6.setFocusable(false);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -166,8 +173,23 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 50));
 
         lblEmailCompany.setForeground(new java.awt.Color(255, 255, 255));
+        lblEmailCompany.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEmailCompany.setText("correoEmpres@gmail.com");
-        jPanel4.add(lblEmailCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+        jPanel4.add(lblEmailCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 210, -1));
+
+        jButton8.setBackground(new java.awt.Color(90, 111, 228));
+        jButton8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(186, 195, 241));
+        jButton8.setText("Mensajes");
+        jButton8.setBorder(null);
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton8.setFocusable(false);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 210, 50));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
@@ -229,16 +251,22 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Cancelar");
+        jButton7.setBorder(null);
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton7.setFocusable(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
 
-        btnSendProject.setBackground(new java.awt.Color(41, 64, 211));
+        btnSendProject.setBackground(new java.awt.Color(90, 111, 228));
         btnSendProject.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSendProject.setForeground(new java.awt.Color(255, 255, 255));
         btnSendProject.setText("Enviar");
+        btnSendProject.setBorder(null);
+        btnSendProject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSendProject.setFocusable(false);
         btnSendProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSendProjectActionPerformed(evt);
@@ -322,10 +350,10 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescriptionProject, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
-                    .addComponent(btnSendProject))
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSendProject, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
@@ -345,9 +373,14 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnCerrarSesiónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesiónActionPerformed
+        IUserRepository repositoryUser = Factory.getInstance().getRepositoryUser("MARIADB");
+        
+        GUIinicioSesion instance = new GUIinicioSesion(new UserService(repositoryUser));
+        instance.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesiónActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -366,7 +399,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnSendProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendProjectActionPerformed
-
         String proId = txtProjectId.getText().trim();
         String proTitle = txtTitleProject.getText().trim();
         String proDescription = txtDescriptionProject.getText().trim();
@@ -374,10 +406,13 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         String proGoals = txtGoalsProject.getText().trim();
         String proDeadLine = txtDeadLineProject.getText().trim();
         String proBudget = txtBudgetProject.getText().trim();
-
         String idCompany = company.getUserId();
-        // Validar y convertir proDeadLine
         
+        // Instanciar projectService 
+        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        ProjectService projectService = new ProjectService(projectRepository);
+        
+        // Validar y convertir proDeadLine
         int proDeadLineInt = 0;
         double proBudgetDouble = 0.0;
         
@@ -388,8 +423,8 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
             txtDeadLineProject.requestFocus();
             return;
         }
-        // Validar y convertir proBudget
         
+        // Validar y convertir proBudget
         try {
             proBudgetDouble = Double.parseDouble(proBudget);
         } catch (NumberFormatException e) {
@@ -410,12 +445,11 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
                 // Verificar que el ID del proyecto no exista
                 if (!projectService.existProjectId(proId)) {
                     projectService.saveProject(project);
-                    this.dispose();
                     Messages.showMessageDialog("El proyecto se registró exitosamente", "Registro correcto");
+                    reset();
                 } else {
                     Messages.showMessageDialog("El ID del proyecto ingresado ya se encuentra en uso.", "Atención");
                     txtProjectId.requestFocus();
-                    return;
                 }
             }
         } catch (ValidationException ve) {
@@ -432,13 +466,15 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
 
             JComponent campoError = mapError.get(ve.getAtributoError());
             campoError.requestFocus();
-            return;
         } catch (Exception ex) {
             Messages.showErrorDialog(ex.getMessage(), "Error desconocido");
-            return;
         }
 
     }//GEN-LAST:event_btnSendProjectActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -473,15 +509,8 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIDashboardEmpresa("U004").setVisible(true);
-            }
-        });
     }
-    
-    
+
     /**
      * Crea los placeholders para la creacion de la empresa
      */
@@ -493,16 +522,29 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         TextPrompt placeholderObjetivos = new TextPrompt("Ingresar objetivos:",txtGoalsProject);
         TextPrompt placeholderDescripcion  = new TextPrompt("Ingrese descripción:",txtDescriptionProject);
         TextPrompt placeholderProId  = new TextPrompt("Ingrese el id del proyecto:",txtProjectId);
-
     }
 
+    /**
+     * Resetea para la creacion de una nueva empresa
+     */
+    private void reset(){
+        txtProjectId.setText("");
+        txtTitleProject.setText("");
+        txtDescriptionProject.setText("");
+        txtAbstractProject.setText("");
+        txtGoalsProject.setText("");
+        txtDeadLineProject.setText("");
+        txtBudgetProject.setText("");
+        initPlaceHolders();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrarSesión;
     private javax.swing.JButton btnSendProject;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -523,4 +565,12 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
     private javax.swing.JTextField txtProjectId;
     private javax.swing.JTextField txtTitleProject;
     // End of variables declaration//GEN-END:variables
+    
+    /**
+     * Se encarga de mostrar la interfaz, se hace para poder utilizar la fabrica y el principio abierto cerrado
+     */
+    @Override
+    public void mostrar() {
+        this.setVisible(true);
+    }
 }

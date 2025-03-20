@@ -1,20 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.domain.services;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.infra.ValidationException;
 
+
 /**
- *
- * @author USUARIO
+ * Clase que valida los datos de una empresa.
+ * 
+ * Implementa la interfaz IValidation para proporcionar reglas de validación específicas
+ * para los datos de una empresa dentro del sistema.
  */
 public class DataValidationCompany implements IValidation {
 
+    /** Empresa cuyos datos serán validados. */
     private Company company;
-
+    
     /**
      * Constructor de la clase que recibe una empresa a validar.
      *

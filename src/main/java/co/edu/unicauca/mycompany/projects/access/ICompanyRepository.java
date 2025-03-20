@@ -1,7 +1,6 @@
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
-import java.util.List;
 
 /**
  * Interface que define el contrato para el repositorio de compañías.
@@ -18,14 +17,6 @@ public interface ICompanyRepository {
      * @return true si la compañía se guardó con éxito, false en caso contrario.
      */
     boolean save(Company newCompany);
-    
-    /**
-     * Obtiene una lista con todas las compañías almacenadas en el repositorio.
-     * 
-     * @return Lista de compañías registradas.
-     */
-    List<Company> listAll();
-
 
     /**
      * Obtiene la información detallada de una compañía a partir de su NIT.
@@ -35,4 +26,11 @@ public interface ICompanyRepository {
      */
     Company companyInfo (String nit);
     
+    /**
+     * Obtiene el identificador único de un sector según su nombre.
+     *
+     * @param sectorName Nombre del sector a buscar.
+     * @return Identificador único del sector si existe, de lo contrario retorna null.
+     */
+    String getSectorIdByName(String sectorName);
 }

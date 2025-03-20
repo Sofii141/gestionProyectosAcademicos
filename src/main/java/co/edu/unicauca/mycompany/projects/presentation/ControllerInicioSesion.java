@@ -1,24 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
+import co.edu.unicauca.mycompany.projects.access.ICoordinatorRepository;
+import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
+import co.edu.unicauca.mycompany.projects.access.IStudentRepository;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
+import co.edu.unicauca.mycompany.projects.domain.services.CoordinatorService;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
 import co.edu.unicauca.mycompany.projects.domain.services.UserService;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
 
 /**
- * Controlador de GUIInicioSesion
- *
- * @author spart
+ * Controlador para la vista de inicio de sesión.
+ * Gestiona la autenticación de usuarios y la redirección a la vista correspondiente.
  */
 public class ControllerInicioSesion {
-
-    private UserService service;
-    private GUIinicioSesion view;
+    /**
+     * Servicio de usuario para manejar la autenticación.
+     */
+    private final UserService service;
+    
+    /**
+     * Vista de inicio de sesión a la que este controlador da soporte.
+     */
+    private final GUIinicioSesion view;
 
     /**
      * Constructor parametrizado de Controller
@@ -40,29 +47,24 @@ public class ControllerInicioSesion {
      * @param enteredPassword Es la contraseña como char[]
      */
     public void actionButtomLogin(String userName, char[] enteredPassword) {
+        if(userName.isEmpty() || enteredPassword.length == 0){
+            Messages.mensajeVario("Ambos campos son obligatorios");
+            return;
+        }
         int result = service.iniciarSesion(userName, enteredPassword);
-        switch (result) {
-            case 0:
-                Messages.mensajeVario("Usuario o clave incorrecta");
-                break;
-            case 1:
-                view.dispose();
-                GUIDashboardEstudiante instance = new GUIDashboardEstudiante(userName);
-                instance.setVisible(true);
-                break;
-            case 2:
-                view.dispose();
-                GUIDashboardCoordinadorInicio instancee = new GUIDashboardCoordinadorInicio(userName);
-                instancee.setVisible(true);
-                break;
-            case 3:
-                view.setVisible(false);
-                GUIDashboardEmpresa instanceee = new GUIDashboardEmpresa(userName); 
-                instanceee.setVisible(true);
-                break;
-            default:
-                Messages.mensajeVario("ERROR EN BASE DE DATOS");
-                break;
+        if (result == 0) {
+            Messages.mensajeVario("Usuario o clave incorrecta");
+            return;
+        }
+
+        Dashboard dashboard = DashboardFactory.getInstance().crearDashboard(result, userName);
+
+        if (dashboard != null) {
+            view.dispose();
+            dashboard.mostrar();
+        } else {
+            Messages.mensajeVario("ERROR EN BASE DE DATOS");
+
         }
     }
 

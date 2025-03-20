@@ -1,18 +1,20 @@
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
 /**
- * Clase que representa un usuario en el sistema.
+ * Representa un usuario dentro del sistema.
+ * 
  * Un usuario tiene un identificador, un correo electrónico y una contraseña.
+ * Esta clase sirve como base para otros tipos de usuarios, como estudiantes y coordinadores.
  */
 public class User {
     
-    // Identificador único del usuario.
+    /** Identificador único del usuario. */
     private String userId;
     
-    // Correo electrónico del usuario.
+    /** Correo electrónico del usuario. */
     private String userEmail;
     
-    // Contraseña del usuario.
+    /** Contraseña del usuario. */
     private String userPassword;
 
     /**

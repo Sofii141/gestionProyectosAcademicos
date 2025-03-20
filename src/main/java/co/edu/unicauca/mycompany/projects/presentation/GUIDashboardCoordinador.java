@@ -1,30 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
+import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
+import co.edu.unicauca.mycompany.projects.access.IUserRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.domain.services.UserService;
 import javax.swing.JButton;
 
 /**
- *
- * @author Ana_Sofia
+ * Interfaz gráfica del panel principal para coordinadores.
+ * Permite la gestión y visualización de proyectos asignados.
  */
 public class GUIDashboardCoordinador extends javax.swing.JFrame {
 
     /**
-     * Creates new form inicioSesion
+     * Coordinador que ha iniciado sesión en el sistema.
      */
-    
     private final Coordinator coordinator;
+
+    /**
+     * Botón para acceder a la vista de proyectos desde el inicio.
+     */
     private final JButton btnProyectosInicio;
+
+    /**
+     * Servicio para la gestión de empresas.
+     */
     private CompanyService companyService;
-    
+
+    /**
+     * Constructor de la interfaz gráfica del panel de coordinador.
+     * Inicializa los componentes gráficos y configura los observadores de datos.
+     *
+     * @param coordinator Coordinador que ha iniciado sesión.
+     * @param projectService Servicio de gestión de proyectos.
+     * @param companyService Servicio de gestión de empresas.
+     * @param btnProyectosInicio Botón de acceso a los proyectos desde la vista principal.
+     */
     public GUIDashboardCoordinador(Coordinator coordinator, ProjectService projectService, CompanyService companyService, JButton btnProyectosInicio) {
-        
         this.coordinator = coordinator;
         this.btnProyectosInicio = btnProyectosInicio;
 
@@ -36,37 +51,20 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
 
         // Agregar un observador para actualizar la tabla de proyectos disponibles
         projectService.addObserver(new TableProjectsCoordinatorObserver(coordinator, projectService, jTableCoordinator, jScrollPane1, companyService));
-
-        /*
-        this.jTableCoordinator.getColumnModel().getColumn(4).setMinWidth(325);
-        this.jTableCoordinator.getColumnModel().getColumn(4).setMaxWidth(325);
-        this.jTableCoordinator.getColumnModel().getColumn(4).setPreferredWidth(325);
-        
-        
-        // Aplicar el renderizador de botones a la última columna
-        this.jTableCoordinator.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRenderCoordinator());
-        this.jTableCoordinator.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditorCoordinator(projectService, coordinator));
-*/
     }
-    
+
+    /**
+     * Configura la apariencia y visualización inicial de la interfaz.
+     * Ajusta la posición, tamaño y muestra información del coordinador.
+     */
     public final void initVisual() {
-        
-        // Mostrar la ventana
         this.setVisible(true); 
-        
-        // Bloquear el cambio de tamaño de la ventana
         setResizable(false); 
-        
-        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null); 
-
-        // Mostrar el ID del estudiante en el botón de inicio
         btnCoordiName.setText("Coordinador " + coordinator.getUserId());
-
-        // Configurar el texto del label con el correo del estudiante
         lblCoordinatorCorreo.setText(coordinator.getUserEmail());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,9 +79,10 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         btnCoordiName = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnCerrarSesión = new javax.swing.JButton();
         lblCoordinatorCorreo = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCoordinator = new javax.swing.JTable();
@@ -107,6 +106,8 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         btnCoordiName.setForeground(new java.awt.Color(255, 255, 255));
         btnCoordiName.setText("Coordinador x");
         btnCoordiName.setBorder(null);
+        btnCoordiName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCoordiName.setFocusable(false);
         btnCoordiName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCoordiNameActionPerformed(evt);
@@ -116,9 +117,11 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(90, 111, 228));
         jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setForeground(new java.awt.Color(186, 195, 241));
         jButton5.setText("Proyectos en espera");
         jButton5.setBorder(null);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.setFocusable(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -126,17 +129,19 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         });
         jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
 
-        jButton6.setBackground(new java.awt.Color(90, 111, 228));
-        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Proyectos en curso");
-        jButton6.setBorder(null);
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesión.setBackground(new java.awt.Color(90, 111, 228));
+        btnCerrarSesión.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnCerrarSesión.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesión.setText("Cerrar Sesión");
+        btnCerrarSesión.setBorder(null);
+        btnCerrarSesión.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrarSesión.setFocusable(false);
+        btnCerrarSesión.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnCerrarSesiónActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 50));
+        jPanel4.add(btnCerrarSesión, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 210, 50));
 
         lblCoordinatorCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCoordinatorCorreo.setText("tuCoordinador@gmail.com");
@@ -147,12 +152,28 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Proyectos");
         jButton7.setBorder(null);
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton7.setFocusable(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
         jPanel4.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 50));
+
+        jButton8.setBackground(new java.awt.Color(90, 111, 228));
+        jButton8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(186, 195, 241));
+        jButton8.setText("Proyectos en curso");
+        jButton8.setBorder(null);
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton8.setFocusable(false);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 50));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
@@ -231,10 +252,18 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Maneja el evento cuando el usuario presiona el botón con el nombre del coordinador.
+     * Abre la ventana del dashboard inicial del coordinador y cierra la ventana actual.
+     *
+     * @param evt Evento de acción generado al presionar el botón.
+     */
     private void btnCoordiNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoordiNameActionPerformed
-        // TODO add your handling code here:
-        GUIDashboardCoordinadorInicio gui = new GUIDashboardCoordinadorInicio(coordinator.getUserId());
+        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        
+        GUIDashboardCoordinadorInicio gui = new GUIDashboardCoordinadorInicio(coordinator, new ProjectService(projectRepository));
         gui.setVisible(true);
+        
         this.dispose();
     }//GEN-LAST:event_btnCoordiNameActionPerformed
 
@@ -242,13 +271,22 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnCerrarSesiónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesiónActionPerformed
+        IUserRepository repositoryUser = Factory.getInstance().getRepositoryUser("MARIADB");
+        
+        GUIinicioSesion instance = new GUIinicioSesion(new UserService(repositoryUser));
+        instance.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesiónActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,10 +324,11 @@ public class GUIDashboardCoordinador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrarSesión;
     private javax.swing.JButton btnCoordiName;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

@@ -10,16 +10,21 @@ import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
  */
 public class PanelActionEstudiante extends javax.swing.JPanel {
     
-    private final Project proyecto; // Proyecto asociado al panel
-    private final Student estudiante; // Estudiante que interactúa con el panel
-    private final ProjectService projectService; // Servicio de proyectos
+    /** Proyecto asociado al panel. */
+    private final Project proyecto;
+    
+    /** Estudiante que interactúa con el panel. */
+    private final Student estudiante;
+    
+    /** Servicio de gestión de proyectos. */
+    private final ProjectService projectService;
 
     /**
-     * Constructor de la clase.
+     * Constructor de la clase PanelActionEstudiante.
      * 
-     * @param projectService Servicio de gestión de proyectos
-     * @param proyecto Proyecto sobre el cual se realizarán acciones
-     * @param estudiante Estudiante que interactúa con el proyecto
+     * @param projectService Servicio de gestión de proyectos.
+     * @param proyecto Proyecto sobre el cual se realizarán acciones.
+     * @param estudiante Estudiante que interactúa con el proyecto.
      */
     public PanelActionEstudiante(ProjectService projectService, Project proyecto, Student estudiante) {
         this.proyecto = proyecto;
@@ -93,11 +98,23 @@ public class PanelActionEstudiante extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Método invocado al presionar el botón de detalles.
+    * Abre una ventana con la información detallada del proyecto.
+    * 
+    * @param evt Evento de acción generado por el botón.
+    */
     private void btnDetallesEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesEstActionPerformed
         GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
         detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesEstActionPerformed
 
+    /**
+    * Método invocado al presionar el botón para postularse a un proyecto.
+    * Abre una ventana donde el estudiante puede completar su postulación.
+    * 
+    * @param evt Evento de acción generado por el botón.
+    */
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
         GUIPostularse objpostularse = new GUIPostularse(projectService, proyecto, estudiante);
         objpostularse.setVisible(true);

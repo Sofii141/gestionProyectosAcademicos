@@ -2,8 +2,6 @@ package co.edu.unicauca.mycompany.projects.domain.services;
 
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
-import co.edu.unicauca.mycompany.projects.domain.entities.User;
-import java.util.List;
 
 /**
  * Servicio para la gestión de empresas en el sistema. Proporciona métodos para
@@ -28,15 +26,6 @@ public class CompanyService {
      */
     public CompanyService(ICompanyRepository repository) {
         this.repository = repository;
-    }
-
-    /**
-     * Obtiene la lista de todas las empresas registradas en el sistema.
-     *
-     * @return Lista de objetos Company.
-     */
-    public List<Company> getAllCompanies() {
-        return repository.listAll();
     }
 
     /**

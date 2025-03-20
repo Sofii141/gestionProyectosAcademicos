@@ -1,6 +1,7 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import javax.swing.JButton;
 
@@ -10,18 +11,21 @@ import javax.swing.JButton;
  */
 public class GUIProyectosDisponibles extends javax.swing.JFrame {
 
+    /** Estudiante que está visualizando los proyectos disponibles. */
     private final Student student;
+
+    /** Botón en la pantalla principal que permite postularse rápidamente. */
     private final JButton btnPostularInicio;
 
     /**
-     * Constructor de la clase GUIProyectosDisponibles.
-     * Inicializa la interfaz con la información del estudiante y los proyectos disponibles.
+     * Constructor de la clase GUIProyectosDisponibles.Inicializa la interfaz con la información del estudiante y los proyectos disponibles.
      *
      * @param student          Estudiante que está visualizando los proyectos.
-     * @param projectService   Servicio encargado de gestionar los proyectos.
+     * @param projectService   Servicio encargado de gestionar los proyectos y sus postulaciones.
+     * @param companyService   Servicio encargado de gestionar las empresas de los proyectos.
      * @param btnPostularInicio Botón de la pantalla principal para postulación rápida.
      */
-    public GUIProyectosDisponibles(Student student, ProjectService projectService, JButton btnPostularInicio) {
+    public GUIProyectosDisponibles(Student student, ProjectService projectService, CompanyService companyService, JButton btnPostularInicio) {
         this.student = student;
         this.btnPostularInicio = btnPostularInicio;
 
@@ -32,7 +36,7 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         initVisual();
 
         // Agregar un observador para actualizar la tabla de proyectos disponibles
-        projectService.addObserver(new TableProjectsObserver(student, projectService, jTableEstudiante, jScrollPane1));
+        projectService.addObserver(new TableProjectsStudentObserver(student, projectService, companyService, jTableEstudiante, jScrollPane1));
     }
 
     /**
@@ -41,19 +45,10 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
      * También establece la información del estudiante en los elementos gráficos.
      */
     public final void initVisual() {
-        // Mostrar la ventana
         this.setVisible(true); 
-        
-        // Bloquear el cambio de tamaño de la ventana
         setResizable(false); 
-        
-        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null); 
-
-        // Mostrar el ID del estudiante en el botón de inicio
         btnInicio.setText("Estudiante " + student.getUserId());
-
-        // Configurar el texto del label con el correo del estudiante
         lblCorreo.setText(student.getUserEmail());
     }
     
@@ -87,7 +82,7 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
 
         btnMisProyectos.setBackground(new java.awt.Color(90, 111, 228));
         btnMisProyectos.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        btnMisProyectos.setForeground(new java.awt.Color(255, 255, 255));
+        btnMisProyectos.setForeground(new java.awt.Color(186, 195, 241));
         btnMisProyectos.setText("Mis proyectos");
         btnMisProyectos.setBorder(null);
         btnMisProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -119,7 +114,7 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         });
         jPanel4.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 210, 50));
 
-        btnPostular1.setBackground(new java.awt.Color(75, 99, 225));
+        btnPostular1.setBackground(new java.awt.Color(90, 111, 228));
         btnPostular1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         btnPostular1.setForeground(new java.awt.Color(255, 255, 255));
         btnPostular1.setText("Postularme");
@@ -195,6 +190,12 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnMisProyectosActionPerformed
 
+    /**
+    * Maneja el evento de acción cuando se presiona el botón "Inicio".
+    * Cierra la ventana actual y vuelve a hacer visible el botón de postulación en la pantalla principal.
+    *
+    * @param evt Evento de acción generado por el botón.
+    */
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         dispose();
         btnPostularInicio.setVisible(true);
