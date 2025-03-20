@@ -11,21 +11,6 @@ import java.util.List;
  */
 public interface IStudentRepository {
     /**
-     * Guarda un nuevo estudiante en el repositorio.
-     * 
-     * @param newStudent Objeto Student con la información del estudiante a guardar.
-     * @return true si el estudiante se guardó con éxito, false en caso contrario.
-     */
-    boolean save(Student newStudent);
-    
-    /**
-     * Obtiene una lista con todos los estudiantes almacenados en el repositorio.
-     * 
-     * @return Lista de estudiantes registrados.
-     */
-    List<Student> listAll();
-    
-    /**
      * Obtiene la información detallada de un estudiante a partir de su identificador.
      * 
      * @param id Identificador único del estudiante.

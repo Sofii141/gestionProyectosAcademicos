@@ -4,8 +4,6 @@ import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import co.edu.unicauca.mycompany.projects.infra.ValidationException;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,14 +21,14 @@ import org.mockito.MockitoAnnotations;
 public class CompanyServiceTest {
 
     /**
-     * Mock de {@code ICompanyRepository} utilizado para simular el acceso a
+     * Mock de ICompanyRepository utilizado para simular el acceso a
      * datos.
      */
     @Mock
     private ICompanyRepository repositoryMock;
 
     /**
-     * Instancia de {@code CompanyService} que se probará.
+     * Instancia de CompanyService que se probará.
      */
     private CompanyService companyService;
 
@@ -42,27 +40,6 @@ public class CompanyServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this); // Inicializa los mocks
         companyService = new CompanyService(repositoryMock); // Inyección del mock en el servicio
-    }
-
-    /**
-     * Prueba el método {@code getAllCompanies()} de {@code CompanyService}.
-     *
-     * Se verifica que el método devuelva una lista con las empresas registradas
-     * en el repositorio.
-     */
-    @Test
-    void testGetAllCompanies() {
-        Company company1 = mock(Company.class);
-        Company company2 = mock(Company.class);
-        List<Company> companies = Arrays.asList(company1, company2);
-
-        when(repositoryMock.listAll()).thenReturn(companies);
-
-        List<Company> result = companyService.getAllCompanies();
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(repositoryMock, times(1)).listAll();
     }
 
     /**
@@ -112,6 +89,45 @@ public class CompanyServiceTest {
         boolean result = companyService.saveCompany(company);
 
         assertTrue(result);
+        verify(repositoryMock, times(1)).save(company);
+    }
+    
+    /**
+     * Prueba el método {@code getCompany()} con un NIT nulo.
+     */
+    @Test
+    void testGetCompanyWithNullNit() {
+        Company result = companyService.getCompany(null);
+
+        assertNull(result, "El método debería retornar null si el NIT es null");
+        verify(repositoryMock, never()).companyInfo(anyString());
+    }
+
+    /**
+     * Prueba el método {@code saveCompany()} con una empresa válida.
+     */
+    @Test
+    void testSaveCompanySuccess() {
+        Company company = mock(Company.class);
+        when(repositoryMock.save(company)).thenReturn(true);
+
+        boolean result = companyService.saveCompany(company);
+
+        assertTrue(result);
+        verify(repositoryMock, times(1)).save(company);
+    }
+
+    /**
+     * Prueba el método {@code saveCompany()} cuando la inserción falla.
+     */
+    @Test
+    void testSaveCompanyFailure() {
+        Company company = mock(Company.class);
+        when(repositoryMock.save(company)).thenReturn(false);
+
+        boolean result = companyService.saveCompany(company);
+
+        assertFalse(result);
         verify(repositoryMock, times(1)).save(company);
     }
 

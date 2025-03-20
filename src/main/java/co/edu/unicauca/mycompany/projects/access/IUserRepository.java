@@ -17,13 +17,6 @@ public interface IUserRepository {
     int iniciarSesion(String usuario, char[] pwd);
     
     /**
-     * Cierra la sesión del usuario actual.
-     * 
-     * @return true si la sesión se cerró correctamente, false en caso contrario.
-     */
-    boolean cerrarSesion();
-    
-    /**
      * Guarda un nuevo usuario en el repositorio.
      * 
      * @param newUser Objeto User con la información del usuario a registrar.

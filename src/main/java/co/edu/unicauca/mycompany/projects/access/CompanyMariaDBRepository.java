@@ -5,8 +5,6 @@ import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,10 +17,8 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
 
     /**
      * Constructor de la clase.
-     * Se encarga de inicializar la base de datos si la tabla no existe.
      */
     public CompanyMariaDBRepository() {
-        initDatabase();
     }
 
     /**
@@ -69,46 +65,6 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
             Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    }
-
-    /**
-     * Crea la tabla CompanyContact en la base de datos si no existe.
-     */
-    private void initDatabase() {
-        String sql = "CREATE TABLE IF NOT EXISTS CompanyContact (\n"
-                + "    userId VARCHAR(50) NOT NULL,\n"
-                + "    comName VARCHAR(100) NOT NULL,\n"
-                + "    comEmail VARCHAR(100) NOT NULL,\n"
-                + "    comContactPhone VARCHAR(20) NOT NULL,\n"
-                + "    comContactName VARCHAR(100) NOT NULL,\n"
-                + "    comContactLastName VARCHAR(100) NOT NULL,\n"
-                + "    comContactCharge VARCHAR(100) NOT NULL,\n"
-                + "    secId VARCHAR(50) NOT NULL,\n"
-                + "    PRIMARY KEY (userId),\n"
-                + "    CONSTRAINT fk_CompanyContact_User FOREIGN KEY (userId) REFERENCES User(userId),\n"
-                + "    CONSTRAINT fk_CompanyContact_Sector FOREIGN KEY (secId) REFERENCES Sector(secId)\n"
-                + ");";
-
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            this.disconnect();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * Retorna una lista de todas las empresas registradas.
-     * 
-     * @return Lista de empresas.
-     * @throws UnsupportedOperationException Método no implementado aún.
-     */
-    @Override
-    public List<Company> listAll() {
-        throw new UnsupportedOperationException("No implementado aún.");
     }
 
     /**
@@ -171,6 +127,7 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
      * @param sectorName Nombre del sector a buscar.
      * @return Identificador único del sector si existe, de lo contrario retorna null.
      */
+    @Override
     public String getSectorIdByName(String sectorName) {
         String sql = "SELECT secId FROM Sector WHERE secName = ?";
         String sectorId = null;

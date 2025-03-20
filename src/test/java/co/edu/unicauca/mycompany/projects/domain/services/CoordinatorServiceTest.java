@@ -41,6 +41,9 @@ public class CoordinatorServiceTest {
         assertNotNull(result, "El coordinador no debería ser null");
         assertEquals("C001", result.getUserId(), "El ID del coordinador no coincide");
         assertEquals("coordinator@email.com", result.getUserEmail(), "El email del coordinador no coincide");
+        
+        // Verificar que se llamó al método del repositorio exactamente una vez
+        verify(mockRepository, times(1)).getCoordinator("C001");
     }
 
     /**
@@ -60,6 +63,9 @@ public class CoordinatorServiceTest {
 
         // Verificar que el resultado es null
         assertNull(result, "Cuando el coordinador no existe, el resultado debería ser null");
+        
+        // Verificar que se llamó al método del repositorio exactamente una vez
+        verify(mockRepository, times(1)).getCoordinator("C999");
     }
 
     /**
@@ -80,4 +86,64 @@ public class CoordinatorServiceTest {
         // Verificar que el resultado es null
         assertNull(result, "Cuando el ID es null, el resultado debería ser null");
     }
+    
+    /**
+     * Test para verificar que getCoordinator maneja un ID vacío correctamente.
+     */
+    @Test
+    public void testGetCoordinatorWithEmptyId() {
+        // Crear un repositorio mock
+        ICoordinatorRepository mockRepository = mock(ICoordinatorRepository.class);
+
+        // Definir comportamiento del mock
+        when(mockRepository.getCoordinator("")).thenReturn(null);
+
+        // Crear servicio con el mock
+        CoordinatorService service = new CoordinatorService(mockRepository);
+        Coordinator result = service.getCoordinator("");
+
+        // Verificar que el resultado es null
+        assertNull(result, "Cuando el ID está vacío, el resultado debería ser null");
+    }
+
+    /**
+     * Test para verificar que getCoordinator maneja un ID con espacios correctamente.
+     */
+    @Test
+    public void testGetCoordinatorWithSpaces() {
+        // Crear un repositorio mock
+        ICoordinatorRepository mockRepository = mock(ICoordinatorRepository.class);
+
+        // Definir comportamiento del mock
+        when(mockRepository.getCoordinator("   ")).thenReturn(null);
+
+        // Crear servicio con el mock
+        CoordinatorService service = new CoordinatorService(mockRepository);
+        Coordinator result = service.getCoordinator("   ");
+
+        // Verificar que el resultado es null
+        assertNull(result, "Cuando el ID contiene solo espacios, el resultado debería ser null");
+    }
+
+    /**
+     * Test para verificar que getCoordinator maneja IDs con diferentes capitalizaciones.
+     */
+    @Test
+    public void testGetCoordinatorCaseInsensitive() {
+        // Crear un repositorio mock
+        ICoordinatorRepository mockRepository = mock(ICoordinatorRepository.class);
+        Coordinator expectedCoordinator = new Coordinator("C001", "coordinator@email.com", "securePass");
+
+        // Definir comportamiento del mock
+        when(mockRepository.getCoordinator("c001")).thenReturn(expectedCoordinator);
+
+        // Crear servicio con el mock
+        CoordinatorService service = new CoordinatorService(mockRepository);
+        Coordinator result = service.getCoordinator("c001");
+
+        // Verificar que el resultado es el esperado
+        assertNotNull(result, "El coordinador no debería ser null");
+        assertEquals("C001", result.getUserId(), "El ID del coordinador debería coincidir sin importar mayúsculas o minúsculas");
+    }
 }
+

@@ -591,7 +591,7 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
                     instance.setVisible(true);
                     
                     // Mostrar mensaje de confirmación
-                    Messages.showMessageDialog("Empresa de nit " + comNit + " registrada correctamente", "Registro correcto");
+                    Messages.mensajeVario("Empresa de nit " + comNit + " registrada correctamente");
                 }
 
             } catch (ValidationException ve) {

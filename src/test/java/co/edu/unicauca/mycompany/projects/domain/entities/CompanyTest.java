@@ -1,17 +1,14 @@
 package co.edu.unicauca.mycompany.projects.domain.entities;
 
+import java.util.Date;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 /**
  * Pruebas unitarias para la clase Company.
- *
- * Esta clase verifica el correcto funcionamiento del constructor, los métodos
- * de acceso (getters) y los métodos modificadores (setters) de la clase
- * {@code Company}.
  */
 public class CompanyTest {
-
     /**
      * Prueba el constructor de la clase Company y los métodos getters. Se
      * verifica que los valores iniciales asignados sean correctos.
@@ -67,4 +64,27 @@ public class CompanyTest {
         assertThat(company.getUserEmail()).isEqualTo("contact@innovative.com");
         assertThat(company.getUserPassword()).isEqualTo("newpassword");
     }
+    /**
+     * Test of addProject method, of class Company.
+     */
+    /*
+    @Test
+    
+    public void testAddProject() {
+        System.out.println("addProject");
+        String proId = "";
+        String proTitle = "";
+        String proDescription = "";
+        String proAbstract = "";
+        String proGoals = "";
+        int proDeadLine = 0;
+        Date proDate = null;
+        double proBudget = 0.0;
+        Company instance = null;
+        instance.addProject(proId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proDate, proBudget);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+    
+ */   
 }

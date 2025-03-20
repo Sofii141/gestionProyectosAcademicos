@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mockito;
 import java.util.List;
 import java.util.ArrayList;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Pruebas unitarias para la clase Coordinator.
@@ -14,9 +17,21 @@ public class CoordinatorTest {
     
     private Coordinator coordinator;
 
+    @BeforeAll
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterAll
+    public static void tearDownClass() throws Exception {
+    }
+
     @BeforeEach
     public void setUp() {
         coordinator = new Coordinator("C001", "coordinator@email.com", "securePass");
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
     }
 
     /**

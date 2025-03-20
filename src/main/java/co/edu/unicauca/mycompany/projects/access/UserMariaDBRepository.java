@@ -59,18 +59,6 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
     }
 
     /**
-     * Cierra la sesión del usuario.
-     * Actualmente, esta operación no está soportada.
-     *
-     * @return Excepción no soportada.
-     */
-    @Override
-    public boolean cerrarSesion() {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-
-    /**
      * Guarda un nuevo usuario en la base de datos.
      *
      * @param newUser Usuario a registrar.

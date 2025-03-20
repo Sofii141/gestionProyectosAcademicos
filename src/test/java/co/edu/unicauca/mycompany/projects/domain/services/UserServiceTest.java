@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.domain.services;
 
 import co.edu.unicauca.mycompany.projects.access.IUserRepository;
@@ -20,8 +16,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 /**
- *
- * @author spart
+ * Pruebas unitarias para la clase UserService.
  */
 public class UserServiceTest {
 
