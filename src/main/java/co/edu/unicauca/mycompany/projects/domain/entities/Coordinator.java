@@ -39,13 +39,18 @@ public class Coordinator extends User {
     /**
      * Establece la lista de proyectos que el coordinador gestionará.
      *
-     * @param coordProjects Lista de proyectos a asignar al coordinador.
+     * @param coordProjects Lista de proyectos a asignar al coordinador. 
+     *                      Si es null, se asignará una lista vacía.
      */
     public void setCoordProjects(List<Project> coordProjects) {
-        this.coordProjects = coordProjects;
+        if (coordProjects == null) {
+            this.coordProjects = new ArrayList<>(); // Evita asignar null
+        } else {
+            this.coordProjects = coordProjects;
+        }
     }
     
-     /**
+    /**
      * Agrega un proyecto a la lista de proyectos que el coordinador gestiona.
      *
      * @param project Proyecto a añadir.
