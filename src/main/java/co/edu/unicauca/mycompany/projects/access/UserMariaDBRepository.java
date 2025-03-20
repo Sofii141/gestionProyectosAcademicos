@@ -1,7 +1,3 @@
-/*
- * Clase UserMariaDBRepository
- * Implementa la interfaz IUserRepository para gestionar usuarios en una base de datos MariaDB.
- */
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
@@ -23,6 +19,7 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
      */
     public UserMariaDBRepository() {
     }
+    
     /**
      * se encarga de verificar si se inicia sesion correctamente mediante una funcion almacenada,
      * borra el valor de password imnediatamente despues de hacer la verificación
@@ -32,9 +29,6 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
      */
     @Override
     public int iniciarSesion(String userId, char[] passwordCharArray) {
-
-
-
         String sql = "SELECT login(?,?)";
 
         // Convertir char[] a String temporalmente
@@ -64,7 +58,6 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
         return -1;
     }
 
-
     /**
      * Cierra la sesión del usuario.
      * Actualmente, esta operación no está soportada.
@@ -85,40 +78,39 @@ public class UserMariaDBRepository extends MariaDBConnection implements IUserRep
      */
     @Override
     public boolean save(User newUser) {
-    try {
-        // Validar que los campos obligatorios no sean nulos o vacíos
-        if (newUser == null
-                || newUser.getUserId().isBlank()
-                || newUser.getUserEmail().isBlank()
-                || newUser.getUserPassword().isBlank()) {
-            return false;
+        try {
+            // Validar que los campos obligatorios no sean nulos o vacíos
+            if (newUser == null
+                    || newUser.getUserId().isBlank()
+                    || newUser.getUserEmail().isBlank()
+                    || newUser.getUserPassword().isBlank()) {
+                return false;
+            }
+
+            this.connect();
+
+            // Insertar usuario en la tabla User
+            String sqlUser = "INSERT INTO User (userId, userEmail, userPassword) VALUES (?, ?, ?)";
+            PreparedStatement pstmtUser = conn.prepareStatement(sqlUser);
+            pstmtUser.setString(1, newUser.getUserId());
+            pstmtUser.setString(2, newUser.getUserEmail());
+            pstmtUser.setString(3, newUser.getUserPassword());
+            pstmtUser.executeUpdate();
+
+            // Insertar rol en la tabla Rol
+            String sqlRol = "INSERT INTO Rol (userId, rolName) VALUES (?, ?)";
+            PreparedStatement pstmtRol = conn.prepareStatement(sqlRol);
+            pstmtRol.setString(1, newUser.getUserId());
+            pstmtRol.setString(2, "CONTACTO EMPRESA");
+            pstmtRol.executeUpdate();
+
+            this.disconnect();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al guardar usuario y rol", ex);
         }
-
-        this.connect();
-
-        // Insertar usuario en la tabla User
-        String sqlUser = "INSERT INTO User (userId, userEmail, userPassword) VALUES (?, ?, ?)";
-        PreparedStatement pstmtUser = conn.prepareStatement(sqlUser);
-        pstmtUser.setString(1, newUser.getUserId());
-        pstmtUser.setString(2, newUser.getUserEmail());
-        pstmtUser.setString(3, newUser.getUserPassword());
-        pstmtUser.executeUpdate();
-
-        // Insertar rol en la tabla Rol
-        String sqlRol = "INSERT INTO Rol (userId, rolName) VALUES (?, ?)";
-        PreparedStatement pstmtRol = conn.prepareStatement(sqlRol);
-        pstmtRol.setString(1, newUser.getUserId());
-        pstmtRol.setString(2, "CONTACTO EMPRESA");
-        pstmtRol.executeUpdate();
-
-        this.disconnect();
-        return true;
-    } catch (SQLException ex) {
-        Logger.getLogger(UserMariaDBRepository.class.getName()).log(Level.SEVERE, "Error al guardar usuario y rol", ex);
+        return false;
     }
-    return false;
-}
-
 
     /**
      * Verifica si un userId ya existe en la base de datos.

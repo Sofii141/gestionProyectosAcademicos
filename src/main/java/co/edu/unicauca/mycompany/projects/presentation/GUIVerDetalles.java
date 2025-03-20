@@ -9,17 +9,22 @@ import javax.swing.JFrame;
 
 /**
  * Clase que representa la interfaz gráfica para visualizar los detalles de un proyecto específico.
- * Muestra información sobre el proyecto y la empresa asociada.
+ * Muestra información detallada sobre el proyecto y la empresa asociada.
  */
 public class GUIVerDetalles extends javax.swing.JFrame {
     
+    /** Proyecto cuyos detalles se van a visualizar. */
     private final Project project;
+
+    /** Empresa asociada al proyecto. */
     private final Company company;
+
+    /** Servicio para gestionar la información de empresas. */
     private final CompanyService companyService;
 
     /**
      * Constructor de la clase GUIVerDetalles.
-     * Inicializa la interfaz con la información del proyecto y su empresa asociada.
+     * Inicializa la interfaz con la información del proyecto y la empresa asociada.
      *
      * @param project Proyecto cuyos detalles se van a visualizar.
      */
@@ -48,9 +53,9 @@ public class GUIVerDetalles extends javax.swing.JFrame {
      * Bloquea el cambio de tamaño, la centra en la pantalla y define la acción de cierre.
      */
     public final void initVisual() {
-        setResizable(false); // Evita que la ventana cambie de tamaño
-        setLocationRelativeTo(null); // Centra la ventana en la pantalla
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana sin afectar la aplicación principal
+        setResizable(false); 
+        setLocationRelativeTo(null); 
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -107,6 +112,7 @@ public class GUIVerDetalles extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Proyecto");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
@@ -151,6 +157,7 @@ public class GUIVerDetalles extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(38, 42, 65));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Informacion de la Empresa");
 
         lblCargoPersona.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -245,10 +252,9 @@ public class GUIVerDetalles extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator2)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
@@ -312,18 +318,17 @@ public class GUIVerDetalles extends javax.swing.JFrame {
                                         .addComponent(lblTiempoProyecto))
                                     .addComponent(lblResumenProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblObjetivosProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 27, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 26, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(186, 186, 186)
-                .addComponent(jLabel10)
+                .addContainerGap()
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(

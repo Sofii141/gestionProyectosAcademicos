@@ -1,33 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.services.UserService;
-import co.edu.unicauca.mycompany.projects.infra.Messages;
-import java.awt.Color;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- *
- * @author Ana_Sofia
+ * Clase que representa la interfaz gráfica para el inicio de sesión de los usuarios.
+ * Permite a los usuarios ingresar sus credenciales y autenticarse en el sistema.
  */
 public class GUIinicioSesion extends javax.swing.JFrame {
 
-    /**
-     * Creates new form inicioSesion
-     */
+    /** Servicio de usuario para la autenticación y gestión de usuarios. */
     private UserService service;
+
+    /** Controlador para manejar la lógica del inicio de sesión. */
     private ControllerInicioSesion controller;
-    
+
+    /**
+     * Constructor de la clase GUIinicioSesion.
+     * Inicializa la interfaz con el servicio de usuario y el controlador de inicio de sesión.
+     *
+     * @param prmService Servicio de usuario utilizado para la autenticación.
+     */
     public GUIinicioSesion(UserService prmService) {
         service = prmService;
         controller = new ControllerInicioSesion(service, this);
+        
+        // Inicializar los componentes gráficos de la interfaz
         initComponents();
+        
+        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null);
+        
+        // Bloquear la opción de redimensionar la ventana
         setResizable(false);
+        
+        // Configurar imágenes y placeholders
         initImages();
         initPlaceholders();
     }
@@ -203,10 +211,22 @@ public class GUIinicioSesion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Método ejecutado al presionar el botón de registro.
+    * Llama al controlador para gestionar la acción de registro de un nuevo usuario.
+    *
+    * @param evt Evento de acción del botón.
+    */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         controller.actionButtomRegister();
     }//GEN-LAST:event_jButton1ActionPerformed
     
+    /**
+    * Método ejecutado al presionar el botón de inicio de sesión.
+    * Obtiene el nombre de usuario y la contraseña ingresados y los envía al controlador para autenticación.
+    *
+    * @param evt Evento de acción del botón.
+    */
     private void jButton_iniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_iniciarSesionActionPerformed
         String userName = jTextUserName.getText().trim();
         char[] enteredPassword = jPasswordField.getPassword();
@@ -216,12 +236,21 @@ public class GUIinicioSesion extends javax.swing.JFrame {
     private void jTextUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextUserNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextUserNameActionPerformed
+    
+    /**
+    * Inicializa las imágenes de la interfaz gráfica.
+    * Carga y escala una imagen para ser usada como icono en un JLabel.
+    */
     private void initImages(){
         Icon mIcono = new ImageIcon(new ImageIcon(getClass().getResource("/burbuja_azul_down.png")).getImage()
         .getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), 0));
 
         jLabel7.setIcon(mIcono);
     }
+    /**
+    * Inicializa los placeholders en los campos de texto.
+    * Establece textos de sugerencia para los campos de usuario y contraseña.
+    */
     private void initPlaceholders(){
         TextPrompt placeholderUsername = new TextPrompt("Ingresar usuario:",jTextUserName);
         TextPrompt placeholderPassword = new TextPrompt("Ingresar contraseña:", jPasswordField);

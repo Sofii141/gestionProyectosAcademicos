@@ -1,8 +1,6 @@
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,9 +30,7 @@ public class StudentMariaDBRepository extends MariaDBConnection implements IStud
     */
     public StudentMariaDBRepository() {
     }
-    
 
-    
     /**
     * Guarda un nuevo estudiante en la base de datos.  
     * 

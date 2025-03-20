@@ -11,28 +11,50 @@ import java.util.List;
  * Un proyecto tiene un identificador, título, descripción, objetivos, presupuesto,
  * estado y fechas clave. Además, puede tener un equipo de desarrollo, postulantes,
  * un coordinador y una empresa asociada.
- * 
  */
 public class Project {
 
-    private String proId; // Identificador único del proyecto
-    private String proTitle; // Título del proyecto
-    private String proDescription; // Descripción detallada del proyecto
-    private String proAbstract; // Resumen del proyecto
-    private String proGoals; // Objetivos del proyecto
-    private Date proDate; // Fecha de creación del proyecto
-    private int proDeadLine; // Plazo del proyecto en días
-    private double proBudget; // Presupuesto asignado al proyecto
-    private String idcompany; // Identificador de la empresa asociada
-    
-    private enumProjectState proState; // Estado actual del proyecto (Ej: RECIBIDO, ACEPTADO)
-    
+    /** Identificador único del proyecto. */
+    private String proId;
+
+    /** Título del proyecto. */
+    private String proTitle;
+
+    /** Descripción detallada del proyecto. */
+    private String proDescription;
+
+    /** Resumen del proyecto. */
+    private String proAbstract;
+
+    /** Objetivos del proyecto. */
+    private String proGoals;
+
+    /** Fecha de creación del proyecto. */
+    private Date proDate;
+
+    /** Plazo del proyecto en días. */
+    private int proDeadLine;
+
+    /** Presupuesto asignado al proyecto. */
+    private double proBudget;
+
+    /** Identificador de la empresa asociada. */
+    private String idcompany;
+
+    /** Estado actual del proyecto (Ej: RECIBIDO, ACEPTADO). */
+    private enumProjectState proState;
+
+    /** Patrón de estado del proyecto para manejar su ciclo de vida. */
     private ProjectStatePatron proStatePatron;
-    
-    private List<Student> proTeam; // Lista de estudiantes asignados al proyecto
-    private List<Student> proPostulates; // Lista de estudiantes que postulan al proyecto
-    private String proCoordinator; // Coordinador del proyecto
-    
+
+    /** Lista de estudiantes asignados al proyecto. */
+    private List<Student> proTeam;
+
+    /** Lista de estudiantes que postulan al proyecto. */
+    private List<Student> proPostulates;
+
+    /** Coordinador del proyecto. */
+    private String proCoordinator;
     
     /**
      * Constructor de la clase Project.

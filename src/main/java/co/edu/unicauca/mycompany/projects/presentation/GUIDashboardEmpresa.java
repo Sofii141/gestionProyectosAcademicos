@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
@@ -13,59 +9,71 @@ import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
 import co.edu.unicauca.mycompany.projects.infra.ValidationException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComponent;
 
 /**
- *
- * @author Ana_Sofia
+ * Interfaz gráfica del panel de inicio para empresas.
+ * Permite la gestión y visualización de información de la empresa y sus proyectos.
  */
 public class GUIDashboardEmpresa extends javax.swing.JFrame {
-    private Company company;
-    private CompanyService companyService;
-    private ProjectService projectService;
+
     /**
-     * Creates new form inicioSesion
+     * Empresa que ha iniciado sesión en el sistema.
+     */
+    private Company company;
+
+    /**
+     * Servicio para la gestión de empresas.
+     */
+    private CompanyService companyService;
+
+    /**
+     * Servicio para la gestión de proyectos.
+     */
+    private ProjectService projectService;
+
+    /**
+     * Constructor del panel de inicio para empresas.
+     * Inicializa los servicios, obtiene los datos de la empresa y configura la interfaz.
+     *
+     * @param nit Número de Identificación Tributaria (NIT) de la empresa.
      */
     public GUIDashboardEmpresa(String nit) {
+        // Inicializar componentes gráficos
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         initPlaceHolders();
         
+        // Obtener instancias de los repositorios a través de la fábrica
         ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
         IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        
+        // Inicializar los servicios con los repositorios correspondientes
         this.projectService = new ProjectService(projectRepository);
         this.companyService = new CompanyService(companyRepository);
+        
+        // Obtener los datos de la empresa a partir del NIT proporcionado
         this.company = companyService.getCompany(nit);
         
+        // Configurar la apariencia y los datos visuales
         initVisual();
-        
     }
+
     /**
      * Configura la apariencia y elementos visuales del dashboard.
      * Hace visible la ventana, la centra en la pantalla y deshabilita la opción de redimensionar.
      */
     public final void initVisual() {
-        // Mostrar la ventana
         this.setVisible(true);
-        
-        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null); 
-        
-        // Bloquear el cambio de tamaño de la ventana
         setResizable(false);
-
-        // Mostrar el ID del estudiante en el botón de inicio
-        lblNameCompany.setText("Compañia " + company.getContactName());
-
-        // Configurar los textos de los labels con la información del estudiante
+        lblNameCompany.setText("Compañía " + company.getUserId());
         lblEmailCompany.setText(company.getUserEmail());
     }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,8 +122,9 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         lblNameCompany.setBackground(new java.awt.Color(255, 255, 255));
         lblNameCompany.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         lblNameCompany.setForeground(new java.awt.Color(255, 255, 255));
+        lblNameCompany.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNameCompany.setText("Empresa x");
-        jPanel4.add(lblNameCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, 30));
+        jPanel4.add(lblNameCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 110, 210, 30));
 
         jButton3.setBackground(new java.awt.Color(90, 111, 228));
         jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
@@ -166,8 +175,9 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 50));
 
         lblEmailCompany.setForeground(new java.awt.Color(255, 255, 255));
+        lblEmailCompany.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEmailCompany.setText("correoEmpres@gmail.com");
-        jPanel4.add(lblEmailCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+        jPanel4.add(lblEmailCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 210, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 42, 65));
@@ -366,7 +376,6 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnSendProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendProjectActionPerformed
-
         String proId = txtProjectId.getText().trim();
         String proTitle = txtTitleProject.getText().trim();
         String proDescription = txtDescriptionProject.getText().trim();
@@ -410,8 +419,8 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
                 // Verificar que el ID del proyecto no exista
                 if (!projectService.existProjectId(proId)) {
                     projectService.saveProject(project);
-                    this.dispose();
                     Messages.showMessageDialog("El proyecto se registró exitosamente", "Registro correcto");
+                    reset();
                 } else {
                     Messages.showMessageDialog("El ID del proyecto ingresado ya se encuentra en uso.", "Atención");
                     txtProjectId.requestFocus();
@@ -480,8 +489,7 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+
     /**
      * Crea los placeholders para la creacion de la empresa
      */
@@ -493,9 +501,21 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
         TextPrompt placeholderObjetivos = new TextPrompt("Ingresar onjetivos:",txtGoalsProject);
         TextPrompt placeholderDescripcion  = new TextPrompt("Ingrese descripción:",txtDescriptionProject);
         TextPrompt placeholderProId  = new TextPrompt("Ingrese el id del proyecto:",txtProjectId);
-
     }
 
+    /**
+     * Resetea para la creacion de una nueva empresa
+     */
+    private void reset(){
+        txtProjectId.setText("");
+        txtTitleProject.setText("");
+        txtDescriptionProject.setText("");
+        txtAbstractProject.setText("");
+        txtGoalsProject.setText("");
+        txtDeadLineProject.setText("");
+        txtBudgetProject.setText("");
+        initPlaceHolders();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSendProject;
     private javax.swing.JButton jButton3;

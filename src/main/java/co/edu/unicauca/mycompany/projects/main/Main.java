@@ -20,13 +20,7 @@ import co.edu.unicauca.mycompany.projects.presentation.GUIinicioSesion;
 public class Main {
 
     public static void main(String[] args) {
-        //GUIDashboardCoordinadorInicio instance = new GUIDashboardCoordinadorInicio("U003");
-        //Student estudiante = new Student("11","paula andrea munoz delgado","paula@gmail");
-        //GUIDashboardEstudiante instance = new GUIDashboardEstudiante(estudiante);
-        
-        
-        //IUserRepository  repository = Factory.getInstance().getRepository("MARIADB", IUserRepository.class); //TODO: generalizar esta mierda
-        IUserRepository repositoryUser = Factory.getInstance().getRepositoryUSer("MARIADB");
+        IUserRepository repositoryUser = Factory.getInstance().getRepositoryUser("MARIADB");
         ICompanyRepository repositoryCompany = Factory.getInstance().getRepositoryCompany("MARIADB");
         IStudentRepository repositoryStudent = Factory.getInstance().getRepositoryStudent("MARIADB");
         ICoordinatorRepository repositoryProject = Factory.getInstance().getRepositoryCoordinator("MARIADB");

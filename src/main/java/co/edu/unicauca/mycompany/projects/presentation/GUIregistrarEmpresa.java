@@ -1,12 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import co.edu.unicauca.mycompany.projects.access.CompanyMariaDBRepository;
-import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
-import co.edu.unicauca.mycompany.projects.access.UserMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
@@ -18,18 +11,26 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComponent;
 
+
 /**
- *
- * @author Ana_Sofia
+ * Clase que representa la interfaz gráfica para el registro de empresas.
+ * Permite a los usuarios registrar una empresa con su respectiva información.
  */
 public class GUIregistrarEmpresa extends javax.swing.JFrame {
 
-    /**
-     * Creates new form inicioSesion
-     */
+    /** Servicio de usuario para gestionar la autenticación y creación de usuarios. */
     private UserService userService;
+    
+    /** Servicio de empresa para gestionar el registro de empresas. */
     private CompanyService companyService;
 
+    /**
+     * Constructor de la clase GUIregistrarEmpresa.
+     * Inicializa los servicios, los componentes gráficos y la configuración inicial de la ventana.
+     *
+     * @param companyService Servicio para gestionar las empresas.
+     * @param userService Servicio para gestionar los usuarios.
+     */
     public GUIregistrarEmpresa(CompanyService companyService, UserService userService) {
         this.companyService = companyService;
         this.userService = userService;
@@ -39,13 +40,17 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         fillSectors();
     }
 
+    /**
+     * Rellena el combo box con los sectores disponibles.
+     * Elimina todos los elementos existentes y añade los valores de la enumeración `enumSector`.
+     */
     private void fillSectors() {
         cboComSector.removeAllItems();
         for (enumSector sector : enumSector.values()) {
             cboComSector.addItem(sector.toString());
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -437,6 +442,13 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     /**
+     * Maneja la acción del botón de verificación para mostrar u ocultar la confirmación de la contraseña.
+     * Si el botón de selección está activado, la contraseña se muestra en texto plano.
+     * Si está desactivado, la contraseña se oculta con un carácter de reemplazo.
+     *
+     * @param evt Evento de acción generado al interactuar con el botón.
+     */
     private void rbSeeConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeeConfirmPasswordActionPerformed
         // TODO add your handling code here:
         if (rbSeeConfirmPassword.isSelected()) {
@@ -448,6 +460,13 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rbSeeConfirmPasswordActionPerformed
 
+    /**
+     * Maneja la acción del botón de verificación para mostrar u ocultar la contraseña principal.
+     * Si el botón de selección está activado, la contraseña se muestra en texto plano.
+     * Si está desactivado, la contraseña se oculta con un carácter de reemplazo.
+     *
+     * @param evt Evento de acción generado al interactuar con el botón.
+     */
     private void rbSeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeePasswordActionPerformed
         // TODO add your handling code here:
         if (rbSeePassword.isSelected()) {
@@ -519,6 +538,13 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtComNameFocusGained
 
+    /**
+     * Maneja el evento de acción del botón de registro de empresa.
+     * Recupera los datos ingresados en el formulario, valida la información y registra la empresa 
+     * si los datos son correctos. Posteriormente, redirige a la pantalla de inicio de sesión.
+     *
+     * @param evt Evento de acción generado al presionar el botón de registro.
+     */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         //Recuperación de datos ingresados por el usuario
         String comNit = txtComNit.getText().trim();
@@ -543,22 +569,30 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         enumSector sector = enumSector.valueOf(comSector.toUpperCase());
         Company company = new Company(comName, comContactName, comContactLastName, comContactPhone, comContactCharge, sector, comNit, comEmail, comPassword);
         User user = new User(comNit, comEmail, comPassword);
+        
         //Registro de empresas
         if (!userService.existUserId(comNit)) {
             try {
+                // Validación de datos antes del registro
                 if (userService.validData(user) && companyService.validData(company)) {
+                    // Guardar usuario y empresa en la base de datos
                     userService.saveUser(user);
                     companyService.saveCompany(company);
+                    
+                    // Cerrar la ventana actual y redirigir a la pantalla de inicio de sesión
                     this.dispose();
                     GUIinicioSesion instance = new GUIinicioSesion(this.userService);
                     instance.setVisible(true);
+                    
+                    // Mostrar mensaje de confirmación
                     Messages.showMessageDialog("Empresa de nit " + comNit + " registrada correctamente", "Registro correcto");
                 }
 
             } catch (ValidationException ve) {
-
+                 // Manejo de errores de validación
                 Messages.showErrorDialog(ve.getMessage(), "Error de validación");
 
+                // Mapear campos del formulario con posibles errores
                 Map<String, JComponent> mapError = new HashMap<>();
                 mapError.put("userId", txtComNit);
                 mapError.put("companyName", txtComName);
@@ -570,23 +604,33 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
                 mapError.put("contactPhone", txtComContactPhone);
                 mapError.put("contactPosition", txtComContactCharge);
 
+                // Resaltar el campo con el error detectado
                 JComponent campoError = mapError.get(ve.getAtributoError());
-                campoError.requestFocus();
+                if (campoError != null) {
+                    campoError.requestFocus();
+                }
                 return;
-
+                
             } catch (Exception ex) {
-
+                // Manejo de errores inesperados
                 Messages.showErrorDialog(ex.getMessage(), "Error desconocido");
                 return;
-
+                
             }
         } else {
+            // Manejo del caso en que el NIT ya existe en el sistema
             Messages.showMessageDialog("El NIT ingresado ya se encuentra en uso.", "Atención");
             txtComNit.requestFocus();
-            return;
+            
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    /**
+     * Maneja el evento de acción del botón "Cancelar".
+     * Cierra la ventana actual y redirige a la pantalla de inicio de sesión.
+     *
+     * @param evt Evento de acción generado al presionar el botón "Cancelar".
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
         GUIinicioSesion instance = new GUIinicioSesion(this.userService);
@@ -628,10 +672,22 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
     private boolean arePasswordsMatching(String password, String confirmPassword) {
         return password.equals(confirmPassword);
     }
+    
+    private void initPlaceholders() {
+        new TextPrompt("Ingrese el NIT", txtComNit);
+        new TextPrompt("Ingrese el nombre de la empresa", txtComName);
+        new TextPrompt("Ingrese el correo electrónico", txtComEmail);
+        new TextPrompt("Ingrese la contraseña", txtComPassword);
+        new TextPrompt("Confirme la contraseña", txtComConfirmPassword);
+        new TextPrompt("Ingrese el nombre del contacto", txtComContactName);
+        new TextPrompt("Ingrese el apellido del contacto", txtComContactLastName);
+        new TextPrompt("Ingrese el cargo del contacto", txtComContactCharge);
+        new TextPrompt("Ingrese el teléfono del contacto", txtComContactPhone);
+    }
+    
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;

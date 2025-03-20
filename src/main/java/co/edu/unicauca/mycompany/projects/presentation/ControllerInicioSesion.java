@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
@@ -11,13 +7,18 @@ import co.edu.unicauca.mycompany.projects.domain.services.UserService;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
 
 /**
- * Controlador de GUIInicioSesion
- *
- * @author spart
+ * Controlador para la vista de inicio de sesión.
+ * Gestiona la autenticación de usuarios y la redirección a la vista correspondiente.
  */
 public class ControllerInicioSesion {
-
+    /**
+     * Servicio de usuario para manejar la autenticación.
+     */
     private UserService service;
+    
+    /**
+     * Vista de inicio de sesión a la que este controlador da soporte.
+     */
     private GUIinicioSesion view;
 
     /**

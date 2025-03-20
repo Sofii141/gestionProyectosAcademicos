@@ -6,17 +6,31 @@ import java.util.List;
 
 /**
  * Representa una empresa que puede registrar proyectos en el sistema.
+ * Extiende la clase User para heredar sus propiedades y métodos.
  */
-public class Company extends User{
-    private String companyName; // Nombre de la empresa
-    private String contactName; // Nombre de la persona de contacto
-    private String contactLastName; // Apellido de la persona de contacto
-    private String contactPhone; // Teléfono de contacto
-    private String contactPosition; // Cargo de la persona de contacto
-    private enumSector companySector; // Sector al que pertenece la empresa
+public class Company extends User {
 
-    private List<Project> companyProjects; // Lista de proyectos asociados a la empresa
+    /** Nombre de la empresa. */
+    private String companyName;
 
+    /** Nombre de la persona de contacto dentro de la empresa. */
+    private String contactName;
+
+    /** Apellido de la persona de contacto dentro de la empresa. */
+    private String contactLastName;
+
+    /** Número de teléfono de contacto de la empresa. */
+    private String contactPhone;
+
+    /** Cargo de la persona de contacto dentro de la empresa. */
+    private String contactPosition;
+
+    /** Sector al que pertenece la empresa. */
+    private enumSector companySector;
+
+    /** Lista de proyectos asociados a la empresa. */
+    private List<Project> companyProjects;
+    
     /**
      * Constructor de la clase Company con todos los atributos.
      * 

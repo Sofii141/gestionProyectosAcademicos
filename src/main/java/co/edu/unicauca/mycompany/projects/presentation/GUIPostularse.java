@@ -5,21 +5,44 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import javax.swing.JFrame;
 
+/**
+ * Clase que representa la interfaz gráfica para que un estudiante se postule a un proyecto.
+ * Permite al estudiante confirmar su postulación o cancelar la acción.
+ */
 public class GUIPostularse extends javax.swing.JFrame {
 
+    /** Proyecto al que el estudiante desea postularse. */
     private final Project project;
+
+    /** Estudiante que se está postulando. */
     private final Student student;
+
+    /** Servicio que gestiona las operaciones relacionadas con los proyectos. */
     private final ProjectService projectService;
-    
+
+    /**
+     * Constructor de la clase GUIPostularse.
+     * Inicializa los atributos de la clase y configura la interfaz gráfica.
+     *
+     * @param projectService Servicio para gestionar proyectos.
+     * @param proyecto Proyecto al que el estudiante desea postularse.
+     * @param estudiante Estudiante que realiza la postulación.
+     */
     public GUIPostularse(ProjectService projectService, Project proyecto, Student estudiante) {
         this.project = proyecto;
         this.student = estudiante;
         this.projectService = projectService;
 
+        // Inicializa los componentes gráficos
         initComponents();
         initVisual();
     }
-    
+
+    /**
+     * Configura la apariencia de la interfaz.
+     * Deshabilita la opción de redimensionar, centra la ventana en la pantalla 
+     * y establece la acción de cierre como DISPOSE_ON_CLOSE.
+     */
     public final void initVisual() {
         setResizable(false);
         setLocationRelativeTo(null);
@@ -122,13 +145,26 @@ public class GUIPostularse extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Acción ejecutada cuando el usuario presiona el botón "Aceptar".
+     * Registra al estudiante en el proyecto y notifica a los observadores sobre el cambio.
+     * Luego, cierra la ventana.
+     *
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         dispose();
         projectService.applyStudent(student.getUserId(), project.getProId());
         projectService.notifyAllObserves();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    /**
+     * Acción ejecutada cuando el usuario presiona el botón "Cancelar".
+     * Simplemente cierra la ventana sin realizar ninguna acción adicional.
+     *
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed

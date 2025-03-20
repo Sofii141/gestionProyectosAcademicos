@@ -17,26 +17,34 @@ import javax.swing.table.DefaultTableModel;
  * Se actualiza cuando un estudiante se postula a un proyecto.
  */
 public class TableProjectsObserver extends JFrame implements Observer {
+
+    /** Tabla que muestra los proyectos disponibles para el estudiante. */
     private final JTable jTableEstudiante;
+
+    /** Panel de desplazamiento para la tabla. */
     private final JScrollPane jScrollPane1;
+
+    /** Servicio de gestión de proyectos. */
     private final ProjectService projectService;
+
+    /** Estudiante que interactúa con los proyectos. */
     private final Student student;
-    
+
     /**
      * Constructor de la clase.
      * 
-     * @param student Estudiante actual
-     * @param projectService Servicio de proyectos
-     * @param jTableEstudiante Tabla que muestra los proyectos disponibles
-     * @param jScrollPane1 Panel de desplazamiento para la tabla
+     * @param student Estudiante actual.
+     * @param projectService Servicio de gestión de proyectos.
+     * @param jTableEstudiante Tabla que muestra los proyectos disponibles.
+     * @param jScrollPane1 Panel de desplazamiento para la tabla.
      */
     public TableProjectsObserver(Student student, ProjectService projectService, JTable jTableEstudiante, JScrollPane jScrollPane1) {
         this.student = student;
         this.jTableEstudiante = jTableEstudiante;
         this.projectService = projectService;
         this.jScrollPane1 = jScrollPane1;
-        
-        // Dargar datos iniciales
+
+        // Cargar datos iniciales
         configurarTabla();
     }
 
@@ -46,7 +54,7 @@ public class TableProjectsObserver extends JFrame implements Observer {
     private void configurarTabla() {
         // Configurar la tabla y cargar datos iniciales
         initComponents();
-        
+
         // Limpiar la tabla antes de cargar nuevos datos
         DefaultTableModel modelo = (DefaultTableModel) jTableEstudiante.getModel();
         modelo.setRowCount(0);
@@ -54,8 +62,8 @@ public class TableProjectsObserver extends JFrame implements Observer {
         // Obtener el servicio de compañías
         ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
         CompanyService companyService = new CompanyService(companyRepository);
-        
-        // Obtener la lista de proyectos disponibles
+
+        // Obtener la lista de proyectos disponibles para el estudiante
         List<Project> projects = projectService.projectsAvailable(student.getUserId());
 
         // Agregar cada proyecto a la tabla
@@ -71,14 +79,14 @@ public class TableProjectsObserver extends JFrame implements Observer {
             });
         }
     }
-    
+
     /**
      * Configura los componentes de la tabla, incluyendo su diseño y renderizadores.
      */
-    private void initComponents(){
+    private void initComponents() {
         jTableEstudiante.setModel(new DefaultTableModel(
-            new Object [][] {},
-            new String [] { "No", "Nombre Empresa", "Nombre Proyecto", "Fecha", "Resumen", "Acciones" }
+            new Object[][] {},
+            new String[] { "No", "Nombre Empresa", "Nombre Proyecto", "Fecha", "Resumen", "Acciones" }
         ));
 
         // Configuración de la apariencia de la tabla

@@ -10,7 +10,10 @@ import javax.swing.JButton;
  */
 public class GUIProyectosDisponibles extends javax.swing.JFrame {
 
+    /** Estudiante que está visualizando los proyectos disponibles. */
     private final Student student;
+
+    /** Botón en la pantalla principal que permite postularse rápidamente. */
     private final JButton btnPostularInicio;
 
     /**
@@ -18,7 +21,7 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
      * Inicializa la interfaz con la información del estudiante y los proyectos disponibles.
      *
      * @param student          Estudiante que está visualizando los proyectos.
-     * @param projectService   Servicio encargado de gestionar los proyectos.
+     * @param projectService   Servicio encargado de gestionar los proyectos y sus postulaciones.
      * @param btnPostularInicio Botón de la pantalla principal para postulación rápida.
      */
     public GUIProyectosDisponibles(Student student, ProjectService projectService, JButton btnPostularInicio) {
@@ -41,19 +44,10 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
      * También establece la información del estudiante en los elementos gráficos.
      */
     public final void initVisual() {
-        // Mostrar la ventana
         this.setVisible(true); 
-        
-        // Bloquear el cambio de tamaño de la ventana
         setResizable(false); 
-        
-        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null); 
-
-        // Mostrar el ID del estudiante en el botón de inicio
         btnInicio.setText("Estudiante " + student.getUserId());
-
-        // Configurar el texto del label con el correo del estudiante
         lblCorreo.setText(student.getUserEmail());
     }
     
@@ -195,6 +189,12 @@ public class GUIProyectosDisponibles extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnMisProyectosActionPerformed
 
+    /**
+    * Maneja el evento de acción cuando se presiona el botón "Inicio".
+    * Cierra la ventana actual y vuelve a hacer visible el botón de postulación en la pantalla principal.
+    *
+    * @param evt Evento de acción generado por el botón.
+    */
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         dispose();
         btnPostularInicio.setVisible(true);

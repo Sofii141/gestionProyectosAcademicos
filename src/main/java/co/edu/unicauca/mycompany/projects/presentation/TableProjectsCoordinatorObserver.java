@@ -5,7 +5,6 @@ import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
-import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.infra.Observer;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
@@ -18,19 +17,30 @@ import javax.swing.table.DefaultTableModel;
  * Se actualiza cuando un estudiante se postula a un proyecto.
  */
 public class TableProjectsCoordinatorObserver extends JFrame implements Observer {
+
+    /** Tabla que muestra los proyectos disponibles */
     private final JTable jTableCoordinator;
+
+    /** Panel de desplazamiento para la tabla */
     private final JScrollPane jScrollPane1;
+
+    /** Servicio de gestión de proyectos */
     private final ProjectService projectService;
+
+    /** Coordinador que supervisa los proyectos */
     private final Coordinator coordinator;
+
+    /** Servicio de gestión de compañías */
     private final CompanyService companyService;
-    
+
     /**
      * Constructor de la clase.
      * 
-     * @param coordinator Estudiante actual
-     * @param projectService Servicio de proyectos
-     * @param jTableCoordinator Tabla que muestra los proyectos disponibles
-     * @param jScrollPane1 Panel de desplazamiento para la tabla
+     * @param coordinator Coordinador que gestiona los proyectos.
+     * @param projectService Servicio de gestión de proyectos.
+     * @param jTableCoordinator Tabla que muestra los proyectos disponibles.
+     * @param jScrollPane1 Panel de desplazamiento para la tabla.
+     * @param companyService Servicio de gestión de compañías.
      */
     public TableProjectsCoordinatorObserver(Coordinator coordinator, ProjectService projectService, JTable jTableCoordinator, JScrollPane jScrollPane1, CompanyService companyService) {
         this.coordinator = coordinator;
@@ -38,13 +48,13 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
         this.projectService = projectService;
         this.jScrollPane1 = jScrollPane1;
         this.companyService = companyService;
-        
-        // Dargar datos iniciales
+
+        // Cargar datos iniciales
         configurarTabla();
     }
 
     /**
-     * Configura y llena la tabla con los proyectos disponibles para el estudiante.
+     * Configura y llena la tabla con los proyectos disponibles para el coordinador.
      */
     private void configurarTabla() {
         // Configurar la tabla y cargar datos iniciales
@@ -62,7 +72,7 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
 
         // Obtener la lista de proyectos
         List<Project> projects = projectService.listProjects();
-        
+
         // Agregar cada proyecto a la tabla
         for (Project project : projects) {
             Company company = companyService.getCompany(project.getIdcompany());
@@ -75,27 +85,18 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
                 "Acciones"
             });
         }
-           
+
         modelo.fireTableDataChanged();
     }
-    
+
     /**
      * Configura los componentes de la tabla, incluyendo su diseño y renderizadores.
      */
-    private void initComponents(){
+    private void initComponents() {
         jTableCoordinator.setModel(new DefaultTableModel(
-            new Object [][] {},
-            new String [] { "Id" ,"NIT Empresa", "Nombre Empresa", "Nombre Proyecto", "Fecha", "Acciones" }
+            new Object[][] {},
+            new String[] { "Id", "NIT Empresa", "Nombre Empresa", "Nombre Proyecto", "Fecha", "Acciones" }
         ));
-
-        // Configuración de la apariencia de la tabla
-        /*
-        jTableCoordinator.setGridColor(new java.awt.Color(204, 204, 204));
-        jTableCoordinator.setRowHeight(45);
-        jTableCoordinator.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTableCoordinator);
-        
-        */
 
         // Configuración de la columna de acciones
         jTableCoordinator.getColumnModel().getColumn(5).setMinWidth(325);

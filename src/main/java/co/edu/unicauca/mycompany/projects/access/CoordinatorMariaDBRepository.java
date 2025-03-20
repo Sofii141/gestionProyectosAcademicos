@@ -1,12 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,16 +11,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Ana_Sofia
+ * Clase que maneja la persistencia de los coordinadores en la base de datos MariaDB.
+ * Implementa la interfaz ICoordinatorRepository y extiende MariaDBConnection.
  */
-public class CoordinatorMariaDBRepository extends MariaDBConnection implements ICoordinatorRepository{
+public class CoordinatorMariaDBRepository extends MariaDBConnection implements ICoordinatorRepository {
 
-
+    /**
+     * Constructor por defecto.
+     */
     public CoordinatorMariaDBRepository() {
     }
 
-
+    /**
+     * Guarda un nuevo coordinador en la base de datos.
+     * 
+     * @param newCoordinator El objeto Coordinator a guardar.
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
     @Override
     public boolean save(Coordinator newCoordinator) {
         String sqlUser = "INSERT INTO User (userId, userEmail, userPassword) VALUES (?, ?, ?)";
@@ -59,6 +60,11 @@ public class CoordinatorMariaDBRepository extends MariaDBConnection implements I
         return rowsAffected > 0;
     }
 
+    /**
+     * Lista todos los coordinadores almacenados en la base de datos.
+     * 
+     * @return Lista de objetos Coordinator.
+     */
     @Override
     public List<Coordinator> listAll() {
         List<Coordinator> coordinators = new ArrayList<>();
@@ -85,6 +91,12 @@ public class CoordinatorMariaDBRepository extends MariaDBConnection implements I
         return coordinators;
     }
 
+    /**
+     * Obtiene un coordinador específico basado en su ID de usuario.
+     * 
+     * @param userId El ID del usuario a buscar.
+     * @return Un objeto Coordinator si se encuentra, null en caso contrario.
+     */
     @Override
     public Coordinator getCoordinator(String userId) {
         Coordinator coordinator = null;

@@ -13,12 +13,23 @@ import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
  */
 public class GUIDashboardEstudiante extends javax.swing.JFrame {
 
+    /**
+     * Servicio para la gestión de estudiantes.
+     */
     private final StudentService studentService;
+
+    /**
+     * Servicio para la gestión de proyectos.
+     */
     private final ProjectService projectService;
+
+    /**
+     * Estudiante que ha iniciado sesión en el sistema.
+     */
     private final Student student;
 
     /**
-     * Constructor de la clase GUIDashboardEstudiante.
+     * Constructor del panel de inicio para estudiantes.
      * Inicializa los servicios de estudiante y proyectos, recupera la información del estudiante
      * y configura la interfaz gráfica.
      *
@@ -51,23 +62,14 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
      * Hace visible la ventana, la centra en la pantalla y deshabilita la opción de redimensionar.
      */
     public final void initVisual() {
-        // Mostrar la ventana
         this.setVisible(true);
-        
-        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null); 
-        
-        // Bloquear el cambio de tamaño de la ventana
         setResizable(false);
-
-        // Mostrar el ID del estudiante en el botón de inicio
         btnInicio.setText("Estudiante " + student.getUserId());
-
-        // Configurar los textos de los labels con la información del estudiante
         lblTitulo.setText("Bienvenido estudiante " + student.getUserId());
         lblCorreo.setText(student.getUserEmail());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -205,6 +207,12 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnProyectosActionPerformed
 
+    /**
+     * Maneja el evento cuando el usuario presiona el botón "Postular".
+     * Abre la ventana de proyectos disponibles y oculta el botón de postulación.
+     *
+     * @param evt Evento de acción generado al presionar el botón.
+     */
     private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
         GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student, projectService, btnPostular);
         gui.setVisible(true);

@@ -1,39 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
-import javax.swing.JOptionPane;
 
 /**
- *
- * @author Ana_Sofia
+ * Clase que representa un panel de acciones para que un coordinador interactúe con un proyecto.
+ * Permite visualizar detalles del proyecto, cambiar su estado y agregar comentarios.
  */
 public class PanelActionCoordinator extends javax.swing.JPanel {
     
+    /** Proyecto sobre el cual se realizarán acciones. */
     private Project proyecto;
-    private final Coordinator coordinator; // Estudiante que interactúa con el panel
-    private final ProjectService projectService; // Servicio de proyectos
-    private CompanyService companyService;
     
-     /**
-     * Constructor de la clase.
+    /** Coordinador que interactúa con el panel. */
+    private final Coordinator coordinator;
+    
+    /** Servicio de gestión de proyectos. */
+    private final ProjectService projectService;
+    
+    /** Servicio de gestión de empresas. */
+    private final CompanyService companyService;
+
+    /**
+     * Constructor de la clase PanelActionCoordinator.
      * 
-     * @param projectService Servicio de gestión de proyectos
-     * @param proyecto Proyecto sobre el cual se realizarán acciones
-     * @param coordinator coordinador que interactúa con el proyecto
+     * @param projectService Servicio de gestión de proyectos.
+     * @param proyecto Proyecto sobre el cual se realizarán acciones.
+     * @param coordinator Coordinador que interactúa con el proyecto.
+     * @param companyService Servicio de gestión de empresas.
      */
     public PanelActionCoordinator(ProjectService projectService, Project proyecto, Coordinator coordinator, CompanyService companyService) {
         this.proyecto = proyecto;
         this.coordinator = coordinator;
         this.projectService = projectService;
-      
-        System.out.println("CompanyService en PanelActionCoordinator: " + (this.companyService != null ? "OK" : "NULL"));
+        this.companyService = companyService;
 
         initComponents();
     }
@@ -108,18 +110,34 @@ public class PanelActionCoordinator extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método invocado al presionar el botón de detalles.
+     * Abre una ventana con la información detallada del proyecto.
+     * 
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
-
-       GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
+        GUIVerDetalles detallesFrame = new GUIVerDetalles(proyecto);
        detallesFrame.setVisible(true);
     }//GEN-LAST:event_btnDetallesActionPerformed
 
+    /**
+     * Método invocado al presionar el botón de estado.
+     * Permite modificar el estado del proyecto.
+     * 
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
-        
         GUIEstado estadoFrame = new GUIEstado(projectService, proyecto, coordinator, companyService);
         estadoFrame.setVisible(true);
     }//GEN-LAST:event_btnEstadoActionPerformed
 
+    /**
+     * Método invocado al presionar el botón de comentarios.
+     * Abre una ventana para agregar comentarios al proyecto.
+     * 
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarioActionPerformed
         GUIComentarios comentariosFrame = new GUIComentarios(projectService, proyecto, coordinator, companyService);
         comentariosFrame.setVisible(true);

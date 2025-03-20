@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
@@ -14,17 +10,38 @@ import co.edu.unicauca.mycompany.projects.domain.services.CoordinatorService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 
 
+/**
+ * Interfaz gráfica del panel de inicio para coordinadores.
+ * Permite la visualización de datos y gráficos relacionados con los proyectos gestionados.
+ */
 public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
 
     /**
-    * Creates new form inicioSesion
-    */
-    
+     * Servicio para la gestión de coordinadores.
+     */
     private final CoordinatorService coordinatorService;
+
+    /**
+     * Servicio para la gestión de proyectos.
+     */
     private final ProjectService projectService;
+
+    /**
+     * Coordinador que ha iniciado sesión.
+     */
     private final Coordinator coordinator;
+
+    /**
+     * Servicio para la gestión de empresas.
+     */
     private final CompanyService companyService;
-    
+
+    /**
+     * Constructor del panel de inicio para coordinadores.
+     * Inicializa los servicios, obtiene los datos del coordinador y configura la interfaz.
+     *
+     * @param coordinatorId ID del coordinador que ha iniciado sesión.
+     */
     public GUIDashboardCoordinadorInicio(String coordinatorId) {
         // Obtener instancias de los repositorios a través de la fábrica
         ICoordinatorRepository coordinatorRepository = Factory.getInstance().getRepositoryCoordinator("MARIADB");
@@ -36,7 +53,7 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
         this.coordinatorService = new CoordinatorService(coordinatorRepository);
         this.companyService = new CompanyService(companyRepository);
 
-        // Obtener los datos del estudiante a partir del ID proporcionado
+        // Obtener los datos del coordinador a partir del ID proporcionado
         this.coordinator = coordinatorService.getCoordinator(coordinatorId);
 
         // Inicializar los componentes gráficos de la interfaz
@@ -54,22 +71,14 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
      * Hace visible la ventana, la centra en la pantalla y deshabilita la opción de redimensionar.
      */
     public final void initVisual() {
-        // Mostrar la ventana
         this.setVisible(true);
-        
-        // Centrar la ventana en la pantalla
         setLocationRelativeTo(null); 
-        
-        // Bloquear el cambio de tamaño de la ventana
         setResizable(false);
-
-        // Mostrar el ID del estudiante en el botón de inicio
         btnCoordiName.setText("Coordinador " + coordinator.getUserId());
-
-        // Configurar los textos de los labels con la información del estudiante
         lbCoordinatorTitle.setText("Bienvenido Coordinador " + coordinator.getUserId());
         lblCoordinatorCorreo.setText(coordinator.getUserEmail());
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -248,8 +257,13 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Maneja el evento cuando el usuario presiona el botón "Proyectos".
+     * Abre la ventana del dashboard del coordinador y cierra la ventana actual.
+     *
+     * @param evt Evento de acción generado al presionar el botón.
+     */
     private void btnProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectosActionPerformed
-        // TODO add your handling code here:
         GUIDashboardCoordinador gui = new GUIDashboardCoordinador(coordinator, projectService, companyService, btnProyectos);
         gui.setVisible(true);
         this.dispose();
@@ -263,8 +277,13 @@ public class GUIDashboardCoordinadorInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    /**
+     * Maneja el evento cuando el usuario presiona el botón con el nombre del coordinador.
+     * Abre la ventana del dashboard inicial del coordinador y cierra la ventana actual.
+     *
+     * @param evt Evento de acción generado al presionar el botón.
+     */
     private void btnCoordiNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoordiNameActionPerformed
-        // TODO add your handling code here:
         GUIDashboardCoordinadorInicio gui = new GUIDashboardCoordinadorInicio(coordinator.getUserId());
         gui.setVisible(true);
         this.dispose();
