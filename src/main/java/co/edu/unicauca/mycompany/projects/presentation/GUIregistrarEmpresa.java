@@ -92,7 +92,6 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(38, 42, 65));
@@ -410,14 +409,14 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 87, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addComponent(jLabel12))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(357, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -438,13 +437,87 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtComContactChargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactChargeActionPerformed
+    private void rbSeeConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeeConfirmPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactChargeActionPerformed
+        if (rbSeeConfirmPassword.isSelected()) {
+            // Mostrar contraseña
+            txtComConfirmPassword.setEchoChar((char) 0);
+        } else {
+            // Ocultar contraseña
+            txtComConfirmPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_rbSeeConfirmPasswordActionPerformed
 
-    private void txtComNitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNitActionPerformed
+    private void rbSeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeePasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtComNitActionPerformed
+        if (rbSeePassword.isSelected()) {
+            // Mostrar contraseña
+            txtComPassword.setEchoChar((char) 0);
+        } else {
+            // Ocultar contraseña
+            txtComPassword.setEchoChar('*'); // Puedes cambiar '*' por el carácter que prefieras
+        }
+    }//GEN-LAST:event_rbSeePasswordActionPerformed
+
+    private void txtComEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComEmailActionPerformed
+
+    private void txtComEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComEmailFocusLost
+
+    private void txtComEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComEmailFocusGained
+
+    private void txtComContactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactNameActionPerformed
+
+    private void txtComContactNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactNameFocusLost
+
+    private void txtComContactNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactNameFocusGained
+
+    private void txtComContactPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactPhoneActionPerformed
+
+    private void txtComContactPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactPhoneFocusLost
+
+    private void txtComContactPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactPhoneFocusGained
+
+    private void txtComContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactLastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactLastNameActionPerformed
+
+    private void txtComContactLastNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactLastNameFocusLost
+
+    private void txtComContactLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactLastNameFocusGained
+
+    private void txtComNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNameActionPerformed
+
+    private void txtComNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNameFocusLost
+
+    private void txtComNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNameFocusGained
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         //Recuperación de datos ingresados por el usuario
@@ -512,8 +585,37 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
             txtComNit.requestFocus();
             return;
         }
-
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+        GUIinicioSesion instance = new GUIinicioSesion(this.userService);
+        instance.setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtComNitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNitActionPerformed
+
+    private void txtComNitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNitFocusLost
+
+    private void txtComNitFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNitFocusGained
+
+    private void txtComContactChargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactChargeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactChargeActionPerformed
+
+    private void txtComContactChargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactChargeFocusLost
+
+    private void txtComContactChargeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactChargeFocusGained
 
     /**
      * Valida que las contraseñas ingresadas sean iguales.
@@ -526,125 +628,6 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
     private boolean arePasswordsMatching(String password, String confirmPassword) {
         return password.equals(confirmPassword);
     }
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.dispose();
-        GUIinicioSesion instance = new GUIinicioSesion(this.userService);
-        instance.setVisible(true);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void txtComNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComNameActionPerformed
-
-    private void txtComContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactLastNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactLastNameActionPerformed
-
-    private void txtComContactPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactPhoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactPhoneActionPerformed
-
-    private void txtComContactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactNameActionPerformed
-
-    private void txtComEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComEmailActionPerformed
-
-    private void txtComNitFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNitFocusGained
-
-    private void txtComNitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNitFocusLost
-
-    private void txtComNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNameFocusGained
-
-    private void txtComNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNameFocusLost
-
-    private void txtComEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComEmailFocusGained
-
-    private void txtComEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComEmailFocusLost
-
-    private void txtComContactPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactPhoneFocusGained
-
-    private void txtComContactPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactPhoneFocusLost
-
-    private void txtComContactNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactNameFocusGained
-
-    private void txtComContactNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactNameFocusLost
-
-    private void txtComContactLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactLastNameFocusGained
-
-    private void txtComContactLastNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactLastNameFocusLost
-
-    private void txtComContactChargeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusGained
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_txtComContactChargeFocusGained
-
-    private void txtComContactChargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactChargeFocusLost
-
-    private void rbSeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeePasswordActionPerformed
-        // TODO add your handling code here:
-        if (rbSeePassword.isSelected()) {
-            // Mostrar contraseña
-            txtComPassword.setEchoChar((char) 0);
-        } else {
-            // Ocultar contraseña
-            txtComPassword.setEchoChar('*'); // Puedes cambiar '*' por el carácter que prefieras
-        }
-    }//GEN-LAST:event_rbSeePasswordActionPerformed
-
-    private void rbSeeConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeeConfirmPasswordActionPerformed
-        // TODO add your handling code here:
-        if (rbSeeConfirmPassword.isSelected()) {
-            // Mostrar contraseña
-            txtComConfirmPassword.setEchoChar((char) 0);
-        } else {
-            // Ocultar contraseña
-            txtComConfirmPassword.setEchoChar('*');
-        }
-    }//GEN-LAST:event_rbSeeConfirmPasswordActionPerformed
-
     /**
      * @param args the command line arguments
      */
