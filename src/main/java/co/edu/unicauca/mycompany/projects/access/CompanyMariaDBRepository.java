@@ -8,12 +8,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
- * Clase que implementa el repositorio de empresas utilizando MariaDB.
- * Extiende la clase de conexión a la base de datos MariaDBConnection.
+ * Clase que implementa el repositorio de empresas utilizando MariaDB. Extiende
+ * la clase de conexión a la base de datos MariaDBConnection.
  */
-public class CompanyMariaDBRepository extends MariaDBConnection implements ICompanyRepository { 
+public class CompanyMariaDBRepository extends MariaDBConnection implements ICompanyRepository {
 
     /**
      * Constructor de la clase.
@@ -25,7 +24,8 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
      * Guarda una nueva empresa en la base de datos.
      *
      * @param newCompany Objeto que representa la empresa a guardar.
-     * @return Verdadero si la empresa se guardó correctamente, falso en caso contrario.
+     * @return Verdadero si la empresa se guardó correctamente, falso en caso
+     * contrario.
      */
     @Override
     public boolean save(Company newCompany) {
@@ -55,7 +55,6 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
             pstmt.setString(5, newCompany.getContactLastName());
             pstmt.setString(6, newCompany.getContactPosition());
             pstmt.setString(7, getSectorIdByName(newCompany.getCompanySector().toString()));
-
 
             pstmt.executeUpdate();
 
@@ -120,12 +119,13 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
         }
         return company;
     }
-    
+
     /**
      * Obtiene el identificador único de un sector según su nombre.
      *
      * @param sectorName Nombre del sector a buscar.
-     * @return Identificador único del sector si existe, de lo contrario retorna null.
+     * @return Identificador único del sector si existe, de lo contrario retorna
+     * null.
      */
     @Override
     public String getSectorIdByName(String sectorName) {
