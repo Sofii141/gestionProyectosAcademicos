@@ -1,12 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import co.edu.unicauca.mycompany.projects.access.CompanyMariaDBRepository;
-import co.edu.unicauca.mycompany.projects.access.ProjectMariaDBRepository;
-import co.edu.unicauca.mycompany.projects.access.UserMariaDBRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
@@ -18,18 +11,26 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComponent;
 
+
 /**
- *
- * @author Ana_Sofia
+ * Clase que representa la interfaz gráfica para el registro de empresas.
+ * Permite a los usuarios registrar una empresa con su respectiva información.
  */
 public class GUIregistrarEmpresa extends javax.swing.JFrame {
 
-    /**
-     * Creates new form inicioSesion
-     */
+    /** Servicio de usuario para gestionar la autenticación y creación de usuarios. */
     private UserService userService;
+    
+    /** Servicio de empresa para gestionar el registro de empresas. */
     private CompanyService companyService;
 
+    /**
+     * Constructor de la clase GUIregistrarEmpresa.
+     * Inicializa los servicios, los componentes gráficos y la configuración inicial de la ventana.
+     *
+     * @param companyService Servicio para gestionar las empresas.
+     * @param userService Servicio para gestionar los usuarios.
+     */
     public GUIregistrarEmpresa(CompanyService companyService, UserService userService) {
         this.companyService = companyService;
         this.userService = userService;
@@ -39,13 +40,17 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         fillSectors();
     }
 
+    /**
+     * Rellena el combo box con los sectores disponibles.
+     * Elimina todos los elementos existentes y añade los valores de la enumeración `enumSector`.
+     */
     private void fillSectors() {
         cboComSector.removeAllItems();
         for (enumSector sector : enumSector.values()) {
             cboComSector.addItem(sector.toString());
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,7 +97,6 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(38, 42, 65));
@@ -143,16 +147,22 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelar.setFocusable(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
-        btnRegistrar.setBackground(new java.awt.Color(41, 64, 211));
+        btnRegistrar.setBackground(new java.awt.Color(90, 111, 228));
         btnRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Registrar");
+        btnRegistrar.setBorder(null);
+        btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistrar.setDefaultCapable(false);
+        btnRegistrar.setFocusable(false);
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
@@ -384,8 +394,8 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
                             .addComponent(txtComContactCharge, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(46, 46, 46)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnRegistrar)
-                            .addComponent(btnCancelar))
+                            .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -410,14 +420,14 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 87, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addComponent(jLabel12))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(357, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -438,14 +448,109 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtComContactChargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactChargeActionPerformed
+     /**
+     * Maneja la acción del botón de verificación para mostrar u ocultar la confirmación de la contraseña.
+     * Si el botón de selección está activado, la contraseña se muestra en texto plano.
+     * Si está desactivado, la contraseña se oculta con un carácter de reemplazo.
+     *
+     * @param evt Evento de acción generado al interactuar con el botón.
+     */
+    private void rbSeeConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeeConfirmPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactChargeActionPerformed
+        if (rbSeeConfirmPassword.isSelected()) {
+            // Mostrar contraseña
+            txtComConfirmPassword.setEchoChar((char) 0);
+        } else {
+            // Ocultar contraseña
+            txtComConfirmPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_rbSeeConfirmPasswordActionPerformed
 
-    private void txtComNitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNitActionPerformed
+    /**
+     * Maneja la acción del botón de verificación para mostrar u ocultar la contraseña principal.
+     * Si el botón de selección está activado, la contraseña se muestra en texto plano.
+     * Si está desactivado, la contraseña se oculta con un carácter de reemplazo.
+     *
+     * @param evt Evento de acción generado al interactuar con el botón.
+     */
+    private void rbSeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeePasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtComNitActionPerformed
+        if (rbSeePassword.isSelected()) {
+            // Mostrar contraseña
+            txtComPassword.setEchoChar((char) 0);
+        } else {
+            // Ocultar contraseña
+            txtComPassword.setEchoChar('*'); // Puedes cambiar '*' por el carácter que prefieras
+        }
+    }//GEN-LAST:event_rbSeePasswordActionPerformed
 
+    private void txtComEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComEmailActionPerformed
+
+    private void txtComEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComEmailFocusLost
+
+    private void txtComEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComEmailFocusGained
+
+    private void txtComContactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactNameActionPerformed
+
+    private void txtComContactNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactNameFocusLost
+
+    private void txtComContactNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactNameFocusGained
+
+    private void txtComContactPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactPhoneActionPerformed
+
+    private void txtComContactPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactPhoneFocusLost
+
+    private void txtComContactPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactPhoneFocusGained
+
+    private void txtComContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactLastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactLastNameActionPerformed
+
+    private void txtComContactLastNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactLastNameFocusLost
+
+    private void txtComContactLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactLastNameFocusGained
+
+    private void txtComNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNameActionPerformed
+
+    private void txtComNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNameFocusLost
+
+    private void txtComNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNameFocusGained
+
+    /**
+     * Maneja el evento de acción del botón de registro de empresa.
+     * Recupera los datos ingresados en el formulario, valida la información y registra la empresa 
+     * si los datos son correctos. Posteriormente, redirige a la pantalla de inicio de sesión.
+     *
+     * @param evt Evento de acción generado al presionar el botón de registro.
+     */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         //Recuperación de datos ingresados por el usuario
         String comNit = txtComNit.getText().trim();
@@ -470,22 +575,30 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
         enumSector sector = enumSector.valueOf(comSector.toUpperCase());
         Company company = new Company(comName, comContactName, comContactLastName, comContactPhone, comContactCharge, sector, comNit, comEmail, comPassword);
         User user = new User(comNit, comEmail, comPassword);
+        
         //Registro de empresas
         if (!userService.existUserId(comNit)) {
             try {
+                // Validación de datos antes del registro
                 if (userService.validData(user) && companyService.validData(company)) {
+                    // Guardar usuario y empresa en la base de datos
                     userService.saveUser(user);
                     companyService.saveCompany(company);
+                    
+                    // Cerrar la ventana actual y redirigir a la pantalla de inicio de sesión
                     this.dispose();
                     GUIinicioSesion instance = new GUIinicioSesion(this.userService);
                     instance.setVisible(true);
-                    Messages.showMessageDialog("Empresa de nit " + comNit + " registrada correctamente", "Registro correcto");
+                    
+                    // Mostrar mensaje de confirmación
+                    Messages.mensajeVario("Empresa de nit " + comNit + " registrada correctamente");
                 }
 
             } catch (ValidationException ve) {
-
+                 // Manejo de errores de validación
                 Messages.showErrorDialog(ve.getMessage(), "Error de validación");
 
+                // Mapear campos del formulario con posibles errores
                 Map<String, JComponent> mapError = new HashMap<>();
                 mapError.put("userId", txtComNit);
                 mapError.put("companyName", txtComName);
@@ -497,23 +610,62 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
                 mapError.put("contactPhone", txtComContactPhone);
                 mapError.put("contactPosition", txtComContactCharge);
 
+                // Resaltar el campo con el error detectado
                 JComponent campoError = mapError.get(ve.getAtributoError());
-                campoError.requestFocus();
+                if (campoError != null) {
+                    campoError.requestFocus();
+                }
                 return;
-
+                
             } catch (Exception ex) {
-
+                // Manejo de errores inesperados
                 Messages.showErrorDialog(ex.getMessage(), "Error desconocido");
                 return;
-
+                
             }
         } else {
+            // Manejo del caso en que el NIT ya existe en el sistema
             Messages.showMessageDialog("El NIT ingresado ya se encuentra en uso.", "Atención");
             txtComNit.requestFocus();
-            return;
+            
         }
-
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    /**
+     * Maneja el evento de acción del botón "Cancelar".
+     * Cierra la ventana actual y redirige a la pantalla de inicio de sesión.
+     *
+     * @param evt Evento de acción generado al presionar el botón "Cancelar".
+     */
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+        GUIinicioSesion instance = new GUIinicioSesion(this.userService);
+        instance.setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtComNitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNitActionPerformed
+
+    private void txtComNitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNitFocusLost
+
+    private void txtComNitFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComNitFocusGained
+
+    private void txtComContactChargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactChargeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactChargeActionPerformed
+
+    private void txtComContactChargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactChargeFocusLost
+
+    private void txtComContactChargeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtComContactChargeFocusGained
 
     /**
      * Valida que las contraseñas ingresadas sean iguales.
@@ -526,129 +678,22 @@ public class GUIregistrarEmpresa extends javax.swing.JFrame {
     private boolean arePasswordsMatching(String password, String confirmPassword) {
         return password.equals(confirmPassword);
     }
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.dispose();
-        GUIinicioSesion instance = new GUIinicioSesion(this.userService);
-        instance.setVisible(true);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void txtComNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComNameActionPerformed
-
-    private void txtComContactLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactLastNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactLastNameActionPerformed
-
-    private void txtComContactPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactPhoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactPhoneActionPerformed
-
-    private void txtComContactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComContactNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComContactNameActionPerformed
-
-    private void txtComEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComEmailActionPerformed
-
-    private void txtComNitFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNitFocusGained
-
-    private void txtComNitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNitFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNitFocusLost
-
-    private void txtComNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNameFocusGained
-
-    private void txtComNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComNameFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComNameFocusLost
-
-    private void txtComEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComEmailFocusGained
-
-    private void txtComEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComEmailFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComEmailFocusLost
-
-    private void txtComContactPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactPhoneFocusGained
-
-    private void txtComContactPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactPhoneFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactPhoneFocusLost
-
-    private void txtComContactNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactNameFocusGained
-
-    private void txtComContactNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactNameFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactNameFocusLost
-
-    private void txtComContactLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactLastNameFocusGained
-
-    private void txtComContactLastNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactLastNameFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactLastNameFocusLost
-
-    private void txtComContactChargeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusGained
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_txtComContactChargeFocusGained
-
-    private void txtComContactChargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtComContactChargeFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtComContactChargeFocusLost
-
-    private void rbSeePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeePasswordActionPerformed
-        // TODO add your handling code here:
-        if (rbSeePassword.isSelected()) {
-            // Mostrar contraseña
-            txtComPassword.setEchoChar((char) 0);
-        } else {
-            // Ocultar contraseña
-            txtComPassword.setEchoChar('*'); // Puedes cambiar '*' por el carácter que prefieras
-        }
-    }//GEN-LAST:event_rbSeePasswordActionPerformed
-
-    private void rbSeeConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSeeConfirmPasswordActionPerformed
-        // TODO add your handling code here:
-        if (rbSeeConfirmPassword.isSelected()) {
-            // Mostrar contraseña
-            txtComConfirmPassword.setEchoChar((char) 0);
-        } else {
-            // Ocultar contraseña
-            txtComConfirmPassword.setEchoChar('*');
-        }
-    }//GEN-LAST:event_rbSeeConfirmPasswordActionPerformed
-
+    
+    private void initPlaceholders() {
+        new TextPrompt("Ingrese el NIT", txtComNit);
+        new TextPrompt("Ingrese el nombre de la empresa", txtComName);
+        new TextPrompt("Ingrese el correo electrónico", txtComEmail);
+        new TextPrompt("Ingrese la contraseña", txtComPassword);
+        new TextPrompt("Confirme la contraseña", txtComConfirmPassword);
+        new TextPrompt("Ingrese el nombre del contacto", txtComContactName);
+        new TextPrompt("Ingrese el apellido del contacto", txtComContactLastName);
+        new TextPrompt("Ingrese el cargo del contacto", txtComContactCharge);
+        new TextPrompt("Ingrese el teléfono del contacto", txtComContactPhone);
+    }
+    
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;

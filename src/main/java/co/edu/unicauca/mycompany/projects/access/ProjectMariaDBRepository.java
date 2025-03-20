@@ -3,9 +3,7 @@ package co.edu.unicauca.mycompany.projects.access;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.enumProjectState;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,17 +15,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author User
- */
-/**
 * Implementación de ICProjectRepository para la gestión de proyectos en MariaDB.
 * Proporciona métodos para insertar, listar y obtener información de proyectos,
 * así como la gestión de la conexión con la base de datos.
 * 
 */
 public class ProjectMariaDBRepository extends MariaDBConnection implements IProjectRepository {
-    
 
     /**
     * Constructor que inicializa la base de datos.
@@ -128,8 +121,7 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
                 // Agrega el proyecto a la lista
                 projects.add(newProject);
             }
-            System.out.println("Proyectos obtenidos de la BD: " + count);
-            
+
             // Cierra la conexión con la base de datos
             this.disconnect();
         } catch (SQLException ex) {
@@ -137,7 +129,7 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
         }finally {
             disconnect();
         }
-        System.out.println("Proyectos en la lista antes de retornar: " + projects.size());
+        
         // Retorna la lista de proyectos
         return projects;
     }
@@ -156,7 +148,8 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
              "p.proGoals, p.proDeadLine, p.proBudget, p.proState, p.proDate " +
              "FROM Project p " +
              "WHERE NOT EXISTS (SELECT 1 FROM Aplicants a WHERE a.proId = p.proId AND a.studentId = ?) " +
-             "AND NOT EXISTS (SELECT 1 FROM Develop d WHERE d.proId = p.proId AND d.studentId = ?)";
+             "AND NOT EXISTS (SELECT 1 FROM Develop d WHERE d.proId = p.proId AND d.studentId = ?) " +
+             "AND p.proState = 'ACEPTADO'";
         try{
             // Conectar a la base de datos
             this.connect();
@@ -393,7 +386,12 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
         return valores;
     }
     
-    
+    /**
+     * Cuenta la cantidad de proyectos con un estado específico.
+     * 
+     * @param status Estado del proyecto (ejemplo: "RECIBIDO", "ACEPTADO", etc.).
+     * @return Número de proyectos con ese estado.
+     */
     @Override
     public int countByStatus(String status) {
         String sql = "SELECT COUNT(*) FROM Project WHERE proState = ?";
@@ -418,6 +416,11 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
         return count;
     }
 
+    /**
+     * Cuenta el número total de proyectos almacenados en la base de datos.
+     * 
+     * @return Número total de proyectos.
+     */
     @Override
     public int countTotalProjects() {
         String sql = "SELECT COUNT(*) FROM Project"; // Eliminamos la condición de filtrado
@@ -440,9 +443,15 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
         return total;
     }
     
+    /**
+     * Actualiza el estado de un proyecto en la base de datos.
+     * 
+     * @param projectId Identificador del proyecto.
+     * @param newStatus Nuevo estado a asignar al proyecto.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     */
     @Override
     public boolean updateProjectStatus(String projectId, String newStatus) {
-        System.out.println("Estado recibido: " + newStatus);
         String sql = "UPDATE Project SET proState = ? WHERE proId = ?";
         boolean success = false;
 
@@ -463,6 +472,12 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
         return success; // Devuelve si se realizó la actualización
     }
     
+    /**
+     * Verifica si existe un proyecto con un identificador específico en la base de datos.
+     * 
+     * @param projectId Identificador del proyecto a verificar.
+     * @return true si el ID existe, false en caso contrario.
+     */
     @Override
     public boolean existProjectId(String projectId) {
         String sql = "SELECT COUNT(*) FROM Project WHERE proId = ?";

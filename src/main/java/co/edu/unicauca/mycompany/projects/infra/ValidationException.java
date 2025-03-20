@@ -1,20 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.infra;
 
 /**
- *
- * @author USUARIO
+ * Excepción personalizada utilizada para representar errores de validación en el sistema.
+ * 
+ * Esta excepción se lanza cuando un atributo no cumple con los criterios de validación 
+ * definidos en la aplicación.
  */
 public class ValidationException extends Exception {
 
+    /** Nombre del atributo que no pasó la validación. */
     private final String atributoError;
 
     /**
-     * Crea una nueva instancia de {@code ValidationException} con un mensaje de
-     * error y el nombre del atributo que causó la excepción.
+     * Crea una nueva instancia de {@code ValidationException} con un mensaje de error
+     * y el nombre del atributo que causó la excepción.
      *
      * @param msg Mensaje detallado del error.
      * @param atributoError Nombre del atributo que no pasó la validación.
@@ -32,5 +31,4 @@ public class ValidationException extends Exception {
     public String getAtributoError() {
         return atributoError;
     }
-
 }

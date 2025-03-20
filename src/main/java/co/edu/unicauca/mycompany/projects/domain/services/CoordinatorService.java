@@ -1,6 +1,5 @@
 package co.edu.unicauca.mycompany.projects.domain.services;
 
-import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.access.ICoordinatorRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 

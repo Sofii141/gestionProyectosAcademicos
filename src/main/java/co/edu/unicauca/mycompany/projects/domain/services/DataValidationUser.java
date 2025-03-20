@@ -1,18 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.domain.services;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
 import co.edu.unicauca.mycompany.projects.infra.ValidationException;
 
 /**
- *
- * @author USUARIO
+ * Clase que valida los datos de una user.
+ * 
+ * Implementa la interfaz IValidation para proporcionar reglas de validación específicas
+ * para los datos de una empresa dentro del sistema.
  */
 public class DataValidationUser implements IValidation {
 
+    /** User cuyos datos serán validados. */
     private User user;
 
     /**
@@ -59,5 +58,4 @@ public class DataValidationUser implements IValidation {
         }
         return true;
     }
-
 }

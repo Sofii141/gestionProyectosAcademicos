@@ -4,26 +4,32 @@ import co.edu.unicauca.mycompany.projects.access.IUserRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.User;
 
 /**
- * Servicio que se encarga inicialmente de iniciar sesion y cerrarla
- *
- * @author spart
+ * Servicio encargado de la gestión de usuarios, incluyendo el inicio y cierre de sesión.
  */
 public class UserService {
 
-    /**
-     * Validador de los datos de los users.
-     */
+    /** Validador de los datos de los usuarios. */
     private IValidation validator;
-    /**
-     * Repositorio que maneja las operaciones de acceso a datos de users.
-     */
+
+    /** Repositorio que maneja las operaciones de acceso a datos de los usuarios. */
     private IUserRepository repository;
 
+    /**
+     * Constructor de la clase UserService.
+     * 
+     * @param prmRepo Repositorio de usuarios que manejará las operaciones de acceso a datos.
+     */
     public UserService(IUserRepository prmRepo) {
         repository = prmRepo;
     }
 
-
+    /**
+     * Inicia sesión en el sistema verificando las credenciales del usuario.
+     * 
+     * @param prmUserName Nombre de usuario ingresado.
+     * @param prmPassword Contraseña ingresada como un array de caracteres.
+     * @return Un código de estado que indica el resultado del intento de inicio de sesión.
+     */
     public int iniciarSesion(String prmUserName, char[] prmPassword) {
         String str_password = new String(prmPassword);
         return repository.iniciarSesion(prmUserName,prmPassword);

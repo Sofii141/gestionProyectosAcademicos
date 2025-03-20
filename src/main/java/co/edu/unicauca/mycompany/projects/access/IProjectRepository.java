@@ -75,8 +75,21 @@ public interface IProjectRepository {
      */
     int countTotalProjects();
     
+    /**
+     * Actualiza el estado de un proyecto específico.
+     * 
+     * @param projectId Identificador del proyecto.
+     * @param newStatus Nuevo estado a asignar al proyecto.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     */
     boolean updateProjectStatus(String projectId, String newStatus);
     
-    public boolean existProjectId(String projectId);
+    /**
+     * Verifica si un proyecto con el ID especificado existe en el repositorio.
+     * 
+     * @param projectId Identificador del proyecto.
+     * @return true si el proyecto existe, false en caso contrario.
+     */
+    boolean existProjectId(String projectId);
 }
     

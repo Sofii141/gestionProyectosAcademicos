@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase que representa a un estudiante en el sistema.
+ * Representa a un estudiante dentro del sistema.
+ * 
  * Un estudiante es un usuario que puede participar en proyectos y postularse a ellos.
+ * Esta clase extiende la clase User, heredando sus propiedades y funcionalidades.
  */
 public class Student extends User {
     
-    // Lista de proyectos en los que el estudiante está participando activamente. 
+    /** Lista de proyectos en los que el estudiante está participando activamente. */
     private List<Project> myProjects;
     
-    // Lista de proyectos a los que el estudiante se ha postulado.
+    /** Lista de proyectos a los que el estudiante se ha postulado. */
     private List<Project> myPostulations;
-
+    
     /**
      * Constructor de la clase Student.
      * 

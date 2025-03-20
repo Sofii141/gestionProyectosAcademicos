@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.access;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
@@ -9,22 +5,28 @@ import co.edu.unicauca.mycompany.projects.domain.entities.enumSector;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author USUARIO
+ * Clase que implementa el repositorio de empresas utilizando MariaDB. Extiende
+ * la clase de conexión a la base de datos MariaDBConnection.
  */
 public class CompanyMariaDBRepository extends MariaDBConnection implements ICompanyRepository {
 
-
+    /**
+     * Constructor de la clase.
+     */
     public CompanyMariaDBRepository() {
-        initDatabase();
     }
 
+    /**
+     * Guarda una nueva empresa en la base de datos.
+     *
+     * @param newCompany Objeto que representa la empresa a guardar.
+     * @return Verdadero si la empresa se guardó correctamente, falso en caso
+     * contrario.
+     */
     @Override
     public boolean save(Company newCompany) {
         try {
@@ -32,7 +34,6 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
             if (newCompany == null
                     || newCompany.getUserId().isBlank()
                     || newCompany.getCompanyName().isBlank()
-                    || newCompany.getUserEmail().isBlank()
                     || newCompany.getContactName().isBlank()
                     || newCompany.getContactLastName().isBlank()
                     || newCompany.getContactPosition().isBlank()
@@ -42,20 +43,18 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
 
             this.connect();
 
-            String sql = "INSERT INTO CompanyContact (userId, comName, comEmail, comContactPhone, comContactName, "
+            String sql = "INSERT INTO CompanyContact (userId, comName, comContactPhone, comContactName, "
                     + "comContactLastName, comContactCharge, secId) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, newCompany.getUserId());
             pstmt.setString(2, newCompany.getCompanyName());
-            pstmt.setString(3, newCompany.getUserEmail());
-            pstmt.setString(4, newCompany.getContactPhone());
-            pstmt.setString(5, newCompany.getContactName());
-            pstmt.setString(6, newCompany.getContactLastName());
-            pstmt.setString(7, newCompany.getContactPosition());
-            pstmt.setString(8, getSectorIdByName(newCompany.getCompanySector().toString()));
-
+            pstmt.setString(3, newCompany.getContactPhone());
+            pstmt.setString(4, newCompany.getContactName());
+            pstmt.setString(5, newCompany.getContactLastName());
+            pstmt.setString(6, newCompany.getContactPosition());
+            pstmt.setString(7, getSectorIdByName(newCompany.getCompanySector().toString()));
 
             pstmt.executeUpdate();
 
@@ -67,40 +66,12 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
         return false;
     }
 
-    // Método companyInfo de la rama master (manteniendo compatibilidad con Diego)
-    private void initDatabase() {
-        String sql = "CREATE TABLE IF NOT EXISTS CompanyContact (\n"
-                + "    userId VARCHAR(50) NOT NULL,\n"
-                + "    comName VARCHAR(100) NOT NULL,\n"
-                + "    comEmail VARCHAR(100) NOT NULL,\n"
-                + "    comContactPhone VARCHAR(20) NOT NULL,\n"
-                + "    comContactName VARCHAR(100) NOT NULL,\n"
-                + "    comContactLastName VARCHAR(100) NOT NULL,\n"
-                + "    comContactCharge VARCHAR(100) NOT NULL,\n"
-                + "    secId VARCHAR(50) NOT NULL,\n"
-                + "    PRIMARY KEY (userId),\n"
-                + "    CONSTRAINT fk_CompanyContact_User FOREIGN KEY (userId) REFERENCES User(userId),\n"
-                + "    CONSTRAINT fk_CompanyContact_Sector FOREIGN KEY (secId) REFERENCES Sector(secId)\n"
-                + ");";
-
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            this.disconnect();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CompanyMariaDBRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public List<Company> listAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-
-
+    /**
+     * Obtiene la información de una empresa según su identificador.
+     *
+     * @param nit Identificador único de la empresa.
+     * @return Objeto que representa la empresa encontrada o null si no existe.
+     */
     @Override
     public Company companyInfo(String nit) {
         // Consulta SQL
@@ -148,12 +119,15 @@ public class CompanyMariaDBRepository extends MariaDBConnection implements IComp
         }
         return company;
     }
-        /**
-     * Obtiene el ID de un sector dado su nombre.
+
+    /**
+     * Obtiene el identificador único de un sector según su nombre.
      *
      * @param sectorName Nombre del sector a buscar.
-     * @return El ID del sector si existe, null en caso contrario.
+     * @return Identificador único del sector si existe, de lo contrario retorna
+     * null.
      */
+    @Override
     public String getSectorIdByName(String sectorName) {
         String sql = "SELECT secId FROM Sector WHERE secName = ?";
         String sectorId = null;

@@ -13,20 +13,40 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Ana_Sofia
+ * Interfaz gráfica para gestionar comentarios dentro de un proyecto.
+ * Permite a un coordinador interactuar con los comentarios asociados a un proyecto.
  */
 public class GUIComentarios extends javax.swing.JFrame {
 
     /**
-     * Creates new form GUIComentarios
+     * Proyecto asociado a los comentarios.
      */
-    
     private Project proyecto;
-    private final Coordinator coordinator; // Estudiante que interactúa con el panel
-    private final ProjectService projectService; // Servicio de proyectos
-    private final CompanyService companyService;
 
+    /**
+     * Coordinador que interactúa con la interfaz de comentarios.
+     */
+    private final Coordinator coordinator;
+
+    /**
+     * Servicio para gestionar operaciones relacionadas con los proyectos.
+     */
+    private final ProjectService projectService;
+
+    /**
+     * Servicio para gestionar operaciones relacionadas con las empresas.
+     */
+    private final CompanyService companyService;
+    
+    /**
+     * Constructor de la interfaz gráfica de comentarios.
+     * Inicializa los servicios y configura la ventana.
+     *
+     * @param projectService Servicio para la gestión de proyectos.
+     * @param proyecto Proyecto al que pertenecen los comentarios.
+     * @param coordinator Coordinador que interactúa con la interfaz.
+     * @param companyService Servicio para la gestión de empresas.
+     */
     public GUIComentarios(ProjectService projectService, Project proyecto, Coordinator coordinator, CompanyService companyService) {
         this.proyecto = proyecto;
         this.coordinator = coordinator;
@@ -38,6 +58,7 @@ public class GUIComentarios extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // Agregar un placeholder al campo de texto
         TextPrompt placeholderUsername = new TextPrompt("Ingresar un comentario: ",textFielCorreo);
     }
 
@@ -78,7 +99,7 @@ public class GUIComentarios extends javax.swing.JFrame {
             }
         });
 
-        btnEnviarComentario.setBackground(new java.awt.Color(41, 64, 211));
+        btnEnviarComentario.setBackground(new java.awt.Color(90, 111, 228));
         btnEnviarComentario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnEnviarComentario.setForeground(new java.awt.Color(255, 255, 255));
         btnEnviarComentario.setText("Enviar");
@@ -92,6 +113,11 @@ public class GUIComentarios extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,10 +146,10 @@ public class GUIComentarios extends javax.swing.JFrame {
                 .addComponent(jLabel29)
                 .addGap(18, 18, 18)
                 .addComponent(textFielCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEnviarComentario)
-                    .addComponent(jButton2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(btnEnviarComentario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21))
         );
 
@@ -142,44 +168,60 @@ public class GUIComentarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textFielCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFielCorreoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_textFielCorreoActionPerformed
 
+    /**
+     * Maneja el evento cuando el usuario presiona el botón "Enviar Comentario".
+     * Captura el comentario ingresado, valida su contenido, obtiene la empresa asociada 
+     * al proyecto y envía un correo electrónico con el comentario al contacto de la empresa.
+     * 
+     * @param evt Evento de acción generado al presionar el botón.
+     */
     private void btnEnviarComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarComentarioActionPerformed
-        // TODO add your handling code here:
-            String comentario = textFielCorreo.getText().trim(); // Captura el texto del campo de entrada
+        String comentario = textFielCorreo.getText().trim(); // Captura el texto del campo de entrada
 
-            if (comentario.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "El comentario no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        if (comentario.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El comentario no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            // Obtener la empresa asociada al proyecto
-            Company empresa = companyService.getCompany(proyecto.getIdcompany());
+        // Obtener la empresa asociada al proyecto
+        Company empresa = companyService.getCompany(proyecto.getIdcompany());
 
-            if (empresa == null || empresa.getUserEmail() == null || empresa.getUserEmail().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontró la empresa asociada al proyecto o su correo no está definido.", 
-                                              "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        if (empresa == null || empresa.getUserEmail() == null || empresa.getUserEmail().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontró la empresa asociada al proyecto o su correo no está definido.", 
+                                          "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            // Definir destinatario y cuerpo del correo
-            String destinatarioEmpresa = empresa.getUserEmail();
-            String asunto = "Nuevo Comentario del Proyecto: " + proyecto.getProTitle();
-            String cuerpo = "Coordinador: " + coordinator.getUserId()+ "\n"
-                          + "Proyecto: " + proyecto.getProTitle()+ "\n"
-                          + "Comentario:\n" + comentario;
+        // Definir destinatario y cuerpo del correo
+        String destinatarioEmpresa = empresa.getUserEmail();
+        String asunto = "Nuevo Comentario del Proyecto: " + proyecto.getProTitle();
+        String cuerpo = "Coordinador: " + coordinator.getUserId()+ "\n"
+                      + "Proyecto: " + proyecto.getProTitle()+ "\n"
+                      + "Comentario:\n" + comentario;
 
-            // Enviar el correo
-            EmailService.sendEmail(destinatarioEmpresa, asunto, cuerpo);
+        // Enviar el correo
+        EmailService.sendEmail(destinatarioEmpresa, asunto, cuerpo);
 
-            // Limpiar el campo de texto y cerrar la ventana
-            textFielCorreo.setText("");
-            this.dispose();
-            
-             // Mostrar mensaje de confirmación
-            Messages.mensajeVario("Comentario enviado correctamente.");
+        // Limpiar el campo de texto y cerrar la ventana
+        textFielCorreo.setText("");
+        this.dispose();
+
+         // Mostrar mensaje de confirmación
+        Messages.mensajeVario("Comentario enviado correctamente.");
     }//GEN-LAST:event_btnEnviarComentarioActionPerformed
+
+    /**
+     * Maneja el evento cuando el usuario presiona el botón "Cerrar".
+     * Cierra la ventana actual sin realizar ninguna otra acción.
+     * 
+     * @param evt Evento de acción generado al presionar el botón.
+     */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
 

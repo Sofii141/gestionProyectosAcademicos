@@ -1,63 +1,84 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.infra.state;
 
-import co.edu.unicauca.mycompany.projects.access.Factory;
-import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.EmailService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.infra.Messages;
 
 /**
- *
- * @author Ana_Sofia
+ * Clase que representa el estado "CERRADO" dentro del patrón de estado para proyectos.
+ * 
+ * Cuando un proyecto cambia a este estado, se notifica a la empresa asociada
+ * y se actualiza el estado en la base de datos.
  */
 public class CerradoState implements ProjectStatePatron {
-    private CompanyService companyService; // Guardamos el servicio como atributo
-    private ProjectService projectService; // Repositorio de proyectos
 
+    /** Servicio para gestionar operaciones relacionadas con empresas. */
+    private CompanyService companyService;
 
-    public CerradoState(CompanyService companyService, ProjectService projectService) {
-        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB"); 
-        this.companyService = new CompanyService(companyRepository); // Se inicializa correctamente
-        this.projectService = projectService;
+    /**
+     * Constructor que inicializa el estado "CERRADO" con los servicios necesarios.
+     * 
+     * @param companyService Servicio para la gestión de empresas.
+     */
+    public CerradoState(CompanyService companyService) {
+        this.companyService = companyService;
     }
-    
+
+    /** Constructor vacío. */
     public CerradoState() {
-        
     }
-    
+
+    /**
+     * Maneja el cambio de estado de un proyecto al estado "CERRADO".
+     * 
+     * @param project Proyecto cuyo estado ha cambiado.
+     */
     @Override
     public void handleStateChange(Project project) {
         project.setProStatePatron(this);
         notifyCompany(project);
     }
 
-     @Override
+    /**
+     * Notifica a la empresa asociada al proyecto que el estado ha cambiado a "CERRADO".
+     * 
+     * @param project Proyecto cuyo estado ha cambiado.
+     */
+    @Override
     public void notifyCompany(Project project) {
         Company company = companyService.getCompany(project.getIdcompany()); // Buscar empresa
 
         if (company != null) {
-            EmailService.sendEmail(company.getUserEmail(), "Estado actualizado", 
-            "Se le informa que su proyecto ha sido cambiado a CERRADO.");
+            String mensaje = Messages.mensajeCambioEstado(company.getCompanyName(), project.getProTitle(), "CERRADO");
+            EmailService.sendEmail(company.getUserEmail(), "Notificación de Cambio de Estado en Proyecto de Software", mensaje);
         } else {
             System.out.println("Error: No se encontró la empresa asociada al proyecto.");
             System.out.println("ID de la empresa buscada: " + project.getIdcompany());
         }
     }
 
+    /**
+     * Devuelve una representación en cadena del estado.
+     * 
+     * @return "CERRADO".
+     */
     @Override
     public String toString() {
         return "CERRADO";
     }
 
+    /**
+     * Actualiza el estado del proyecto en la base de datos.
+     * 
+     * @param project Proyecto que se actualizará.
+     * @param projectService Servicio utilizado para actualizar el estado del proyecto.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     */
     @Override
     public boolean updateDatabase(Project project, ProjectService projectService) {
         return projectService.updateProjectStatus(project.getProId(), "CERRADO"); // Usamos el servicio
     }
 }
-

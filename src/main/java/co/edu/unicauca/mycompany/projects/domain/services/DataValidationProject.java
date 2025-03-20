@@ -1,21 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.mycompany.projects.domain.services;
 
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.infra.ValidationException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
- *
- * @author User
+ * Clase que valida los datos de un proyecto.
+ * 
+ * Implementa la interfaz IValidation para proporcionar reglas de validación específicas
+ * para los datos de una empresa dentro del sistema.
  */
 public class DataValidationProject implements IValidation {
 
-    
+    /** Proyecto cuyos datos serán validados. */
     private Project project;
 
     /**
@@ -74,14 +71,14 @@ public class DataValidationProject implements IValidation {
         if (project.getProTitle().length() < 1 || project.getProTitle().length() > 20) {
             throw new ValidationException("El título del proyecto debe tener entre 1 y 20 caracteres", "proTitle");
         }
-        if (project.getProAbstract().length() < 50 || project.getProAbstract().length() > 300) {
-            throw new ValidationException("El resumen debe tener entre 50 y 300 caracteres", "proAbstract");
+        if (project.getProAbstract().length() < 10 || project.getProAbstract().length() > 50) {
+            throw new ValidationException("El resumen debe tener entre 10 y 300 caracteres", "proAbstract");
         }
-        if (project.getProGoals().length() < 50 || project.getProGoals().length() > 500) {
-            throw new ValidationException("Los objetivos deben tener entre 50 y 500 caracteres", "proGoals");
+        if (project.getProGoals().length() < 10 || project.getProGoals().length() > 50) {
+            throw new ValidationException("Los objetivos deben tener entre 10 y 50 caracteres", "proGoals");
         }
-        if (project.getProDescription().length() < 100 || project.getProDescription().length() > 1000) {
-            throw new ValidationException("La descripción debe tener entre 100 y 1000 caracteres", "proDescription");
+        if (project.getProDescription().length() < 10 || project.getProDescription().length() > 1000) {
+            throw new ValidationException("La descripción debe tener entre 10 y 100 caracteres", "proDescription");
         }
         if (project.getProDeadLine() <= 0 || project.getProDeadLine() > 36) {
             throw new ValidationException("El plazo del proyecto debe estar entre 1 y 36 meses", "proDeadLine");
@@ -95,7 +92,6 @@ public class DataValidationProject implements IValidation {
         if (!new SimpleDateFormat("dd/MM/yyyy").format(project.getProDate()).matches(validationDate)) {
             throw new ValidationException("La fecha no tiene el formato dd/MM/yyyy", "proDate");
         }
-
         return true;
     }
 

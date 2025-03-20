@@ -5,21 +5,44 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Student;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
 import javax.swing.JFrame;
 
+/**
+ * Clase que representa la interfaz gráfica para que un estudiante se postule a un proyecto.
+ * Permite al estudiante confirmar su postulación o cancelar la acción.
+ */
 public class GUIPostularse extends javax.swing.JFrame {
 
+    /** Proyecto al que el estudiante desea postularse. */
     private final Project project;
+
+    /** Estudiante que se está postulando. */
     private final Student student;
+
+    /** Servicio que gestiona las operaciones relacionadas con los proyectos. */
     private final ProjectService projectService;
-    
+
+    /**
+     * Constructor de la clase GUIPostularse.
+     * Inicializa los atributos de la clase y configura la interfaz gráfica.
+     *
+     * @param projectService Servicio para gestionar proyectos.
+     * @param proyecto Proyecto al que el estudiante desea postularse.
+     * @param estudiante Estudiante que realiza la postulación.
+     */
     public GUIPostularse(ProjectService projectService, Project proyecto, Student estudiante) {
         this.project = proyecto;
         this.student = estudiante;
         this.projectService = projectService;
 
+        // Inicializa los componentes gráficos
         initComponents();
         initVisual();
     }
-    
+
+    /**
+     * Configura la apariencia de la interfaz.
+     * Deshabilita la opción de redimensionar, centra la ventana en la pantalla 
+     * y establece la acción de cierre como DISPOSE_ON_CLOSE.
+     */
     public final void initVisual() {
         setResizable(false);
         setLocationRelativeTo(null);
@@ -49,7 +72,10 @@ public class GUIPostularse extends javax.swing.JFrame {
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("Aceptar");
+        btnAceptar.setBorder(null);
+        btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptar.setFocusPainted(false);
+        btnAceptar.setFocusable(false);
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -60,7 +86,9 @@ public class GUIPostularse extends javax.swing.JFrame {
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.setFocusPainted(false);
+        btnCancelar.setFocusable(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -102,10 +130,10 @@ public class GUIPostularse extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36))
         );
 
@@ -122,13 +150,26 @@ public class GUIPostularse extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Acción ejecutada cuando el usuario presiona el botón "Aceptar".
+     * Registra al estudiante en el proyecto y notifica a los observadores sobre el cambio.
+     * Luego, cierra la ventana.
+     *
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         dispose();
         projectService.applyStudent(student.getUserId(), project.getProId());
         projectService.notifyAllObserves();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    /**
+     * Acción ejecutada cuando el usuario presiona el botón "Cancelar".
+     * Simplemente cierra la ventana sin realizar ninguna acción adicional.
+     *
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed

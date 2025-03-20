@@ -9,6 +9,7 @@ import co.edu.unicauca.mycompany.projects.domain.entities.Student;
  */
 public class StudentService {
     
+    /** Repositorio que maneja las operaciones de acceso a datos de estudiantes. */
     private final IStudentRepository repository;
 
     /**

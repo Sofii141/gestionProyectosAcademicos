@@ -6,20 +6,41 @@ import java.util.Map;
 /**
  * Clase Factory que implementa el patrón de diseño Singleton y Factory Method.
  * Proporciona una instancia única de la fábrica y permite obtener repositorios
- * para diferentes entidades como Company, Student y Project según el tipo especificado.
- * 
- * @author Libardo, Julio
+ * para diferentes entidades como Company, Student, Project, Coordinator y User
+ * según el tipo especificado.
  */
 public class Factory {
-    // Instancia única de la fábrica (patrón Singleton)
+    
+    /**
+     * Instancia única de la fábrica (patrón Singleton).
+     */
     private static Factory instance;
     
-    // Diccionarios que almacenan los repositorios según el tipo de almacenamiento
+    /**
+     * Diccionario que almacena los repositorios de compañías según el tipo de almacenamiento.
+     */
     private final Map<String, ICompanyRepository> companyDictionary;
-    private final Map<String, IStudentRepository> StudentDictionary;
+    
+    /**
+     * Diccionario que almacena los repositorios de estudiantes según el tipo de almacenamiento.
+     */
+    private final Map<String, IStudentRepository> studentDictionary;
+    
+    /**
+     * Diccionario que almacena los repositorios de proyectos según el tipo de almacenamiento.
+     */
     private final Map<String, IProjectRepository> projectDictionary;
+    
+    /**
+     * Diccionario que almacena los repositorios de coordinadores según el tipo de almacenamiento.
+     */
     private final Map<String, ICoordinatorRepository> coordinatorDictionary;
+    
+    /**
+     * Diccionario que almacena los repositorios de usuarios según el tipo de almacenamiento.
+     */
     private final Map<String, IUserRepository> userDictionary;
+    
     /**
      * Constructor privado para evitar la instanciación externa.
      * Inicializa los diccionarios y registra las implementaciones disponibles.
@@ -30,8 +51,8 @@ public class Factory {
         companyDictionary.put("MARIADB", new CompanyMariaDBRepository()); // Agrega repositorio MariaDB
         
         // Diccionario para repositorios de estudiantes
-        StudentDictionary = new HashMap<>();
-        StudentDictionary.put("MARIADB", new StudentMariaDBRepository()); // Agrega repositorio MariaDB
+        studentDictionary = new HashMap<>();
+        studentDictionary.put("MARIADB", new StudentMariaDBRepository()); // Agrega repositorio MariaDB
         
         // Diccionario para repositorios de proyectos
         projectDictionary = new HashMap<>();
@@ -47,10 +68,9 @@ public class Factory {
     /**
      * Obtiene la instancia única de la fábrica (patrón Singleton).
      * 
-     * @return Instancia de Factory
+     * @return Instancia de Factory.
      */
     public static Factory getInstance() {
-        // Si la instancia aún no ha sido creada crea una
         if (instance == null) {
             instance = new Factory();
         }
@@ -64,13 +84,7 @@ public class Factory {
      * @return Implementación de ICompanyRepository o null si no se encuentra.
      */
     public ICompanyRepository getRepositoryCompany(String repository) {
-        ICompanyRepository result = null;
-        // Verifica si el repositorio existe
-        if (companyDictionary.containsKey(repository)) {
-            // Obtiene la implementación correspondiente
-            result = companyDictionary.get(repository);
-        }
-        return result;
+        return companyDictionary.getOrDefault(repository, null);
     }
     
     /**
@@ -80,13 +94,7 @@ public class Factory {
      * @return Implementación de IStudentRepository o null si no se encuentra.
      */  
     public IStudentRepository getRepositoryStudent(String repository) {
-        IStudentRepository result = null;
-        // Verifica si el repositorio existe
-        if (StudentDictionary.containsKey(repository)) {
-            // Obtiene la implementación correspondiente
-            result = StudentDictionary.get(repository);
-        }
-        return result;
+        return studentDictionary.getOrDefault(repository, null);
     }
     
     /**
@@ -96,32 +104,26 @@ public class Factory {
      * @return Implementación de IProjectRepository o null si no se encuentra.
      */   
     public IProjectRepository getRepositoryProject(String repository) {
-        IProjectRepository result = null;
-        // Verifica si el repositorio existe
-        if (projectDictionary.containsKey(repository)) {
-            // Obtiene la implementación correspondiente
-            result = projectDictionary.get(repository);
-        }
-        return result;
+        return projectDictionary.getOrDefault(repository, null);
     }
     
+    /**
+     * Obtiene el repositorio de coordinadores según el tipo de almacenamiento.
+     * 
+     * @param repository Tipo de repositorio (ej. "MARIADB").
+     * @return Implementación de ICoordinatorRepository o null si no se encuentra.
+     */  
     public ICoordinatorRepository getRepositoryCoordinator(String repository) {
-        ICoordinatorRepository result = null;
-        // Verifica si el repositorio existe
-        if (coordinatorDictionary.containsKey(repository)) {
-            // Obtiene la implementación correspondiente
-            result = coordinatorDictionary.get(repository);
-        }
-        return result;
+        return coordinatorDictionary.getOrDefault(repository, null);
     }
     
-    public IUserRepository getRepositoryUSer(String repository) {
-        IUserRepository result = null;
-        // Verifica si el repositorio existe
-        if (userDictionary.containsKey(repository)) {
-            // Obtiene la implementación correspondiente
-            result = userDictionary.get(repository);
-        }
-        return result;
+    /**
+     * Obtiene el repositorio de usuarios según el tipo de almacenamiento.
+     * 
+     * @param repository Tipo de repositorio (ej. "MARIADB").
+     * @return Implementación de IUserRepository o null si no se encuentra.
+     */  
+    public IUserRepository getRepositoryUser(String repository) {
+        return userDictionary.getOrDefault(repository, null);
     }
 }

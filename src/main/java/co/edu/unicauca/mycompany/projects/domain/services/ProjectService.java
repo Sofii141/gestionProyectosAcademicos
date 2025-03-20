@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class ProjectService extends Subject{
 
+    /** Repositorio que maneja las operaciones de acceso a datos de proyectos. */
     private final IProjectRepository repository;
     
     /**
@@ -95,6 +96,11 @@ public class ProjectService extends Subject{
         return repository.countProjectsStudent(studentId);
     }
     
+    /**
+    * Obtiene los datos estadísticos de los proyectos según su estado para ser utilizados en una gráfica.
+    * 
+    * @return Una lista de enteros donde cada elemento representa la cantidad de proyectos en un estado específico.
+    */
     public List<Integer> dataGraphicCoordinator() {
         List<Integer> data = new ArrayList<>();
 
@@ -108,6 +114,13 @@ public class ProjectService extends Subject{
         return data;
     }
     
+    /**
+    * Actualiza el estado de un proyecto en el sistema.
+    * 
+    * @param projectId  El identificador del proyecto que se desea actualizar.
+    * @param newStatus  El nuevo estado que se asignará al proyecto.
+    * @return true si la actualización fue exitosa, false en caso contrario.
+    */
     public boolean updateProjectStatus(String projectId, String newStatus) {
         boolean success = repository.updateProjectStatus(projectId, newStatus);
 
@@ -119,9 +132,9 @@ public class ProjectService extends Subject{
     }
     
     /**
-     * Verifica si un usuario con el ID especificado ya existe en la base de datos.
+     * Verifica si un proyecto con el ID especificado ya existe en la base de datos.
      *
-     * @param userId El identificador único del usuario a verificar.
+     * @param projectId El identificador único del usuario a verificar.
      * @return true si el ID del usuario ya existe en el repositorio, false en caso contrario.
      */
     public boolean existProjectId(String projectId) {
