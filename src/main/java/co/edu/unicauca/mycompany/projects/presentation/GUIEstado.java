@@ -14,7 +14,6 @@ import co.edu.unicauca.mycompany.projects.infra.state.CerradoState;
 import co.edu.unicauca.mycompany.projects.infra.state.EjecucionState;
 import co.edu.unicauca.mycompany.projects.infra.state.ProjectStatePatron;
 import co.edu.unicauca.mycompany.projects.infra.state.RechazadoState;
-import co.edu.unicauca.mycompany.projects.infra.state.RecibidoState;
 import javax.mail.Message;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -52,6 +51,7 @@ public class GUIEstado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnRecibido = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
@@ -59,7 +59,16 @@ public class GUIEstado extends javax.swing.JFrame {
         btnAceptado = new javax.swing.JButton();
         btnRechazado = new javax.swing.JButton();
         btnEjecucion = new javax.swing.JButton();
-        btnRecibido = new javax.swing.JButton();
+
+        btnRecibido.setBackground(new java.awt.Color(0, 204, 204));
+        btnRecibido.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnRecibido.setForeground(new java.awt.Color(255, 255, 255));
+        btnRecibido.setText("Recibido");
+        btnRecibido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecibidoActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,16 +122,6 @@ public class GUIEstado extends javax.swing.JFrame {
             }
         });
 
-        btnRecibido.setBackground(new java.awt.Color(0, 204, 204));
-        btnRecibido.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnRecibido.setForeground(new java.awt.Color(255, 255, 255));
-        btnRecibido.setText("Recibido");
-        btnRecibido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRecibidoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -140,8 +139,7 @@ public class GUIEstado extends javax.swing.JFrame {
                             .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRecibido, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -151,17 +149,15 @@ public class GUIEstado extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel41)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(btnRecibido, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -236,15 +232,6 @@ public class GUIEstado extends javax.swing.JFrame {
     private void btnRecibidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecibidoActionPerformed
         // TODO add your handling code here:
         // Cambiar estado del proyecto
-        ProjectStatePatron estado = new RecibidoState(companyService, projectService);
-        estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
-        dispose();
-        
-        if (estado.updateDatabase(proyecto, projectService)) {
-            Messages.mensajeVario("El estado del proyecto ha sido cambiado a Recibido.");
-        } else {
-            Messages.mensajeVario("Error al actualizar el estado en la base de datos.");
-        }
     }//GEN-LAST:event_btnRecibidoActionPerformed
 
     /**
