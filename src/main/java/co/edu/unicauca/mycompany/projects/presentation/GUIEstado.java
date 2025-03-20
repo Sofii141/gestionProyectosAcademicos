@@ -107,6 +107,9 @@ public class GUIEstado extends javax.swing.JFrame {
         btnCerrado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCerrado.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrado.setText("Cerrado");
+        btnCerrado.setBorder(null);
+        btnCerrado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrado.setFocusable(false);
         btnCerrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerradoActionPerformed(evt);
@@ -117,6 +120,9 @@ public class GUIEstado extends javax.swing.JFrame {
         btnAceptado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptado.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptado.setText("Aceptado");
+        btnAceptado.setBorder(null);
+        btnAceptado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAceptado.setFocusable(false);
         btnAceptado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptadoActionPerformed(evt);
@@ -127,6 +133,9 @@ public class GUIEstado extends javax.swing.JFrame {
         btnRechazado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnRechazado.setForeground(new java.awt.Color(255, 255, 255));
         btnRechazado.setText("Rechazado");
+        btnRechazado.setBorder(null);
+        btnRechazado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRechazado.setFocusable(false);
         btnRechazado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRechazadoActionPerformed(evt);
@@ -137,6 +146,9 @@ public class GUIEstado extends javax.swing.JFrame {
         btnEjecucion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnEjecucion.setForeground(new java.awt.Color(255, 255, 255));
         btnEjecucion.setText("En ejecución");
+        btnEjecucion.setBorder(null);
+        btnEjecucion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEjecucion.setFocusable(false);
         btnEjecucion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEjecucionActionPerformed(evt);
@@ -148,29 +160,28 @@ public class GUIEstado extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(167, 167, 167)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel41)
-                            .addComponent(jLabel11)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(170, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel41))
+                .addGap(98, 98, 98))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel41)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(btnAceptado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRechazado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,7 +214,7 @@ public class GUIEstado extends javax.swing.JFrame {
      */
     private void btnAceptadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptadoActionPerformed
         // Cambiar estado del proyecto
-        ProjectStatePatron estado = new AceptadoState(companyService, projectService);
+        ProjectStatePatron estado = new AceptadoState(companyService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
         dispose();
         if (estado.updateDatabase(proyecto, projectService)) {
@@ -220,10 +231,8 @@ public class GUIEstado extends javax.swing.JFrame {
      * @param evt Evento de acción generado al presionar el botón.
      */
     private void btnRechazadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRechazadoActionPerformed
-        // TODO add your handling code here:
-
         // Cambiar estado del proyecto
-        ProjectStatePatron estado = new RechazadoState(companyService, projectService);
+        ProjectStatePatron estado = new RechazadoState(companyService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
         dispose();
         if (estado.updateDatabase(proyecto, projectService)) {
@@ -240,7 +249,7 @@ public class GUIEstado extends javax.swing.JFrame {
      * @param evt Evento de acción generado al presionar el botón.
      */
     private void btnEjecucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecucionActionPerformed
-        ProjectStatePatron estado = new EjecucionState(companyService, projectService);
+        ProjectStatePatron estado = new EjecucionState(companyService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
         dispose();
         if (estado.updateDatabase(proyecto, projectService)) {
@@ -257,7 +266,7 @@ public class GUIEstado extends javax.swing.JFrame {
      * @param evt Evento de acción generado al presionar el botón.
      */
     private void btnCerradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerradoActionPerformed
-        ProjectStatePatron estado = new CerradoState(companyService, projectService);
+        ProjectStatePatron estado = new CerradoState(companyService);
         estado.handleStateChange(proyecto); // Ahora esto cambia el estado y notifica por correo
         dispose();
         if (estado.updateDatabase(proyecto, projectService)) {

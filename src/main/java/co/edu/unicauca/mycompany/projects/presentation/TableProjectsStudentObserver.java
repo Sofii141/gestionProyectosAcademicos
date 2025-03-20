@@ -1,7 +1,5 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import co.edu.unicauca.mycompany.projects.access.Factory;
-import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
@@ -16,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * Clase que implementa un observador para actualizar dinámicamente la tabla de proyectos disponibles.
  * Se actualiza cuando un estudiante se postula a un proyecto.
  */
-public class TableProjectsObserver extends JFrame implements Observer {
+public class TableProjectsStudentObserver extends JFrame implements Observer {
 
     /** Tabla que muestra los proyectos disponibles para el estudiante. */
     private final JTable jTableEstudiante;
@@ -26,6 +24,9 @@ public class TableProjectsObserver extends JFrame implements Observer {
 
     /** Servicio de gestión de proyectos. */
     private final ProjectService projectService;
+    
+    /** Servicio de gestión de compañías */
+    private final CompanyService companyService;
 
     /** Estudiante que interactúa con los proyectos. */
     private final Student student;
@@ -35,13 +36,15 @@ public class TableProjectsObserver extends JFrame implements Observer {
      * 
      * @param student Estudiante actual.
      * @param projectService Servicio de gestión de proyectos.
+     * @param companyService Servicio de gestión de empresas.
      * @param jTableEstudiante Tabla que muestra los proyectos disponibles.
      * @param jScrollPane1 Panel de desplazamiento para la tabla.
      */
-    public TableProjectsObserver(Student student, ProjectService projectService, JTable jTableEstudiante, JScrollPane jScrollPane1) {
+    public TableProjectsStudentObserver(Student student, ProjectService projectService, CompanyService companyService, JTable jTableEstudiante, JScrollPane jScrollPane1) {
         this.student = student;
         this.jTableEstudiante = jTableEstudiante;
         this.projectService = projectService;
+        this.companyService = companyService;
         this.jScrollPane1 = jScrollPane1;
 
         // Cargar datos iniciales
@@ -58,10 +61,6 @@ public class TableProjectsObserver extends JFrame implements Observer {
         // Limpiar la tabla antes de cargar nuevos datos
         DefaultTableModel modelo = (DefaultTableModel) jTableEstudiante.getModel();
         modelo.setRowCount(0);
-
-        // Obtener el servicio de compañías
-        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
-        CompanyService companyService = new CompanyService(companyRepository);
 
         // Obtener la lista de proyectos disponibles para el estudiante
         List<Project> projects = projectService.projectsAvailable(student.getUserId());

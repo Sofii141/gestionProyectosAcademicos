@@ -99,7 +99,7 @@ public class GUIComentarios extends javax.swing.JFrame {
             }
         });
 
-        btnEnviarComentario.setBackground(new java.awt.Color(41, 64, 211));
+        btnEnviarComentario.setBackground(new java.awt.Color(90, 111, 228));
         btnEnviarComentario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnEnviarComentario.setForeground(new java.awt.Color(255, 255, 255));
         btnEnviarComentario.setText("Enviar");
@@ -146,10 +146,10 @@ public class GUIComentarios extends javax.swing.JFrame {
                 .addComponent(jLabel29)
                 .addGap(18, 18, 18)
                 .addComponent(textFielCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEnviarComentario)
-                    .addComponent(jButton2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(btnEnviarComentario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21))
         );
 

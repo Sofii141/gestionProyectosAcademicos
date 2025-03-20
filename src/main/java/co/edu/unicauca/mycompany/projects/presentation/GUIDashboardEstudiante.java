@@ -1,11 +1,13 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
+import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
-import co.edu.unicauca.mycompany.projects.access.IStudentRepository;
+import co.edu.unicauca.mycompany.projects.access.IUserRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Student;
+import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
 import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
-import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
+import co.edu.unicauca.mycompany.projects.domain.services.UserService;
 
 /**
  * Clase que representa el panel principal (dashboard) de un estudiante en la interfaz gráfica.
@@ -14,42 +16,23 @@ import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
 public class GUIDashboardEstudiante extends javax.swing.JFrame {
 
     /**
-     * Servicio para la gestión de estudiantes.
-     */
-    private final StudentService studentService;
-
-    /**
-     * Servicio para la gestión de proyectos.
-     */
-    private final ProjectService projectService;
-
-    /**
      * Estudiante que ha iniciado sesión en el sistema.
      */
     private final Student student;
 
     /**
-     * Constructor del panel de inicio para estudiantes.
-     * Inicializa los servicios de estudiante y proyectos, recupera la información del estudiante
-     * y configura la interfaz gráfica.
+     * Constructor del panel de inicio para estudiantes.Inicializa los servicios de estudiante y proyectos, 
+     * recupera la información del estudiante y configura la interfaz gráfica.
      *
-     * @param studentId Identificador único del estudiante que inicia sesión.
+     * @param student Instancia del estudiante que inició sesión.
+     * @param projectService Instancia servicio de proyectos.
      */
-    public GUIDashboardEstudiante(String studentId) {
-        // Obtener instancias de los repositorios a través de la fábrica
-        IStudentRepository studentRepository = Factory.getInstance().getRepositoryStudent("MARIADB");
-        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
-
-        // Inicializar los servicios con los repositorios correspondientes
-        this.projectService = new ProjectService(projectRepository);
-        this.studentService = new StudentService(studentRepository);
-
-        // Obtener los datos del estudiante a partir del ID proporcionado
-        this.student = studentService.getStudent(studentId);
+    public GUIDashboardEstudiante(Student student, ProjectService projectService) {
+        this.student = student;
 
         // Inicializar los componentes gráficos de la interfaz
         initComponents();
-
+        
         // Agregar un observador para actualizar la gráfica de proyectos en el panel
         projectService.addObserver(new GraphicProjectsObserver(student, projectService, jPanelGrafico));
 
@@ -83,8 +66,9 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         lblCorreo = new javax.swing.JLabel();
         btnInicio = new javax.swing.JButton();
-        btnProyectos = new javax.swing.JButton();
+        btnCerrarSesión = new javax.swing.JButton();
         btnPostular = new javax.swing.JButton();
+        btnProyectos1 = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         jPanelGrafico = new javax.swing.JPanel();
 
@@ -116,23 +100,23 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         });
         jPanel4.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 210, 50));
 
-        btnProyectos.setBackground(new java.awt.Color(90, 111, 228));
-        btnProyectos.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        btnProyectos.setForeground(new java.awt.Color(255, 255, 255));
-        btnProyectos.setText("Mis proyectos");
-        btnProyectos.setBorder(null);
-        btnProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProyectos.setFocusPainted(false);
-        btnProyectos.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesión.setBackground(new java.awt.Color(90, 111, 228));
+        btnCerrarSesión.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnCerrarSesión.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesión.setText("Cerrar Sesión");
+        btnCerrarSesión.setBorder(null);
+        btnCerrarSesión.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrarSesión.setFocusPainted(false);
+        btnCerrarSesión.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProyectosActionPerformed(evt);
+                btnCerrarSesiónActionPerformed(evt);
             }
         });
-        jPanel4.add(btnProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
+        jPanel4.add(btnCerrarSesión, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 210, 50));
 
         btnPostular.setBackground(new java.awt.Color(90, 111, 228));
         btnPostular.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        btnPostular.setForeground(new java.awt.Color(255, 255, 255));
+        btnPostular.setForeground(new java.awt.Color(186, 195, 241));
         btnPostular.setText("Postularme");
         btnPostular.setBorder(null);
         btnPostular.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -142,6 +126,20 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
             }
         });
         jPanel4.add(btnPostular, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, 50));
+
+        btnProyectos1.setBackground(new java.awt.Color(90, 111, 228));
+        btnProyectos1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnProyectos1.setForeground(new java.awt.Color(186, 195, 241));
+        btnProyectos1.setText("Mis proyectos");
+        btnProyectos1.setBorder(null);
+        btnProyectos1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProyectos1.setFocusPainted(false);
+        btnProyectos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProyectos1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnProyectos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, 50));
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(38, 42, 65));
@@ -203,9 +201,14 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnInicioActionPerformed
 
-    private void btnProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectosActionPerformed
-
-    }//GEN-LAST:event_btnProyectosActionPerformed
+    private void btnCerrarSesiónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesiónActionPerformed
+        IUserRepository repositoryUser = Factory.getInstance().getRepositoryUser("MARIADB");
+        
+        GUIinicioSesion instance = new GUIinicioSesion(new UserService(repositoryUser));
+        
+        this.dispose();
+        instance.setVisible(true);
+    }//GEN-LAST:event_btnCerrarSesiónActionPerformed
 
     /**
      * Maneja el evento cuando el usuario presiona el botón "Postular".
@@ -214,15 +217,24 @@ public class GUIDashboardEstudiante extends javax.swing.JFrame {
      * @param evt Evento de acción generado al presionar el botón.
      */
     private void btnPostularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularActionPerformed
-        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student, projectService, btnPostular);
+        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
+        
+        GUIProyectosDisponibles gui = new GUIProyectosDisponibles(student, new ProjectService(projectRepository),new CompanyService(companyRepository), btnPostular);
         gui.setVisible(true);
+        
         btnPostular.setVisible(false);
     }//GEN-LAST:event_btnPostularActionPerformed
 
+    private void btnProyectos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyectos1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProyectos1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrarSesión;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnPostular;
-    private javax.swing.JButton btnProyectos;
+    private javax.swing.JButton btnProyectos1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelGrafico;

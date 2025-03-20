@@ -1,7 +1,5 @@
 package co.edu.unicauca.mycompany.projects.infra.state;
 
-import co.edu.unicauca.mycompany.projects.access.Factory;
-import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
@@ -22,20 +20,12 @@ public class RechazadoState implements ProjectStatePatron {
     private CompanyService companyService;
 
     /**
-     * Servicio para gestionar la información de los proyectos.
-     */
-    private ProjectService projectService;
-
-    /**
      * Constructor que inicializa los servicios necesarios para la gestión de proyectos y empresas.
      * 
      * @param companyService Servicio que gestiona la empresa asociada al proyecto.
-     * @param projectService Servicio que permite actualizar el estado del proyecto.
      */
-    public RechazadoState(CompanyService companyService, ProjectService projectService) {
-        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB"); 
-        this.companyService = new CompanyService(companyRepository); // Inicialización del servicio de empresa
-        this.projectService = projectService;
+    public RechazadoState(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
     /**

@@ -1,7 +1,5 @@
 package co.edu.unicauca.mycompany.projects.infra.state;
 
-import co.edu.unicauca.mycompany.projects.access.Factory;
-import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
@@ -20,19 +18,13 @@ public class EjecucionState implements ProjectStatePatron {
     /** Servicio para gestionar operaciones relacionadas con empresas. */
     private CompanyService companyService;
 
-    /** Servicio para gestionar operaciones relacionadas con proyectos. */
-    private ProjectService projectService;
-
     /**
      * Constructor que inicializa el estado "EJECUCIÓN" con los servicios necesarios.
      * 
      * @param companyService Servicio para la gestión de empresas.
-     * @param projectService Servicio para la gestión de proyectos.
      */
-    public EjecucionState(CompanyService companyService, ProjectService projectService) {
-        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB"); 
-        this.companyService = new CompanyService(companyRepository); // Se inicializa correctamente
-        this.projectService = projectService;
+    public EjecucionState(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
     /** Constructor vacío. */

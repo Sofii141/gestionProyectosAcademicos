@@ -2,7 +2,13 @@ package co.edu.unicauca.mycompany.projects.presentation;
 
 import co.edu.unicauca.mycompany.projects.access.Factory;
 import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
+import co.edu.unicauca.mycompany.projects.access.ICoordinatorRepository;
+import co.edu.unicauca.mycompany.projects.access.IProjectRepository;
+import co.edu.unicauca.mycompany.projects.access.IStudentRepository;
 import co.edu.unicauca.mycompany.projects.domain.services.CompanyService;
+import co.edu.unicauca.mycompany.projects.domain.services.CoordinatorService;
+import co.edu.unicauca.mycompany.projects.domain.services.ProjectService;
+import co.edu.unicauca.mycompany.projects.domain.services.StudentService;
 import co.edu.unicauca.mycompany.projects.domain.services.UserService;
 import co.edu.unicauca.mycompany.projects.infra.Messages;
 
@@ -14,12 +20,12 @@ public class ControllerInicioSesion {
     /**
      * Servicio de usuario para manejar la autenticación.
      */
-    private UserService service;
+    private final UserService service;
     
     /**
      * Vista de inicio de sesión a la que este controlador da soporte.
      */
-    private GUIinicioSesion view;
+    private final GUIinicioSesion view;
 
     /**
      * Constructor parametrizado de Controller
@@ -41,6 +47,20 @@ public class ControllerInicioSesion {
      * @param enteredPassword Es la contraseña como char[]
      */
     public void actionButtomLogin(String userName, char[] enteredPassword) {
+        
+        // Obtener instancias de los repositorios a través de la fábrica
+        IStudentRepository studentRepository = Factory.getInstance().getRepositoryStudent("MARIADB");
+        StudentService studentService = new StudentService(studentRepository);
+        
+        ICoordinatorRepository coordinatorRepository = Factory.getInstance().getRepositoryCoordinator("MARIADB");
+        CoordinatorService coordinatorService = new CoordinatorService(coordinatorRepository);
+
+        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
+        CompanyService companyService = new CompanyService(companyRepository);
+        
+        IProjectRepository projectRepository = Factory.getInstance().getRepositoryProject("MARIADB");
+        ProjectService projectService = new ProjectService(projectRepository);
+        
         int result = service.iniciarSesion(userName, enteredPassword);
         switch (result) {
             case 0:
@@ -48,17 +68,17 @@ public class ControllerInicioSesion {
                 break;
             case 1:
                 view.dispose();
-                GUIDashboardEstudiante instance = new GUIDashboardEstudiante(userName);
+                GUIDashboardEstudiante instance = new GUIDashboardEstudiante(studentService.getStudent(userName),projectService);
                 instance.setVisible(true);
                 break;
             case 2:
                 view.dispose();
-                GUIDashboardCoordinadorInicio instancee = new GUIDashboardCoordinadorInicio(userName);
+                GUIDashboardCoordinadorInicio instancee = new GUIDashboardCoordinadorInicio(coordinatorService.getCoordinator(userName), projectService);
                 instancee.setVisible(true);
                 break;
             case 3:
                 view.setVisible(false);
-                GUIDashboardEmpresa instanceee = new GUIDashboardEmpresa(userName); 
+                GUIDashboardEmpresa instanceee = new GUIDashboardEmpresa(companyService.getCompany(userName)); 
                 instanceee.setVisible(true);
                 break;
             default:

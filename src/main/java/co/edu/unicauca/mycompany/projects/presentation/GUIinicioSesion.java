@@ -92,10 +92,13 @@ public class GUIinicioSesion extends javax.swing.JFrame {
             }
         });
 
-        jButton_iniciarSesion.setBackground(new java.awt.Color(41, 64, 211));
+        jButton_iniciarSesion.setBackground(new java.awt.Color(90, 111, 228));
         jButton_iniciarSesion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton_iniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
         jButton_iniciarSesion.setText("Iniciar sesión");
+        jButton_iniciarSesion.setBorder(null);
+        jButton_iniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton_iniciarSesion.setFocusable(false);
         jButton_iniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_iniciarSesionActionPerformed(evt);
@@ -149,10 +152,13 @@ public class GUIinicioSesion extends javax.swing.JFrame {
 
         jTextUserName.getAccessibleContext().setAccessibleName("jPanelUsername");
 
-        jButton1.setBackground(new java.awt.Color(41, 64, 211));
+        jButton1.setBackground(new java.awt.Color(90, 111, 228));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Crear Cuenta");
+        jButton1.setBorder(null);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setFocusable(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

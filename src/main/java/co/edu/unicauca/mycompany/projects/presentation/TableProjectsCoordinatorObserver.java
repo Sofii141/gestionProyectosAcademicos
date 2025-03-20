@@ -1,7 +1,5 @@
 package co.edu.unicauca.mycompany.projects.presentation;
 
-import co.edu.unicauca.mycompany.projects.access.Factory;
-import co.edu.unicauca.mycompany.projects.access.ICompanyRepository;
 import co.edu.unicauca.mycompany.projects.domain.entities.Company;
 import co.edu.unicauca.mycompany.projects.domain.entities.Coordinator;
 import co.edu.unicauca.mycompany.projects.domain.entities.Project;
@@ -65,10 +63,6 @@ public class TableProjectsCoordinatorObserver extends JFrame implements Observer
 
         // Limpiar la tabla antes de cargar nuevos datos
         modelo.setRowCount(0);
-
-        // Obtener el servicio de compañías
-        ICompanyRepository companyRepository = Factory.getInstance().getRepositoryCompany("MARIADB");
-        CompanyService companyService = new CompanyService(companyRepository);
 
         // Obtener la lista de proyectos
         List<Project> projects = projectService.listProjects();

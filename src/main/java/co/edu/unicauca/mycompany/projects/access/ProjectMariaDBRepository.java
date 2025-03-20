@@ -148,7 +148,8 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
              "p.proGoals, p.proDeadLine, p.proBudget, p.proState, p.proDate " +
              "FROM Project p " +
              "WHERE NOT EXISTS (SELECT 1 FROM Aplicants a WHERE a.proId = p.proId AND a.studentId = ?) " +
-             "AND NOT EXISTS (SELECT 1 FROM Develop d WHERE d.proId = p.proId AND d.studentId = ?)";
+             "AND NOT EXISTS (SELECT 1 FROM Develop d WHERE d.proId = p.proId AND d.studentId = ?) " +
+             "AND p.proState = 'ACEPTADO'";
         try{
             // Conectar a la base de datos
             this.connect();
