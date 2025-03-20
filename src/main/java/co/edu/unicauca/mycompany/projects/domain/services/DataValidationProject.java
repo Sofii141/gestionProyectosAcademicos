@@ -86,7 +86,8 @@ public class DataValidationProject implements IValidation {
         if (project.getProDeadLine() <= 0 || project.getProDeadLine() > 36) {
             throw new ValidationException("El plazo del proyecto debe estar entre 1 y 36 meses", "proDeadLine");
         }
-        if (!String.valueOf(project.getProBudget()).matches(validationBudget)) {
+        //System.out.println(String.valueOf(String.format("%.0f", project.getProBudget())));
+        if (!String.valueOf(String.format("%.0f", project.getProBudget())).matches(validationBudget)) {
             throw new ValidationException("El presupuesto debe ser un número entero positivo con hasta 2 decimales", "proBudget");
         }
         if (project.getProBudget() < 0 || project.getProBudget() > 1000000000) {

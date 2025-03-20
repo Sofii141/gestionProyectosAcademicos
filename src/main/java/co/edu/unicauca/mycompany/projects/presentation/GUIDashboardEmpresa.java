@@ -488,9 +488,9 @@ public class GUIDashboardEmpresa extends javax.swing.JFrame {
     private void initPlaceHolders(){
         TextPrompt placeholderName = new TextPrompt("Ingresar nombre:",txtTitleProject);
         TextPrompt placeholderTiempo = new TextPrompt("Ingresar tiempo maximo en meses:",txtDeadLineProject);
-        TextPrompt placeholderPresupuesto = new TextPrompt("Ingresar fecha:",txtBudgetProject);
+        TextPrompt placeholderPresupuesto = new TextPrompt("Ingresar presupuesto:",txtBudgetProject);
         TextPrompt placeholderResumen = new TextPrompt("Ingresar resumen:",txtAbstractProject);
-        TextPrompt placeholderObjetivos = new TextPrompt("Ingresar onjetivos:",txtGoalsProject);
+        TextPrompt placeholderObjetivos = new TextPrompt("Ingresar objetivos:",txtGoalsProject);
         TextPrompt placeholderDescripcion  = new TextPrompt("Ingrese descripción:",txtDescriptionProject);
         TextPrompt placeholderProId  = new TextPrompt("Ingrese el id del proyecto:",txtProjectId);
 
