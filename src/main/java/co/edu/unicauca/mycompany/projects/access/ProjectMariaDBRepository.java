@@ -88,7 +88,8 @@ public class ProjectMariaDBRepository extends MariaDBConnection implements IProj
         List<Project> projects = new ArrayList<>();
         
         // Consulta SQL para seleccionar todos los proyectos
-        String sql = "SELECT proId, companyId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proBudget, proState, proDate FROM Project";
+        String sql = "SELECT proId, companyId, proTitle, proDescription, proAbstract, proGoals, proDeadLine, proBudget, proState, proDate FROM Project "
+                + "WHERE proState != 'RECHAZADO' AND proState != 'CERRADO'";
         
         try{
             // Establece la conexión con la base de datos

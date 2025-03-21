@@ -53,7 +53,6 @@ public class GUIVerDetalles extends javax.swing.JFrame {
      * Bloquea el cambio de tamaño, la centra en la pantalla y define la acción de cierre.
      */
     public final void initVisual() {
-        setResizable(false); 
         setLocationRelativeTo(null); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
